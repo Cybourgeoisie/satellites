@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import "SatellitesAppDelegate.h"
 
 int main(int argc, char *argv[])

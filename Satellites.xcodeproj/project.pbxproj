@@ -7,6 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD00C9D617CA6C6100A6ADF3 /* TextureCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DD00C9D517CA6C6100A6ADF3 /* TextureCollectionViewLayout.m */; };
+		DD0788881736B1EC00CE27CF /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788871736B1EC00CE27CF /* Default-Landscape~ipad.png */; };
+		DD0788931736C3A000CE27CF /* SatellitesAppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788921736C3A000CE27CF /* SatellitesAppIcon.png */; };
+		DD0788951736C3A500CE27CF /* SatellitesAppIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788941736C3A500CE27CF /* SatellitesAppIcon@2x.png */; };
+		DD0788971736C3AE00CE27CF /* SatellitesAppIcon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788961736C3AE00CE27CF /* SatellitesAppIcon~ipad.png */; };
+		DD0788991736C3B400CE27CF /* SatellitesAppIcon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788981736C3B400CE27CF /* SatellitesAppIcon@2x~ipad.png */; };
+		DD4AFC8B17C5800F0028D003 /* TextureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD4AFC8A17C5800F0028D003 /* TextureViewController.m */; };
+		DD4EB19817D69E3500C32F3C /* SceneMesh.h in Sources */ = {isa = PBXBuildFile; fileRef = DDB2FD62172C60DE000C59D2 /* SceneMesh.h */; };
+		DD4EB19917D69E3500C32F3C /* SceneMesh.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB2FD63172C60DE000C59D2 /* SceneMesh.m */; };
+		DD4EB19A17D69E3500C32F3C /* SceneModel.h in Sources */ = {isa = PBXBuildFile; fileRef = DDB2FD64172C60DE000C59D2 /* SceneModel.h */; };
+		DD4EB19B17D69E3500C32F3C /* SceneModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB2FD65172C60DE000C59D2 /* SceneModel.m */; };
+		DD4EB1CF17D6A0FF00C32F3C /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = DD4EB1CE17D6A0FF00C32F3C /* Textures */; };
+		DDB2FD6B172C6196000C59D2 /* SceneSatelliteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB2FD6A172C6196000C59D2 /* SceneSatelliteModel.m */; };
+		DDB2FD6E172C64A3000C59D2 /* SceneSatellite.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB2FD6D172C64A3000C59D2 /* SceneSatellite.m */; };
+		DDB9574217493B43005B8E07 /* SystemTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB9574117493B43005B8E07 /* SystemTableViewController.m */; };
+		DDB9574717494498005B8E07 /* SatelliteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB9574617494497005B8E07 /* SatelliteObject.m */; };
+		DDB9574D174944D0005B8E07 /* SystemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB9574C174944D0005B8E07 /* SystemObject.m */; };
+		DDC21245175E96C500E2D42C /* SystemDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC21244175E96C500E2D42C /* SystemDetailsViewController.m */; };
+		DDC9FAF5175560A200968025 /* EditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC9FAF4175560A200968025 /* EditingViewController.m */; };
+		DDD35981176927110049A509 /* SatelliteDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDD35980176927110049A509 /* SatelliteDetailsViewController.m */; };
+		DDD35984176927350049A509 /* ManagedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDD35983176927350049A509 /* ManagedTableViewController.m */; };
+		DDDFD24917443FB20063FEB1 /* SatelliteModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DDDFD24717443FB20063FEB1 /* SatelliteModel.xcdatamodeld */; };
+		DDDFD24E174442260063FEB1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDDFD24D174442260063FEB1 /* CoreData.framework */; };
+		DDDFD2511744460D0063FEB1 /* Satellite.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDFD2501744460D0063FEB1 /* Satellite.m */; };
+		DDE2776F17CA7534003BAEC6 /* TextureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE2776E17CA7534003BAEC6 /* TextureCollectionViewCell.m */; };
+		DDE3C400174C2EE60020482B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE3C3FF174C2EE60020482B /* RootViewController.m */; };
 		DDF131BB171B517C00C42923 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF131BA171B517C00C42923 /* UIKit.framework */; };
 		DDF131BD171B517C00C42923 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF131BC171B517C00C42923 /* Foundation.framework */; };
 		DDF131BF171B517C00C42923 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF131BE171B517C00C42923 /* CoreGraphics.framework */; };
@@ -19,9 +45,55 @@
 		DDF131D4171B517C00C42923 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDF131D2171B517C00C42923 /* MainStoryboard_iPhone.storyboard */; };
 		DDF131D7171B517C00C42923 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDF131D5171B517C00C42923 /* MainStoryboard_iPad.storyboard */; };
 		DDF131DA171B517C00C42923 /* SatellitesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDF131D9171B517C00C42923 /* SatellitesViewController.m */; };
+		DDF131E4171B540600C42923 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF131E3171B540600C42923 /* GLKit.framework */; };
+		DDF131E6171B543600C42923 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF131E5171B543600C42923 /* OpenGLES.framework */; };
+		DDF131ED171B691300C42923 /* AGLKVertexAttribArrayBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = DDF131EC171B691300C42923 /* AGLKVertexAttribArrayBuffer.m */; };
+		DDF131FC171B7DBC00C42923 /* SatellitesController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDF131F8171B7DBC00C42923 /* SatellitesController.m */; };
+		DDF131FD171B7DBC00C42923 /* Vector.m in Sources */ = {isa = PBXBuildFile; fileRef = DDF131FA171B7DBC00C42923 /* Vector.m */; };
+		DDF131FF171B80DF00C42923 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF131FE171B80DF00C42923 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD00C9D417CA6C6100A6ADF3 /* TextureCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCollectionViewLayout.h; sourceTree = "<group>"; };
+		DD00C9D517CA6C6100A6ADF3 /* TextureCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureCollectionViewLayout.m; sourceTree = "<group>"; };
+		DD0788871736B1EC00CE27CF /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		DD0788921736C3A000CE27CF /* SatellitesAppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SatellitesAppIcon.png; sourceTree = SOURCE_ROOT; };
+		DD0788941736C3A500CE27CF /* SatellitesAppIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SatellitesAppIcon@2x.png"; sourceTree = SOURCE_ROOT; };
+		DD0788961736C3AE00CE27CF /* SatellitesAppIcon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SatellitesAppIcon~ipad.png"; sourceTree = SOURCE_ROOT; };
+		DD0788981736C3B400CE27CF /* SatellitesAppIcon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SatellitesAppIcon@2x~ipad.png"; sourceTree = SOURCE_ROOT; };
+		DD4AFC8917C5800F0028D003 /* TextureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureViewController.h; sourceTree = "<group>"; };
+		DD4AFC8A17C5800F0028D003 /* TextureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureViewController.m; sourceTree = "<group>"; };
+		DD4EB1CE17D6A0FF00C32F3C /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Textures; sourceTree = "<group>"; };
+		DDB2FD62172C60DE000C59D2 /* SceneMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneMesh.h; path = ../../../OpenGLKitTextbookEx/ch06_EXAMPLES/CommonCode/SceneMesh.h; sourceTree = "<group>"; };
+		DDB2FD63172C60DE000C59D2 /* SceneMesh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SceneMesh.m; path = ../../../OpenGLKitTextbookEx/ch06_EXAMPLES/CommonCode/SceneMesh.m; sourceTree = "<group>"; };
+		DDB2FD64172C60DE000C59D2 /* SceneModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneModel.h; path = ../../../OpenGLKitTextbookEx/ch06_EXAMPLES/CommonCode/SceneModel.h; sourceTree = "<group>"; };
+		DDB2FD65172C60DE000C59D2 /* SceneModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SceneModel.m; path = ../../../OpenGLKitTextbookEx/ch06_EXAMPLES/CommonCode/SceneModel.m; sourceTree = "<group>"; };
+		DDB2FD69172C6196000C59D2 /* SceneSatelliteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneSatelliteModel.h; sourceTree = "<group>"; };
+		DDB2FD6A172C6196000C59D2 /* SceneSatelliteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneSatelliteModel.m; sourceTree = "<group>"; };
+		DDB2FD6C172C64A3000C59D2 /* SceneSatellite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneSatellite.h; sourceTree = "<group>"; };
+		DDB2FD6D172C64A3000C59D2 /* SceneSatellite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneSatellite.m; sourceTree = "<group>"; };
+		DDB9574017493B43005B8E07 /* SystemTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemTableViewController.h; sourceTree = "<group>"; };
+		DDB9574117493B43005B8E07 /* SystemTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemTableViewController.m; sourceTree = "<group>"; };
+		DDB9574517494497005B8E07 /* SatelliteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SatelliteObject.h; sourceTree = "<group>"; };
+		DDB9574617494497005B8E07 /* SatelliteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SatelliteObject.m; sourceTree = "<group>"; };
+		DDB9574B174944D0005B8E07 /* SystemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemObject.h; sourceTree = "<group>"; };
+		DDB9574C174944D0005B8E07 /* SystemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemObject.m; sourceTree = "<group>"; };
+		DDC21243175E96C500E2D42C /* SystemDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemDetailsViewController.h; sourceTree = "<group>"; };
+		DDC21244175E96C500E2D42C /* SystemDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemDetailsViewController.m; sourceTree = "<group>"; };
+		DDC9FAF3175560A200968025 /* EditingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditingViewController.h; sourceTree = "<group>"; };
+		DDC9FAF4175560A200968025 /* EditingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditingViewController.m; sourceTree = "<group>"; };
+		DDD3597F176927110049A509 /* SatelliteDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SatelliteDetailsViewController.h; sourceTree = "<group>"; };
+		DDD35980176927110049A509 /* SatelliteDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SatelliteDetailsViewController.m; sourceTree = "<group>"; };
+		DDD35982176927350049A509 /* ManagedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedTableViewController.h; sourceTree = "<group>"; };
+		DDD35983176927350049A509 /* ManagedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedTableViewController.m; sourceTree = "<group>"; };
+		DDDFD24817443FB20063FEB1 /* SatelliteModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SatelliteModel.xcdatamodel; sourceTree = "<group>"; };
+		DDDFD24D174442260063FEB1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		DDDFD24F1744460D0063FEB1 /* Satellite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Satellite.h; sourceTree = "<group>"; };
+		DDDFD2501744460D0063FEB1 /* Satellite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Satellite.m; sourceTree = "<group>"; };
+		DDE2776D17CA7534003BAEC6 /* TextureCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCollectionViewCell.h; sourceTree = "<group>"; };
+		DDE2776E17CA7534003BAEC6 /* TextureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureCollectionViewCell.m; sourceTree = "<group>"; };
+		DDE3C3FE174C2EE50020482B /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		DDE3C3FF174C2EE60020482B /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		DDF131B7171B517C00C42923 /* Satellites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Satellites.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDF131BA171B517C00C42923 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DDF131BC171B517C00C42923 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -39,6 +111,16 @@
 		DDF131D6171B517C00C42923 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		DDF131D8171B517C00C42923 /* SatellitesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SatellitesViewController.h; sourceTree = "<group>"; };
 		DDF131D9171B517C00C42923 /* SatellitesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SatellitesViewController.m; sourceTree = "<group>"; };
+		DDF131E3171B540600C42923 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		DDF131E5171B543600C42923 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		DDF131E9171B67C400C42923 /* sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphere.h; sourceTree = "<group>"; };
+		DDF131EB171B691300C42923 /* AGLKVertexAttribArrayBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGLKVertexAttribArrayBuffer.h; sourceTree = "<group>"; };
+		DDF131EC171B691300C42923 /* AGLKVertexAttribArrayBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGLKVertexAttribArrayBuffer.m; sourceTree = "<group>"; };
+		DDF131F7171B7DBC00C42923 /* SatellitesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SatellitesController.h; sourceTree = "<group>"; };
+		DDF131F8171B7DBC00C42923 /* SatellitesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SatellitesController.m; sourceTree = "<group>"; };
+		DDF131F9171B7DBC00C42923 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		DDF131FA171B7DBC00C42923 /* Vector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector.m; sourceTree = "<group>"; };
+		DDF131FE171B80DF00C42923 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,15 +128,123 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDF131BB171B517C00C42923 /* UIKit.framework in Frameworks */,
+				DDDFD24E174442260063FEB1 /* CoreData.framework in Frameworks */,
+				DDF131E4171B540600C42923 /* GLKit.framework in Frameworks */,
 				DDF131BD171B517C00C42923 /* Foundation.framework in Frameworks */,
+				DDF131BB171B517C00C42923 /* UIKit.framework in Frameworks */,
 				DDF131BF171B517C00C42923 /* CoreGraphics.framework in Frameworks */,
+				DDF131E6171B543600C42923 /* OpenGLES.framework in Frameworks */,
+				DDF131FF171B80DF00C42923 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DD0788841736B1B300CE27CF /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				DDF131CC171B517C00C42923 /* Default.png */,
+				DDF131CE171B517C00C42923 /* Default@2x.png */,
+				DDF131D0171B517C00C42923 /* Default-568h@2x.png */,
+				DD0788871736B1EC00CE27CF /* Default-Landscape~ipad.png */,
+			);
+			name = Launch;
+			sourceTree = "<group>";
+		};
+		DD0788891736C37500CE27CF /* App Icons */ = {
+			isa = PBXGroup;
+			children = (
+				DD0788981736C3B400CE27CF /* SatellitesAppIcon@2x~ipad.png */,
+				DD0788961736C3AE00CE27CF /* SatellitesAppIcon~ipad.png */,
+				DD0788941736C3A500CE27CF /* SatellitesAppIcon@2x.png */,
+				DD0788921736C3A000CE27CF /* SatellitesAppIcon.png */,
+			);
+			name = "App Icons";
+			sourceTree = "<group>";
+		};
+		DD13468617692A0600D63FF5 /* GLKit */ = {
+			isa = PBXGroup;
+			children = (
+				DDF131D8171B517C00C42923 /* SatellitesViewController.h */,
+				DDF131D9171B517C00C42923 /* SatellitesViewController.m */,
+			);
+			name = GLKit;
+			sourceTree = "<group>";
+		};
+		DD13468717692A1A00D63FF5 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				DDE3C3FE174C2EE50020482B /* RootViewController.h */,
+				DDE3C3FF174C2EE60020482B /* RootViewController.m */,
+			);
+			name = Navigation;
+			sourceTree = "<group>";
+		};
+		DD13468817692A3000D63FF5 /* Tables */ = {
+			isa = PBXGroup;
+			children = (
+				DDD35982176927350049A509 /* ManagedTableViewController.h */,
+				DDD35983176927350049A509 /* ManagedTableViewController.m */,
+				DDB9574017493B43005B8E07 /* SystemTableViewController.h */,
+				DDB9574117493B43005B8E07 /* SystemTableViewController.m */,
+				DDC21243175E96C500E2D42C /* SystemDetailsViewController.h */,
+				DDC21244175E96C500E2D42C /* SystemDetailsViewController.m */,
+				DDD3597F176927110049A509 /* SatelliteDetailsViewController.h */,
+				DDD35980176927110049A509 /* SatelliteDetailsViewController.m */,
+			);
+			name = Tables;
+			sourceTree = "<group>";
+		};
+		DDB2FD68172C60E8000C59D2 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				DDB2FD62172C60DE000C59D2 /* SceneMesh.h */,
+				DDB2FD63172C60DE000C59D2 /* SceneMesh.m */,
+				DDB2FD64172C60DE000C59D2 /* SceneModel.h */,
+				DDB2FD65172C60DE000C59D2 /* SceneModel.m */,
+				DDB2FD69172C6196000C59D2 /* SceneSatelliteModel.h */,
+				DDB2FD6A172C6196000C59D2 /* SceneSatelliteModel.m */,
+				DDB2FD6C172C64A3000C59D2 /* SceneSatellite.h */,
+				DDB2FD6D172C64A3000C59D2 /* SceneSatellite.m */,
+			);
+			name = Scene;
+			sourceTree = "<group>";
+		};
+		DDB9573F174939F6005B8E07 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DD13468617692A0600D63FF5 /* GLKit */,
+				DD13468717692A1A00D63FF5 /* Navigation */,
+				DD13468817692A3000D63FF5 /* Tables */,
+				DDC9FAF3175560A200968025 /* EditingViewController.h */,
+				DDC9FAF4175560A200968025 /* EditingViewController.m */,
+				DD4AFC8917C5800F0028D003 /* TextureViewController.h */,
+				DD4AFC8A17C5800F0028D003 /* TextureViewController.m */,
+				DD00C9D417CA6C6100A6ADF3 /* TextureCollectionViewLayout.h */,
+				DD00C9D517CA6C6100A6ADF3 /* TextureCollectionViewLayout.m */,
+				DDE2776D17CA7534003BAEC6 /* TextureCollectionViewCell.h */,
+				DDE2776E17CA7534003BAEC6 /* TextureCollectionViewCell.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		DDB9574317493EB8005B8E07 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				DDF131D2171B517C00C42923 /* MainStoryboard_iPhone.storyboard */,
+			);
+			name = iPhone;
+			sourceTree = "<group>";
+		};
+		DDB9574417493EC2005B8E07 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				DDF131D5171B517C00C42923 /* MainStoryboard_iPad.storyboard */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
 		DDF131AE171B517B00C42923 = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +265,10 @@
 		DDF131B9171B517C00C42923 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DDDFD24D174442260063FEB1 /* CoreData.framework */,
+				DDF131FE171B80DF00C42923 /* QuartzCore.framework */,
+				DDF131E5171B543600C42923 /* OpenGLES.framework */,
+				DDF131E3171B540600C42923 /* GLKit.framework */,
 				DDF131BA171B517C00C42923 /* UIKit.framework */,
 				DDF131BC171B517C00C42923 /* Foundation.framework */,
 				DDF131BE171B517C00C42923 /* CoreGraphics.framework */,
@@ -85,12 +279,9 @@
 		DDF131C0171B517C00C42923 /* Satellites */ = {
 			isa = PBXGroup;
 			children = (
-				DDF131C9171B517C00C42923 /* SatellitesAppDelegate.h */,
-				DDF131CA171B517C00C42923 /* SatellitesAppDelegate.m */,
-				DDF131D2171B517C00C42923 /* MainStoryboard_iPhone.storyboard */,
-				DDF131D5171B517C00C42923 /* MainStoryboard_iPad.storyboard */,
-				DDF131D8171B517C00C42923 /* SatellitesViewController.h */,
-				DDF131D9171B517C00C42923 /* SatellitesViewController.m */,
+				DDF131E0171B519400C42923 /* Controller */,
+				DDF131E2171B51A000C42923 /* Model */,
+				DDF131E1171B519B00C42923 /* View */,
 				DDF131C1171B517C00C42923 /* Supporting Files */,
 			);
 			path = Satellites;
@@ -99,15 +290,88 @@
 		DDF131C1171B517C00C42923 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DD0788891736C37500CE27CF /* App Icons */,
+				DD0788841736B1B300CE27CF /* Launch */,
 				DDF131C2171B517C00C42923 /* Satellites-Info.plist */,
 				DDF131C3171B517C00C42923 /* InfoPlist.strings */,
-				DDF131C6171B517C00C42923 /* main.m */,
 				DDF131C8171B517C00C42923 /* Satellites-Prefix.pch */,
-				DDF131CC171B517C00C42923 /* Default.png */,
-				DDF131CE171B517C00C42923 /* Default@2x.png */,
-				DDF131D0171B517C00C42923 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DDF131E0171B519400C42923 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DDF131C6171B517C00C42923 /* main.m */,
+				DDF131E7171B570900C42923 /* App Delegate */,
+				DDB9573F174939F6005B8E07 /* View Controllers */,
+				DDF131F4171B7DA800C42923 /* Engine */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		DDF131E1171B519B00C42923 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DDB9574417493EC2005B8E07 /* iPad */,
+				DDB9574317493EB8005B8E07 /* iPhone */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		DDF131E2171B51A000C42923 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DD4EB1CE17D6A0FF00C32F3C /* Textures */,
+				DDF131EA171B68FC00C42923 /* Buffer */,
+				DDF131E8171B679B00C42923 /* Objects */,
+				DDB2FD68172C60E8000C59D2 /* Scene */,
+				DDDFD24717443FB20063FEB1 /* SatelliteModel.xcdatamodeld */,
+				DDB9574517494497005B8E07 /* SatelliteObject.h */,
+				DDB9574617494497005B8E07 /* SatelliteObject.m */,
+				DDB9574B174944D0005B8E07 /* SystemObject.h */,
+				DDB9574C174944D0005B8E07 /* SystemObject.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		DDF131E7171B570900C42923 /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				DDF131C9171B517C00C42923 /* SatellitesAppDelegate.h */,
+				DDF131CA171B517C00C42923 /* SatellitesAppDelegate.m */,
+			);
+			name = "App Delegate";
+			sourceTree = "<group>";
+		};
+		DDF131E8171B679B00C42923 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				DDF131E9171B67C400C42923 /* sphere.h */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		DDF131EA171B68FC00C42923 /* Buffer */ = {
+			isa = PBXGroup;
+			children = (
+				DDF131EB171B691300C42923 /* AGLKVertexAttribArrayBuffer.h */,
+				DDF131EC171B691300C42923 /* AGLKVertexAttribArrayBuffer.m */,
+			);
+			name = Buffer;
+			sourceTree = "<group>";
+		};
+		DDF131F4171B7DA800C42923 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				DDF131F7171B7DBC00C42923 /* SatellitesController.h */,
+				DDF131F8171B7DBC00C42923 /* SatellitesController.m */,
+				DDF131F9171B7DBC00C42923 /* Vector.h */,
+				DDF131FA171B7DBC00C42923 /* Vector.m */,
+				DDDFD24F1744460D0063FEB1 /* Satellite.h */,
+				DDDFD2501744460D0063FEB1 /* Satellite.m */,
+			);
+			name = Engine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +432,12 @@
 				DDF131D1171B517C00C42923 /* Default-568h@2x.png in Resources */,
 				DDF131D4171B517C00C42923 /* MainStoryboard_iPhone.storyboard in Resources */,
 				DDF131D7171B517C00C42923 /* MainStoryboard_iPad.storyboard in Resources */,
+				DD0788881736B1EC00CE27CF /* Default-Landscape~ipad.png in Resources */,
+				DD0788931736C3A000CE27CF /* SatellitesAppIcon.png in Resources */,
+				DD0788951736C3A500CE27CF /* SatellitesAppIcon@2x.png in Resources */,
+				DD0788971736C3AE00CE27CF /* SatellitesAppIcon~ipad.png in Resources */,
+				DD0788991736C3B400CE27CF /* SatellitesAppIcon@2x~ipad.png in Resources */,
+				DD4EB1CF17D6A0FF00C32F3C /* Textures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,9 +448,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD4EB19817D69E3500C32F3C /* SceneMesh.h in Sources */,
+				DD4EB19917D69E3500C32F3C /* SceneMesh.m in Sources */,
+				DD4EB19A17D69E3500C32F3C /* SceneModel.h in Sources */,
+				DD4EB19B17D69E3500C32F3C /* SceneModel.m in Sources */,
 				DDF131C7171B517C00C42923 /* main.m in Sources */,
 				DDF131CB171B517C00C42923 /* SatellitesAppDelegate.m in Sources */,
 				DDF131DA171B517C00C42923 /* SatellitesViewController.m in Sources */,
+				DDF131ED171B691300C42923 /* AGLKVertexAttribArrayBuffer.m in Sources */,
+				DDF131FC171B7DBC00C42923 /* SatellitesController.m in Sources */,
+				DDF131FD171B7DBC00C42923 /* Vector.m in Sources */,
+				DDB2FD6B172C6196000C59D2 /* SceneSatelliteModel.m in Sources */,
+				DDB2FD6E172C64A3000C59D2 /* SceneSatellite.m in Sources */,
+				DDDFD24917443FB20063FEB1 /* SatelliteModel.xcdatamodeld in Sources */,
+				DDDFD2511744460D0063FEB1 /* Satellite.m in Sources */,
+				DDB9574217493B43005B8E07 /* SystemTableViewController.m in Sources */,
+				DDB9574717494498005B8E07 /* SatelliteObject.m in Sources */,
+				DDB9574D174944D0005B8E07 /* SystemObject.m in Sources */,
+				DDE3C400174C2EE60020482B /* RootViewController.m in Sources */,
+				DDC9FAF5175560A200968025 /* EditingViewController.m in Sources */,
+				DDC21245175E96C500E2D42C /* SystemDetailsViewController.m in Sources */,
+				DDD35981176927110049A509 /* SatelliteDetailsViewController.m in Sources */,
+				DDD35984176927350049A509 /* ManagedTableViewController.m in Sources */,
+				DD4AFC8B17C5800F0028D003 /* TextureViewController.m in Sources */,
+				DD00C9D617CA6C6100A6ADF3 /* TextureCollectionViewLayout.m in Sources */,
+				DDE2776F17CA7534003BAEC6 /* TextureCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,8 +605,22 @@
 				DDF131DF171B517C00C42923 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DDDFD24717443FB20063FEB1 /* SatelliteModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DDDFD24817443FB20063FEB1 /* SatelliteModel.xcdatamodel */,
+			);
+			currentVersion = DDDFD24817443FB20063FEB1 /* SatelliteModel.xcdatamodel */;
+			path = SatelliteModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DDF131AF171B517B00C42923 /* Project object */;
 }

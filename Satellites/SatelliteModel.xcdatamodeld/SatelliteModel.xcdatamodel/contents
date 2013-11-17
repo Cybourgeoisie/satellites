@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="SatelliteObject" representedClassName="SatelliteObject" syncable="YES">
+        <attribute name="axialTilt" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="bMoon" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="bStar" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="eccentricity" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="inclination" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mass" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rotation" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="semimajorAxis" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="size" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="texture" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="orbitalBody" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SatelliteObject" inverseName="relativeBody" inverseEntity="SatelliteObject" syncable="YES"/>
+        <relationship name="relativeBody" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SatelliteObject" inverseName="orbitalBody" inverseEntity="SatelliteObject" syncable="YES"/>
+        <relationship name="system" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SystemObject" inverseName="satellites" inverseEntity="SystemObject" syncable="YES"/>
+    </entity>
+    <entity name="SystemObject" representedClassName="SystemObject" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="satellites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SatelliteObject" inverseName="system" inverseEntity="SatelliteObject" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="SatelliteObject" positionX="198" positionY="-1251" width="128" height="255"/>
+        <element name="SystemObject" positionX="45" positionY="-1215" width="128" height="75"/>
+    </elements>
+</model>
