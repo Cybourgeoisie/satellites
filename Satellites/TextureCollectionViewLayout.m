@@ -82,9 +82,7 @@
     // make sure we count another row if one is only partially filled
     if ([self.collectionView numberOfSections] % self.numberOfColumns) rowCount++;
     
-    CGFloat height = self.itemInsets.top +
-    rowCount * self.itemSize.height + (rowCount - 1) * self.interItemSpacingY +
-    self.itemInsets.bottom;
+    CGFloat height = self.itemInsets.top + rowCount * self.itemSize.height + (rowCount - 1) * self.interItemSpacingY + self.itemInsets.bottom;
     
     return CGSizeMake(self.collectionView.bounds.size.width, height);
 }
@@ -131,8 +129,8 @@
 
 - (CGRect)frameForAlbumPhotoAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger row    = indexPath.row / self.numberOfColumns;
-    NSInteger column = indexPath.row % self.numberOfColumns;
+    NSInteger row    = indexPath.section / self.numberOfColumns;
+    NSInteger column = indexPath.section % self.numberOfColumns;
     
     CGFloat spacingX = self.collectionView.bounds.size.width - self.itemInsets.left - self.itemInsets.right - (self.numberOfColumns * self.itemSize.width);
     

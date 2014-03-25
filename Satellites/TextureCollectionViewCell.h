@@ -11,6 +11,6 @@
 
 @interface TextureCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, strong, readwrite) UIImageView * imageView;
+@property (nonatomic, strong, readonly) UIImageView * imageView;
 
 @end

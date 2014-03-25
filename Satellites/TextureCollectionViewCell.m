@@ -8,6 +8,12 @@
 
 #import "TextureCollectionViewCell.h"
 
+@interface TextureCollectionViewCell ()
+
+@property (nonatomic, strong, readwrite) UIImageView * imageView;
+
+@end
+
 @implementation TextureCollectionViewCell
 
 - (id)initWithFrame:(CGRect)frame

@@ -53,16 +53,25 @@
     }
     
     // Prepare the album
-    NSMutableArray * album = [[NSMutableArray alloc] init];
+    NSMutableArray * album;
     
     // Add each item to the list
     for (NSString * file in files)
     {
+        album = [[NSMutableArray alloc] init];
         [album addObject:[texturesPath stringByAppendingString:file]];
+        [self.albums addObject:album];
     }
     
     // Add the album to the collection
-    [self.albums addObject:album];
+    //[self.albums addObject:album];
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString * imageUrl = self.albums[indexPath.section][indexPath.row];
+    
+    // Pass this texture back to the EditingViewController
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -76,8 +85,9 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     // Return the number of textures in this album
-    NSMutableArray * album = self.albums[section];
-    return album.count;
+    //NSMutableArray * album = self.albums[section];
+    //return album.count;
+    return 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -110,8 +120,7 @@
         self.textureViewLayout.numberOfColumns = 3;
         
         // handle insets for iPhone 4 or 5
-        CGFloat sideInset = [UIScreen mainScreen].preferredMode.size.width == 1136.0f ?
-        45.0f : 25.0f;
+        CGFloat sideInset = [UIScreen mainScreen].preferredMode.size.width == 1136.0f ? 45.0f : 25.0f;
         
         self.textureViewLayout.itemInsets = UIEdgeInsetsMake(22.0f, sideInset, 13.0f, sideInset);
         
