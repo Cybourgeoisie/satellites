@@ -9,6 +9,8 @@
 #import "TextureViewController.h"
 
 @implementation TextureViewController
+
+@synthesize editedObject;
 @synthesize albums;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -69,9 +71,25 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    // Get the image at this location
     NSString * imageUrl = self.albums[indexPath.section][indexPath.row];
+
+    // Parse the image URL for the only necessary information
+    NSArray * urlComponents = [[NSArray alloc] init];
+    urlComponents = [imageUrl componentsSeparatedByString:@"/"];
+    imageUrl      = [urlComponents lastObject];
+    urlComponents = [imageUrl componentsSeparatedByString:@"."];
+    imageUrl      = [urlComponents objectAtIndex:0];
+
+    // Pass current value to the edited object
+    [self.editedObject setValue:imageUrl forKey:@"texture"];
     
-    // Pass this texture back to the EditingViewController
+    // Save
+    RootViewController * controller = (RootViewController *) self.navigationController;
+    [controller didFinishWithSave : YES];
+    
+    // Pop.
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UICollectionViewDataSource

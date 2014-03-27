@@ -87,7 +87,7 @@ static float dt = 1;
         [star setRotationSpeed : [starObject.rotation floatValue]];
         [star setPosition:0.0 : [starObject.semimajorAxis floatValue] * scale : 0.0];
         [star setName : starObject.name];
-        [star setTexture : @"sunmap"];
+        [star setTexture : ([starObject.texture length]) ? starObject.texture : @"sunmap"];
         [star setMass : [starObject.mass floatValue]];
         
         // PROBLEM: Multiple stars need to be able to revolve with each other.
@@ -128,7 +128,7 @@ static float dt = 1;
         [planet setRotationSpeed : [planetObject.rotation floatValue]];
         [planet setDistance: [planetObject.semimajorAxis floatValue] * scale fromBody: barycenter];
         [planet setName : planetObject.name];
-        [planet setTexture : @"venusmap"];
+        [planet setTexture : ([planetObject.texture length]) ? planetObject.texture : @"venusmap"];
         [planet setMass : [planetObject.mass floatValue]];
         
         // Add the body
@@ -146,7 +146,7 @@ static float dt = 1;
             [moon setRotationSpeed : [moonObject.rotation floatValue]];
             [moon setDistance: [moonObject.semimajorAxis floatValue] * scale fromBody: planet];
             [moon setName : moonObject.name];
-            [moon setTexture : @"moonmap"];
+            [moon setTexture : ([moonObject.texture length]) ? moonObject.texture : @"moonmap"];
             [moon setMass : [moonObject.mass floatValue]];
             
             // Add the moons

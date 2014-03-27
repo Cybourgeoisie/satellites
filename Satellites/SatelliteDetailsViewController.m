@@ -150,6 +150,9 @@
         
         // Prepare the View Textures Controller
         TextureViewController * controller = (TextureViewController *)[segue destinationViewController];
+
+        // Set the object
+        controller.editedObject = self.satellite;
     }
     else if ([[segue identifier] isEqualToString:@"AddNewBody"])
     {
