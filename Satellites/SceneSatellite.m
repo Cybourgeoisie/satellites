@@ -53,7 +53,7 @@
         if ([aTexture length] > 0)
         {
             // Find the image
-            NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:aTexture ofType:@"jpg"];
+            NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:aTexture ofType:@"jpg" inDirectory:@"Textures"];
             
             // Load the texture
             NSError *error = nil;

@@ -278,7 +278,7 @@
         if (indexPath.row == 0)
         {
             cellLabelText  = @"Texture";
-            cellDetailText = @"To do"; //satellite.texture;
+            cellDetailText = satellite.texture ?: @"Default";
         }
         else if (indexPath.row == 1)
         {
