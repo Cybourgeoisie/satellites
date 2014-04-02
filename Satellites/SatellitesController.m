@@ -87,7 +87,7 @@ static float dt = 1;
         [star setRotationSpeed : [starObject.rotation floatValue]];
         [star setPosition:0.0 : [starObject.semimajorAxis floatValue] * scale : 0.0];
         [star setName : starObject.name];
-        [star setTexture : ([starObject.texture length]) ? starObject.texture : @"sunmap"];
+        [star setTexture : ([starObject.texture length]) ? starObject.texture : @"Sun"];
         [star setMass : [starObject.mass floatValue]];
         
         // PROBLEM: Multiple stars need to be able to revolve with each other.
@@ -128,7 +128,7 @@ static float dt = 1;
         [planet setRotationSpeed : [planetObject.rotation floatValue]];
         [planet setDistance: [planetObject.semimajorAxis floatValue] * scale fromBody: barycenter];
         [planet setName : planetObject.name];
-        [planet setTexture : ([planetObject.texture length]) ? planetObject.texture : @"venusmap"];
+        [planet setTexture : ([planetObject.texture length]) ? planetObject.texture : @"Venus"];
         [planet setMass : [planetObject.mass floatValue]];
         
         // Add the body
@@ -146,7 +146,7 @@ static float dt = 1;
             [moon setRotationSpeed : [moonObject.rotation floatValue]];
             [moon setDistance: [moonObject.semimajorAxis floatValue] * scale fromBody: planet];
             [moon setName : moonObject.name];
-            [moon setTexture : ([moonObject.texture length]) ? moonObject.texture : @"moonmap"];
+            [moon setTexture : ([moonObject.texture length]) ? moonObject.texture : @"Moon"];
             [moon setMass : [moonObject.mass floatValue]];
             
             // Add the moons
@@ -179,7 +179,7 @@ static float dt = 1;
     Satellite *sun = [[Satellite alloc] init];
     [sun setRotationSpeed: 0.05];
     [sun setMass : 330000];
-    [sun setTexture : @"sunmap"];
+    [sun setTexture : @"Sun"];
     [sun setName : @"Sun"];
     
     // Mercury
@@ -188,7 +188,7 @@ static float dt = 1;
     [mercury setInclination  : 7.01];
     [mercury setDistance: 0.4 * scale fromBody : sun];
     [mercury setMass : 0.06];
-    [mercury setTexture : @"mercurymap"];
+    [mercury setTexture : @"Mercury"];
     [mercury setName : @"Mercury"];
     
     // Venus
@@ -197,7 +197,7 @@ static float dt = 1;
     [venus setInclination  : 3.39];
     [venus setDistance : 0.7 * scale fromBody : sun];
     [venus setMass : 0.81];
-    [venus setTexture : @"venusmap"];
+    [venus setTexture : @"Venus"];
     [venus setName : @"Venus"];
     
     // Earth
@@ -207,7 +207,7 @@ static float dt = 1;
     [earth setRotationSpeed: 0.01];
     [earth setDistance : 1.0 * scale fromBody : sun];
     [earth setMass : 1];
-    [earth setTexture : @"earthmap"];
+    [earth setTexture : @"Earth"];
     [earth setName : @"Earth"];
     
     // Moon
@@ -215,7 +215,7 @@ static float dt = 1;
     [moon isMoon : true];
     [moon setDistance : 0.0025 * scale fromBody : earth];
     [moon setMass : 0.0123];
-    [moon setTexture : @"moonmap"];
+    [moon setTexture : @"Moon"];
     [moon setName : @"Moon"];
     
     // Mars
@@ -224,7 +224,7 @@ static float dt = 1;
     [mars setInclination  : 1.85];
     [mars setDistance : 1.5 * scale fromBody : sun];
     [mars setMass : 0.11];
-    [mars setTexture : @"marsmap"];
+    [mars setTexture : @"Mars"];
     [mars setName : @"Mars"];
     
     // Ceres
@@ -233,7 +233,7 @@ static float dt = 1;
     [ceres setInclination  : 10.59];
     [ceres setDistance : 2.8 * scale fromBody : sun];
     [ceres setMass : 0.00015];
-    [ceres setTexture : @"moonmap"];
+    [ceres setTexture : @"Moon"];
     [ceres setName : @"Ceres"];
     
     // Jupiter
@@ -242,7 +242,7 @@ static float dt = 1;
     [jupiter setInclination  : 1.31];
     [jupiter setDistance : 5.22 * scale fromBody : sun];
     [jupiter setMass : 317.8];
-    [jupiter setTexture : @"jupitermap"];
+    [jupiter setTexture : @"Jupiter"];
     [jupiter setName : @"Jupiter"];
 
     // Saturn
@@ -251,7 +251,7 @@ static float dt = 1;
     [saturn setInclination  : 2.49];
     [saturn setDistance : 9.54 * scale fromBody : sun];
     [saturn setMass : 95.2];
-    [saturn setTexture : @"saturnmap"];
+    [saturn setTexture : @"Saturn"];
     [saturn setName : @"Saturn"];
 
     // Uranus
@@ -260,7 +260,7 @@ static float dt = 1;
     [uranus setInclination  : 0.77];
     [uranus setDistance : 19.2 * scale fromBody : sun];
     [uranus setMass : 14.5];
-    [uranus setTexture : @"uranusmap"];
+    [uranus setTexture : @"Uranus"];
     [uranus setName : @"Uranus"];
     
     // Neptune
@@ -269,7 +269,7 @@ static float dt = 1;
     [neptune setInclination  : 1.77];
     [neptune setDistance : 30.05 * scale fromBody : sun];
     [neptune setMass : 17.2];
-    [neptune setTexture : @"neptunemap"];
+    [neptune setTexture : @"Neptune"];
     [neptune setName : @"Neptune"];
     
     // Pluto -- Requires Charon for accuracy, which means another
@@ -280,7 +280,7 @@ static float dt = 1;
     [pluto setInclination  : 17.14];
     [pluto setDistance : 39.48 * scale fromBody : sun];
     [pluto setMass : 0.002];
-    [pluto setTexture : @"plutomap"];
+    [pluto setTexture : @"Pluto"];
     [pluto setName : @"Pluto"];
     
     // Add the bodies to the array

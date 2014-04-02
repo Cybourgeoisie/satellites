@@ -13,8 +13,8 @@
 		DD0788951736C3A500CE27CF /* SatellitesAppIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788941736C3A500CE27CF /* SatellitesAppIcon@2x.png */; };
 		DD0788971736C3AE00CE27CF /* SatellitesAppIcon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788961736C3AE00CE27CF /* SatellitesAppIcon~ipad.png */; };
 		DD0788991736C3B400CE27CF /* SatellitesAppIcon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788981736C3B400CE27CF /* SatellitesAppIcon@2x~ipad.png */; };
+		DD1FA95518ECD91A0009BE05 /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = DD1FA95418ECD91A0009BE05 /* Textures */; };
 		DD4AFC8B17C5800F0028D003 /* TextureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD4AFC8A17C5800F0028D003 /* TextureViewController.m */; };
-		DDA376C818E3A92B0071A268 /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = DDA376C618E3A8BD0071A268 /* Textures */; };
 		DDB2FD6B172C6196000C59D2 /* SceneSatelliteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB2FD6A172C6196000C59D2 /* SceneSatelliteModel.m */; };
 		DDB2FD6E172C64A3000C59D2 /* SceneSatellite.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB2FD6D172C64A3000C59D2 /* SceneSatellite.m */; };
 		DDB9574217493B43005B8E07 /* SystemTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB9574117493B43005B8E07 /* SystemTableViewController.m */; };
@@ -59,9 +59,9 @@
 		DD0788941736C3A500CE27CF /* SatellitesAppIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SatellitesAppIcon@2x.png"; sourceTree = SOURCE_ROOT; };
 		DD0788961736C3AE00CE27CF /* SatellitesAppIcon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SatellitesAppIcon~ipad.png"; sourceTree = SOURCE_ROOT; };
 		DD0788981736C3B400CE27CF /* SatellitesAppIcon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SatellitesAppIcon@2x~ipad.png"; sourceTree = SOURCE_ROOT; };
+		DD1FA95418ECD91A0009BE05 /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Textures; sourceTree = "<group>"; };
 		DD4AFC8917C5800F0028D003 /* TextureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureViewController.h; sourceTree = "<group>"; };
 		DD4AFC8A17C5800F0028D003 /* TextureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureViewController.m; sourceTree = "<group>"; };
-		DDA376C618E3A8BD0071A268 /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Textures; sourceTree = "<group>"; };
 		DDB2FD69172C6196000C59D2 /* SceneSatelliteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneSatelliteModel.h; sourceTree = "<group>"; };
 		DDB2FD6A172C6196000C59D2 /* SceneSatelliteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneSatelliteModel.m; sourceTree = "<group>"; };
 		DDB2FD6C172C64A3000C59D2 /* SceneSatellite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneSatellite.h; sourceTree = "<group>"; };
@@ -320,7 +320,7 @@
 		DDF131E2171B51A000C42923 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DDA376C618E3A8BD0071A268 /* Textures */,
+				DD1FA95418ECD91A0009BE05 /* Textures */,
 				DDF131EA171B68FC00C42923 /* Buffer */,
 				DDF131E8171B679B00C42923 /* Objects */,
 				DDB2FD68172C60E8000C59D2 /* Scene */,
@@ -435,7 +435,7 @@
 				DD0788951736C3A500CE27CF /* SatellitesAppIcon@2x.png in Resources */,
 				DD0788971736C3AE00CE27CF /* SatellitesAppIcon~ipad.png in Resources */,
 				DD0788991736C3B400CE27CF /* SatellitesAppIcon@2x~ipad.png in Resources */,
-				DDA376C818E3A92B0071A268 /* Textures in Resources */,
+				DD1FA95518ECD91A0009BE05 /* Textures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
