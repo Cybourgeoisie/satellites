@@ -46,7 +46,7 @@ static float dt = 1;
 - (void) setConfiguration
 {
     // Multipliers
-    scale = 1000;
+    scale = 1500;
 }
 
 - (void) initializeBodies

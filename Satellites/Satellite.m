@@ -99,7 +99,11 @@
     self->mass = m;
     
     // Create the size
-    self.size = log10f(m * 10000) * 0.75;
+    // The radius of the body is proportional to mass ^ 1/3
+    // The logarithm allows us to see everything on the screen
+    //self.size = log2f(pow(m * 1000, 1.0/3.0f));
+    
+    self.size = log2f(pow(m * 1000, 1.0/2.0f));
 }
 
 - (void) isMoon : (bool) isMoon
