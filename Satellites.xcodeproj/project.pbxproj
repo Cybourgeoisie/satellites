@@ -26,6 +26,7 @@
 		DDD35984176927350049A509 /* ManagedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDD35983176927350049A509 /* ManagedTableViewController.m */; };
 		DDDBA4D418EB6C2C007446BA /* SceneMesh.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDBA4D118EB6C2C007446BA /* SceneMesh.m */; };
 		DDDBA4D518EB6C2C007446BA /* SceneModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDBA4D318EB6C2C007446BA /* SceneModel.m */; };
+		DDDBCC7A18EF91D00011D29D /* skybox in Resources */ = {isa = PBXBuildFile; fileRef = DDDBCC7918EF91D00011D29D /* skybox */; };
 		DDDFD24917443FB20063FEB1 /* SatelliteModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DDDFD24717443FB20063FEB1 /* SatelliteModel.xcdatamodeld */; };
 		DDDFD24E174442260063FEB1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDDFD24D174442260063FEB1 /* CoreData.framework */; };
 		DDDFD2511744460D0063FEB1 /* Satellite.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDFD2501744460D0063FEB1 /* Satellite.m */; };
@@ -84,6 +85,7 @@
 		DDDBA4D118EB6C2C007446BA /* SceneMesh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneMesh.m; sourceTree = "<group>"; };
 		DDDBA4D218EB6C2C007446BA /* SceneModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneModel.h; sourceTree = "<group>"; };
 		DDDBA4D318EB6C2C007446BA /* SceneModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneModel.m; sourceTree = "<group>"; };
+		DDDBCC7918EF91D00011D29D /* skybox */ = {isa = PBXFileReference; lastKnownFileType = folder; path = skybox; sourceTree = "<group>"; };
 		DDDFD24817443FB20063FEB1 /* SatelliteModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SatelliteModel.xcdatamodel; sourceTree = "<group>"; };
 		DDDFD24D174442260063FEB1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		DDDFD24F1744460D0063FEB1 /* Satellite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Satellite.h; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 		DDF131E2171B51A000C42923 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DDDBCC7918EF91D00011D29D /* skybox */,
 				DD1FA95418ECD91A0009BE05 /* Textures */,
 				DDF131EA171B68FC00C42923 /* Buffer */,
 				DDF131E8171B679B00C42923 /* Objects */,
@@ -436,6 +439,7 @@
 				DD0788971736C3AE00CE27CF /* SatellitesAppIcon~ipad.png in Resources */,
 				DD0788991736C3B400CE27CF /* SatellitesAppIcon@2x~ipad.png in Resources */,
 				DD1FA95518ECD91A0009BE05 /* Textures in Resources */,
+				DDDBCC7A18EF91D00011D29D /* skybox in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

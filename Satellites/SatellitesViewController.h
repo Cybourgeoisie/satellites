@@ -15,10 +15,12 @@
 
 @interface SatellitesViewController : GLKViewController
 {
+    
     SatellitesController * controller;
     SystemObject         * system;
     NSMutableArray       * spheres;
     NSMutableArray       * bodies;
+    GLKSkyboxEffect      * skybox;
 }
 
 @property (strong, nonatomic) GLKBaseEffect *baseEffect;
@@ -27,6 +29,7 @@
 @property (strong, nonatomic) SceneModel * satelliteModel;
 @property (strong, nonatomic) NSMutableArray * spheres;
 @property (strong, nonatomic) NSMutableArray * bodies;
+@property (strong, nonatomic) GLKSkyboxEffect * skybox;
 @property (nonatomic, assign) GLKVector3 eyePosition;
 @property (nonatomic, assign) GLKVector3 lookAtPosition;
 @property (nonatomic, assign) GLKVector3 targetEyePosition;

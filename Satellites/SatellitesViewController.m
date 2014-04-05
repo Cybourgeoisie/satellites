@@ -16,6 +16,7 @@
 @synthesize satelliteModel;
 @synthesize spheres;
 @synthesize bodies;
+@synthesize skybox;
 @synthesize eyePosition;
 @synthesize lookAtPosition;
 @synthesize targetEyePosition;
@@ -84,6 +85,9 @@
     
     // Generate, bind, and initialize contents of a buffer to be stored in GPU memory
     [self drawElements];
+    
+    // Lastly, provide the skybox
+    [self initSkybox];
 }
 
 // View context
@@ -158,6 +162,37 @@
     }
 }
 
+- (void) initSkybox
+{
+    // Get all six textures
+    NSArray * paths = [[NSArray alloc] initWithObjects:
+                       [[NSBundle bundleForClass:[self class]] pathForResource:@"right" ofType:@"png" inDirectory:@"skybox"],
+                       [[NSBundle bundleForClass:[self class]] pathForResource:@"left" ofType:@"png" inDirectory:@"skybox"],
+                       [[NSBundle bundleForClass:[self class]] pathForResource:@"south" ofType:@"png" inDirectory:@"skybox"],
+                       [[NSBundle bundleForClass:[self class]] pathForResource:@"north" ofType:@"png" inDirectory:@"skybox"],
+                       [[NSBundle bundleForClass:[self class]] pathForResource:@"top" ofType:@"png" inDirectory:@"skybox"],
+                       [[NSBundle bundleForClass:[self class]] pathForResource:@"bottom" ofType:@"png" inDirectory:@"skybox"],
+                       nil];
+    
+    // Get the texture infomation
+    NSError *error = nil;
+    GLKTextureInfo *skyboxTextureInfo = [GLKTextureLoader cubeMapWithContentsOfFiles:paths options:nil error:&error];
+    NSAssert(nil != skyboxTextureInfo, @"Invalid skyboxTextureInfo: %@", error);
+
+    // Create the skybox
+    self.skybox = [[GLKSkyboxEffect alloc] init];
+    self.skybox.textureCubeMap.name   = skyboxTextureInfo.name;
+    self.skybox.textureCubeMap.target = skyboxTextureInfo.target;
+
+    // Size up the skybox
+    GLfloat maxDimension = 3000.0f;
+    self.skybox.xSize = maxDimension;
+    self.skybox.ySize = maxDimension;
+    self.skybox.zSize = maxDimension;
+    //self.skyboxEffect.center = GLKVector3Make(0.5f * maxDimension, 0.5f * maxDimension, 0.5f * maxDimension);
+    self.skybox.center = GLKVector3Make(0.0f, 0.0f, 0.0f);
+}
+
 // Update operations
 - (void) update
 {
@@ -195,14 +230,31 @@
     
     // Calculate the aspect ratio for the scene and setup a perspective projection
     const GLfloat aspectRatio = (GLfloat) view.drawableWidth / (GLfloat) view.drawableHeight;
-    self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 2500.0f);
-    
+    self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 5000.0f * scale);
+
     // Reposition all of the bodies to the scaled amount
     [self drawSatellites];
+    
+    // Draw the skybox
+    [self drawSkybox];
+}
+
+- (void) drawSkybox
+{
+    glDisable(GL_BLEND);
+    
+    self.skybox.transform.projectionMatrix = self.baseEffect.transform.projectionMatrix;
+    self.skybox.transform.modelviewMatrix  = GLKMatrix4Translate(self.baseEffect.transform.modelviewMatrix, self.lookAtPosition.x, self.lookAtPosition.y, self.lookAtPosition.z);
+    
+    [self.skybox prepareToDraw];
+    [self.skybox draw];
+    glBindVertexArrayOES(0);
 }
 
 - (void) drawSatellites
 {
+    glEnable(GL_BLEND);
+    
     int i = 0;
     for (Satellite * body in bodies)
     {
@@ -224,6 +276,7 @@
     }
 }
 
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -244,6 +297,12 @@
 
 - (void) handleScale : (UIPinchGestureRecognizer*) sender
 {
+    // Don't allow the user to go too far out
+    if (scale < 0.15 && sender.scale < scale)
+    {
+        return;
+    }
+    
     if ([(UIPinchGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan)
     {
         sender.scale = scale;
@@ -264,8 +323,9 @@
     
     // Delete buffers that aren't needed when view is unloaded
     self.controller = nil;
-    self.spheres = nil;
-    self.bodies = nil;
+    self.spheres    = nil;
+    self.bodies     = nil;
+    self.skybox     = nil;
     
     // Stop using the context created in -viewDidLoad
     ((GLKView *) self.view).context = nil;
