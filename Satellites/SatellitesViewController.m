@@ -237,6 +237,9 @@
     
     // Draw the skybox
     [self drawSkybox];
+
+    // Draw test path
+    //[self drawQuadBezier];
 }
 
 - (void) drawSkybox
@@ -276,6 +279,75 @@
     }
 }
 
+- (void) drawQuadBezier
+{
+    GLKVector3 origin      = GLKVector3Make(0.0f, 0.0f, 0.0f);
+    GLKVector3 control     = GLKVector3Make(10.0f, 5.0f, 0.0f);
+    GLKVector3 destination = GLKVector3Make(20.0f, 10.0f, 0.0f);
+    
+    // Bezier quadratic code
+    GLfloat vertices[12];
+    GLfloat t = 0.0f;
+    for (int i = 0; i < 4; i++)
+    {
+        vertices[i] = pow(1 - t, 2) * origin.x + 2.0 * (1 - t) * t * control.x + t * t * destination.x;
+        vertices[i] = pow(1 - t, 2) * origin.y + 2.0 * (1 - t) * t * control.y + t * t * destination.y;
+        vertices[i] = pow(1 - t, 2) * origin.x + 2.0 * (1 - t) * t * control.x + t * t * destination.x;
+        t += 1.0f / 4.0f;
+    }
+    
+    GLfloat verts[] = {
+        0.0f, 0.0f, 0.0f,
+        0.0f, 50.0f, 0.0f,
+        30.0f, 30.0f, 50.0f,
+        -10.0f, 50.0f, 0.0f};
+    
+    [self draw3dVertices: vertices : sizeof(vertices)];
+    
+}
+
+- (void) draw3dVertices : (GLfloat *) verts : (size_t) sizeVerts
+{
+    // Turn off the lights
+    self.baseEffect.light0.enabled = GL_FALSE;
+    
+    // Plain ol' color
+    self.baseEffect.useConstantColor = GL_TRUE;
+    self.baseEffect.constantColor = GLKVector4Make(0.0f, 1.0f, 0.0f, 1.0f);
+    
+    // Prepare for drawing
+    [self.baseEffect prepareToDraw];
+   
+    // Create an handle for a buffer object array
+    // Have OpenGL generate a buffer name and store it in the buffer object array
+    // Bind the buffer object array to the GL_ARRAY_BUFFER target buffer
+    GLuint bufferObjectNameArray;
+    glGenBuffers(1, &bufferObjectNameArray);
+    glBindBuffer(GL_ARRAY_BUFFER, bufferObjectNameArray);
+    
+    // Send the line data over to the target buffer in GPU RAM
+    glBufferData(GL_ARRAY_BUFFER, sizeVerts, verts, GL_STATIC_DRAW);
+    
+    // Enable vertex data to be fed down the graphics pipeline to be drawn
+    // Specify how the GPU looks up the data
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribPosition, // the currently bound buffer holds the data
+                          3,                       // number of coordinates per vertex
+                          GL_FLOAT,                // the data type of each component
+                          GL_FALSE,                // can the data be scaled
+                          3*sizeof(GLfloat),       // how many bytes per vertex (3 floats per vertex)
+                          NULL);                   // offset to the first coordinate, in this case 0
+    
+    // Set the line width
+    glLineWidth(2.0);
+    
+    // Render
+    glDrawArrays(GL_LINE_STRIP, 0, 4);
+    
+    // Clean up
+    glDisableVertexAttribArray(GLKVertexAttribPosition);
+    self.baseEffect.light0.enabled = GL_TRUE;
+}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
 
