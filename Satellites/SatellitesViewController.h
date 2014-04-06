@@ -7,6 +7,7 @@
 //
 
 #import <GLKit/GLKit.h>
+#import "Vector.h"
 #import "SatellitesController.h"
 #import "SceneSatelliteModel.h"
 #import "SceneSatellite.h"

@@ -232,14 +232,36 @@
     const GLfloat aspectRatio = (GLfloat) view.drawableWidth / (GLfloat) view.drawableHeight;
     self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 5000.0f * scale);
 
+    //[self castLight];
+    
     // Reposition all of the bodies to the scaled amount
     [self drawSatellites];
     
     // Draw the skybox
     [self drawSkybox];
 
+    
+    
     // Draw test path
     //[self drawQuadBezier];
+}
+
+- (void) castLight : (GLfloat) x : (GLfloat) y : (GLfloat) z
+{
+    self.baseEffect.lightingType = GLKLightingTypePerPixel;
+    self.baseEffect.lightModelAmbientColor = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
+    self.baseEffect.colorMaterialEnabled = GL_TRUE;
+    
+    self.baseEffect.light0.enabled = GL_TRUE;
+    self.baseEffect.light0.spotCutoff = 180.0f;
+    self.baseEffect.light0.spotExponent = 45.0f;
+    self.baseEffect.light0.ambientColor = GLKVector4Make(0.1f, 0.1f, 0.1f, 1.0f);
+    self.baseEffect.light0.diffuseColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
+    //self.baseEffect.light0.specularColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
+    self.baseEffect.light0.position = GLKVector4Make(x, y, z, 1.0f);
+    self.baseEffect.light0.quadraticAttenuation = 0.000002f;
+    self.baseEffect.texture2d0.envMode = GLKTextureEnvModeModulate;
+    [self.baseEffect prepareToDraw];
 }
 
 - (void) drawSkybox
@@ -265,6 +287,12 @@
         float x = body.position.x / 40;
         float y = body.position.y / 40;
         float z = body.position.z / 40;
+        
+        // If this body is a star, illuminate
+        if ([body.name isEqualToString : @"Sun"])
+        {
+            [self castLight: x : y : z];
+        }
         
         // If this body is a moon, increase the spacing
         if (body.isMoon)
