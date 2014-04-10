@@ -231,8 +231,6 @@
     // Calculate the aspect ratio for the scene and setup a perspective projection
     const GLfloat aspectRatio = (GLfloat) view.drawableWidth / (GLfloat) view.drawableHeight;
     self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 5000.0f * scale);
-
-    //[self castLight];
     
     // Reposition all of the bodies to the scaled amount
     [self drawSatellites];
@@ -240,8 +238,6 @@
     // Draw the skybox
     [self drawSkybox];
 
-    
-    
     // Draw test path
     //[self drawQuadBezier];
 }
@@ -278,8 +274,6 @@
 
 - (void) drawSatellites
 {
-    glEnable(GL_BLEND);
-    
     int i = 0;
     for (Satellite * body in bodies)
     {
@@ -289,9 +283,10 @@
         float z = body.position.z / 40;
         
         // If this body is a star, illuminate
-        if ([body.name isEqualToString : @"Sun"])
+        if ([body isStar])
         {
             [self castLight: x : y : z];
+            [self disableLighting];
         }
         
         // If this body is a moon, increase the spacing
@@ -304,7 +299,23 @@
         
         [spheres[i]   updateBody : x : y : z];
         [spheres[i++] drawWithBaseEffect : self.baseEffect];
+        
+        // If we're done with the star, turn the light back on
+        if ([body isStar])
+        {
+            [self enableLighting];
+        }
     }
+}
+
+- (void) disableLighting
+{
+    self.baseEffect.light0.enabled = GL_FALSE;
+}
+
+- (void) enableLighting
+{
+    self.baseEffect.light0.enabled = GL_TRUE;
 }
 
 - (void) drawQuadBezier

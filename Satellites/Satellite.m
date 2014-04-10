@@ -11,6 +11,7 @@
 @implementation Satellite
 
 // Flags
+@synthesize bStar;
 @synthesize bMoon;
 @synthesize orbitalBody;
 
@@ -104,6 +105,16 @@
     //self.size = log2f(pow(m * 1000, 1.0/3.0f));
     
     self.size = log2f(pow(m * 1000, 1.0/2.0f));
+}
+
+- (void) isStar : (bool)isStar
+{
+    self.bStar = isStar;
+}
+
+- (bool) isStar
+{
+    return self.bStar;
 }
 
 - (void) isMoon : (bool) isMoon

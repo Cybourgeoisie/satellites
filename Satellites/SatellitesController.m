@@ -80,6 +80,7 @@ static float dt = 1;
     {
         // Star
         Satellite * star = [[Satellite alloc] init];
+        [star isStar : true];
         [star isMoon : false];
         [star setEccentricity : [starObject.eccentricity floatValue]];
         [star setInclination  : [starObject.inclination floatValue]];
@@ -121,6 +122,7 @@ static float dt = 1;
     {
         // Planet
         Satellite * planet = [[Satellite alloc] init];
+        [planet isStar : false];
         [planet isMoon : false];
         [planet setEccentricity : [planetObject.eccentricity floatValue]];
         [planet setInclination  : [planetObject.inclination floatValue]];
@@ -139,6 +141,7 @@ static float dt = 1;
         {
             // Moon
             Satellite * moon = [[Satellite alloc] init];
+            [moon isStar : false];
             [moon isMoon : true];
             [moon setEccentricity : [moonObject.eccentricity floatValue]];
             [moon setInclination  : [moonObject.inclination floatValue]];
@@ -177,6 +180,7 @@ static float dt = 1;
 {
     // Sun
     Satellite *sun = [[Satellite alloc] init];
+    [sun isStar : true];
     [sun setRotationSpeed: 0.05];
     [sun setMass : 330000];
     [sun setTexture : @"Sun"];
@@ -324,12 +328,14 @@ static float dt = 1;
 {
     // Create a massive star first
     Satellite *star = [[Satellite alloc] init];
+    [star isStar : true];
     [star setPosition: 0.0 : 1.0 * scale : 0];
     [star setTexture : @"sunmap"];
     [star setMass : 1000];
     
     // Another star
     Satellite *star2 = [[Satellite alloc] init];
+    [star2 isStar : true];
     [star2 setPosition: 0.0 : - 1.0 * scale : 0];
     [star2 setTexture : @"sunmap"];
     [star2 setMass : 1000];

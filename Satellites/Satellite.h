@@ -20,6 +20,7 @@
     
     // Properties
 @public
+    bool        bStar;
     bool        bMoon;
     float       mass;
     float       eccentricity;
@@ -33,6 +34,7 @@
 }
 
 // Flags
+@property (nonatomic) bool bStar;
 @property (nonatomic) bool bMoon;
 @property Satellite * orbitalBody;
 
@@ -54,9 +56,12 @@
 @property (retain) Vector * velocity;
 @property (retain) Vector * acceleration;
 
+- (bool) isStar;
+- (void) isStar           : (bool) isStar;
 
 - (bool) isMoon;
 - (void) isMoon           : (bool) isMoon;
+
 - (void) setDistance      : (float) a;
 - (void) setDistance      : (float) a fromBody : (Satellite *) body;
 
