@@ -18,6 +18,7 @@
     
     // UI Elements
     IBOutlet UITextField * textField;
+    IBOutlet UIButton    * unitField;
 }
 
 // Data Management
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) NSString        * editedFieldName;
 
 // UI Elements
-@property (nonatomic)   IBOutlet UITextField * textField;
+@property (nonatomic) IBOutlet UITextField * textField;
+@property (nonatomic) IBOutlet UIButton    * unitField;
 
 @end

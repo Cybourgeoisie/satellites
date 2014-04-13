@@ -110,6 +110,12 @@
 {
     // Create a base effect that provides standard OpenGL ES 2.0
     self.baseEffect = [[GLKBaseEffect alloc] init];
+    self.baseEffect.lightingType           = GLKLightingTypePerPixel;
+    self.baseEffect.lightModelAmbientColor = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
+    self.baseEffect.colorMaterialEnabled   = GL_TRUE;
+
+    self.baseEffect.texture2d0.envMode = GLKTextureEnvModeModulate;
+    
     self.baseEffect.light0.enabled      = GL_TRUE;
     self.baseEffect.light0.ambientColor = GLKVector4Make(0.5f, 0.2f, 0.2f, 1.0f);
     self.baseEffect.light0.diffuseColor = GLKVector4Make(0.7f, 0.7f, 0.7f, 1.0f);
@@ -222,19 +228,16 @@
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    // Make the light white
-    self.baseEffect.light0.diffuseColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
-    
     // Clear Frame Buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
     // Calculate the aspect ratio for the scene and setup a perspective projection
     const GLfloat aspectRatio = (GLfloat) view.drawableWidth / (GLfloat) view.drawableHeight;
     self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 5000.0f * scale);
-    
+
     // Reposition all of the bodies to the scaled amount
     [self drawSatellites];
-    
+
     // Draw the skybox
     [self drawSkybox];
 
@@ -242,21 +245,28 @@
     //[self drawQuadBezier];
 }
 
-- (void) castLight : (GLfloat) x : (GLfloat) y : (GLfloat) z
+- (void) castLight : (GLint) lightNum : (GLfloat) x : (GLfloat) y : (GLfloat) z
 {
-    self.baseEffect.lightingType = GLKLightingTypePerPixel;
-    self.baseEffect.lightModelAmbientColor = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
-    self.baseEffect.colorMaterialEnabled = GL_TRUE;
+    GLKEffectPropertyLight * light;
+    switch (lightNum)
+    {
+        case 1:
+            light = self.baseEffect.light1;
+            break;
+        case 0:
+        default:
+            light = self.baseEffect.light0;
+            break;
+    }
     
-    self.baseEffect.light0.enabled = GL_TRUE;
-    self.baseEffect.light0.spotCutoff = 180.0f;
-    self.baseEffect.light0.spotExponent = 45.0f;
-    self.baseEffect.light0.ambientColor = GLKVector4Make(0.1f, 0.1f, 0.1f, 1.0f);
-    self.baseEffect.light0.diffuseColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
-    //self.baseEffect.light0.specularColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
-    self.baseEffect.light0.position = GLKVector4Make(x, y, z, 1.0f);
-    self.baseEffect.light0.quadraticAttenuation = 0.000002f;
-    self.baseEffect.texture2d0.envMode = GLKTextureEnvModeModulate;
+    //light.enabled = GL_TRUE;
+    //light.spotCutoff = 180.0f;
+    //light.spotExponent = 45.0f;
+    light.ambientColor = GLKVector4Make(0.1f, 0.1f, 0.1f, 1.0f);
+    light.diffuseColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
+    //light.specularColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
+    light.position = GLKVector4Make(x, y, z, 1.0f);
+    //light.quadraticAttenuation = 0.000002f;
     [self.baseEffect prepareToDraw];
 }
 
@@ -275,6 +285,7 @@
 - (void) drawSatellites
 {
     int i = 0;
+    GLint starCount = 0;
     for (Satellite * body in bodies)
     {
         // Redraw each body
@@ -285,7 +296,7 @@
         // If this body is a star, illuminate
         if ([body isStar])
         {
-            [self castLight: x : y : z];
+            [self castLight : starCount : x : y : z];
             [self disableLighting];
         }
         
@@ -304,17 +315,20 @@
         if ([body isStar])
         {
             [self enableLighting];
+            starCount++;
         }
     }
 }
 
 - (void) disableLighting
 {
+    self.baseEffect.light1.enabled = GL_FALSE;
     self.baseEffect.light0.enabled = GL_FALSE;
 }
 
 - (void) enableLighting
 {
+    self.baseEffect.light1.enabled = GL_TRUE;
     self.baseEffect.light0.enabled = GL_TRUE;
 }
 

@@ -14,6 +14,7 @@
 @synthesize editedFieldName;
 @synthesize editedObject;
 @synthesize textField;
+@synthesize unitField;
 
 - (void)viewDidLoad
 {
@@ -21,6 +22,8 @@
     
     // Set the title to the user-visible name of the field.
     self.title = self.editedFieldName;
+    
+    // Set the various options
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -40,6 +43,34 @@
     self.textField.hidden = NO;
     self.textField.text = value;
     self.textField.placeholder = self.title;
+}
+
+- (IBAction) setUserActivity: (id) sender
+{
+    UIActionSheet *activityActionSheet = [[UIActionSheet alloc] initWithTitle:@"Unit of Measurement"
+                                                             delegate:self
+                                                    cancelButtonTitle:nil
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Kilograms", @"Earth Masses", @"Solar Masses", nil];
+    activityActionSheet.tag = 1;
+    
+    [activityActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    [activityActionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex
+{    
+    switch (popup.tag) {
+        default:
+            switch (buttonIndex)
+            {
+                default:
+                    // Switch the button text to the proper unit
+                    [unitField setTitle:@"Unit: Kilograms" forState:UIControlStateNormal];
+                    break;
+            }
+            break;
+    }
 }
 
 // Save Action
