@@ -89,6 +89,9 @@
         // Set the object
         controller.editedObject = self.satellite;
         
+        // Prepare the units of measurements
+        NSMutableArray * units;
+
         // Given a particular section and row, allow certain editing to occur
         if (indexPath.section == SECTION_DETAILS && indexPath.row == ROW_NAME)
         {
@@ -99,31 +102,37 @@
         {
             controller.editedFieldKey = @"mass";
             controller.editedFieldName = NSLocalizedString(@"Mass", @"Mass");
+            units = [[NSMutableArray alloc] initWithObjects:@"Kilograms", @"Earth Masses", @"Solar Masses", nil];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_ECCENTRICITY)
         {
             controller.editedFieldKey = @"eccentricity";
             controller.editedFieldName = NSLocalizedString(@"Eccentricity", @"Eccentricity");
+            units = [[NSMutableArray alloc] initWithObjects:@"Degrees", @"Radians", nil];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_INCLINATION)
         {
             controller.editedFieldKey = @"inclination";
             controller.editedFieldName = NSLocalizedString(@"Inclination", @"Inclination");
+            units = [[NSMutableArray alloc] initWithObjects:@"Degrees", @"Radians", nil];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_ROTATION)
         {
             controller.editedFieldKey = @"rotation";
             controller.editedFieldName = NSLocalizedString(@"Rotation", @"Rotation");
+            units = [[NSMutableArray alloc] initWithObjects:@"Degrees / Second", @"Radians / Second", nil];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_DISTANCE)
         {
             controller.editedFieldKey = @"semimajorAxis";
             controller.editedFieldName = NSLocalizedString(@"Distance", @"Distance");
+            units = [[NSMutableArray alloc] initWithObjects:@"Kilometers", @"Astronomical Units (AU)", nil];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_AXIAL_TILT)
         {
             controller.editedFieldKey = @"axialTilt";
             controller.editedFieldName = NSLocalizedString(@"Axial Tilt", @"Axial Tilt");
+            units = [[NSMutableArray alloc] initWithObjects:@"Degrees", @"Radians", nil];
         }
         else
         {
@@ -131,6 +140,9 @@
             controller.editedFieldKey = @"name";
             controller.editedFieldName = NSLocalizedString(@"TODO", @"todo");
         }
+        
+        // Set the unit of measurement options
+        [controller setButtons: units];
     }
     else if ([[segue identifier] isEqualToString:@"EditSelectedBody"])
     {

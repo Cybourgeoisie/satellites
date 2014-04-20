@@ -15,6 +15,8 @@
 @synthesize editedObject;
 @synthesize textField;
 @synthesize unitField;
+@synthesize buttons;
+@synthesize activityActionSheet;
 
 - (void)viewDidLoad
 {
@@ -43,34 +45,51 @@
     self.textField.hidden = NO;
     self.textField.text = value;
     self.textField.placeholder = self.title;
+    
+    // Prepare the unit of measurement action sheet
+    [self prepareUnitOfMeasurementActionSheet];
+    
+    // Update the button name
+    if ([self.buttons count] > 0)
+    {
+        [unitField setTitle:[self.buttons objectAtIndex:0] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [unitField setHidden:true];
+    }
+}
+
+- (void) prepareUnitOfMeasurementActionSheet
+{
+    activityActionSheet = [[UIActionSheet alloc] initWithTitle:@"Unit of Measurement"
+                                                      delegate:self
+                                             cancelButtonTitle:nil
+                                        destructiveButtonTitle:@"Cancel"
+                                             otherButtonTitles:nil];
+
+    for (NSString * buttonName in self.buttons)
+    {
+        [activityActionSheet addButtonWithTitle:buttonName];
+    }
 }
 
 - (IBAction) setUserActivity: (id) sender
 {
-    UIActionSheet *activityActionSheet = [[UIActionSheet alloc] initWithTitle:@"Unit of Measurement"
-                                                             delegate:self
-                                                    cancelButtonTitle:nil
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Kilograms", @"Earth Masses", @"Solar Masses", nil];
     activityActionSheet.tag = 1;
-    
     [activityActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
     [activityActionSheet showInView:self.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex
-{    
-    switch (popup.tag) {
-        default:
-            switch (buttonIndex)
-            {
-                default:
-                    // Switch the button text to the proper unit
-                    [unitField setTitle:@"Unit: Kilograms" forState:UIControlStateNormal];
-                    break;
-            }
-            break;
+{
+    if (buttonIndex == 0)
+    {
+        return;
     }
+    
+    // Update the unit of measurement
+    [unitField setTitle:[self.buttons objectAtIndex:buttonIndex-1] forState:UIControlStateNormal];
 }
 
 // Save Action
