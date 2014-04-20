@@ -13,9 +13,10 @@
 @synthesize editedFieldKey;
 @synthesize editedFieldName;
 @synthesize editedObject;
+@synthesize slider;
+@synthesize unitsToRange;
 @synthesize textField;
 @synthesize unitField;
-@synthesize buttons;
 @synthesize activityActionSheet;
 
 - (void)viewDidLoad
@@ -32,32 +33,85 @@
 {
     [super viewWillAppear:animated];
     
-    // Get the value
-    id value = [self.editedObject valueForKey:self.editedFieldKey];
-    
-    // If the value is numeric, convert to string
-    if ([value isKindOfClass:[NSNumber class]])
-    {
-        value = [value stringValue];
-    }
-    
-    // If we're editing a text field..
-    self.textField.hidden = NO;
-    self.textField.text = value;
-    self.textField.placeholder = self.title;
-    
-    // Prepare the unit of measurement action sheet
+    // Prepare UI elements
+    [self prepareTextField];
+    [self prepareSlider];
     [self prepareUnitOfMeasurementActionSheet];
     
-    // Update the button name
-    if ([self.buttons count] > 0)
+    // Get the value
+    id value = [self.editedObject valueForKey:self.editedFieldKey];
+    [self updateSliderValue:[value floatValue]];
+}
+
+- (void) prepareTextField
+{
+    self.textField.hidden = NO;
+    self.textField.placeholder = self.title;
+    [textField addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
+}
+
+- (void) prepareSlider
+{
+    // Handle the slider value change event
+    [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    // Set the min and max values for the slider
+    [self setRange:0];
+}
+
+- (void) setRange : (NSUInteger) index
+{
+    // Get the keys
+    NSArray * units = [unitsToRange allKeys];
+    
+    // Set the initial minimum and maximum values for the default UOM
+    NSDictionary * dict  = [unitsToRange valueForKey:[units objectAtIndex:index]];
+    NSArray      * range = [dict valueForKey:@"range"];
+    NSNumber     * min   = [range objectAtIndex:0];
+    NSNumber     * max   = [range objectAtIndex:1];
+    
+    [slider setMinimumValue:[min floatValue]];
+    [slider setMaximumValue:[max floatValue]];
+}
+
+- (IBAction) textFieldValueChanged : (UITextField *) sender
+{
+    // Float this shit
+    NSString * textValue = sender.text;
+    float value = [textValue floatValue];
+    
+    // Validate that we are within range
+    float min = [slider minimumValue];
+    float max = [slider maximumValue];
+    if (min > value)
     {
-        [unitField setTitle:[self.buttons objectAtIndex:0] forState:UIControlStateNormal];
+        value = min;
+        [textField setText:[NSString stringWithFormat:@"%1.3f", value]];
     }
-    else
+    else if (max < value)
     {
-        [unitField setHidden:true];
+        value = max;
+        [textField setText:[NSString stringWithFormat:@"%1.3f", value]];
     }
+    
+    // Update slider value
+    [slider setValue:value];
+}
+
+- (IBAction) sliderValueChanged : (UISlider *) sender
+{
+    // Update the text field
+    NSString * value = [NSString stringWithFormat:@"%1.3f", sender.value];
+    [textField setText : value];
+}
+
+- (void) updateSliderValue : (float) value
+{
+    [slider setValue:value];
+    
+    // Update the text field
+    NSString * textValue = [NSString stringWithFormat:@"%1.3f", value];
+    [textField setText : textValue];
 }
 
 - (void) prepareUnitOfMeasurementActionSheet
@@ -68,9 +122,23 @@
                                         destructiveButtonTitle:@"Cancel"
                                              otherButtonTitles:nil];
 
-    for (NSString * buttonName in self.buttons)
+    // Set the buttons
+    NSArray * units = [self.unitsToRange allKeys];
+    for (NSString * buttonName in units)
     {
         [activityActionSheet addButtonWithTitle:buttonName];
+    }
+    
+    // Update the button name
+    if ([units count] > 0)
+    {
+        NSDictionary * dict  = [unitsToRange valueForKey:[units objectAtIndex:0]];
+        NSString * uomAbbr = [dict valueForKey:@"abbr"];
+        [unitField setTitle:uomAbbr forState:UIControlStateNormal];
+    }
+    else
+    {
+        [unitField setHidden:true];
     }
 }
 
@@ -88,16 +156,54 @@
         return;
     }
     
+    // Get the units
+    NSArray      * units = [unitsToRange allKeys];
+    NSDictionary * dict  = [unitsToRange valueForKey:[units objectAtIndex:buttonIndex-1]];
+
+    // Get the new value
+    float value = [self convertValue : buttonIndex - 1];
+
+    // Update the range
+    [self setRange:buttonIndex - 1];
+    
+    // New value
+    [self updateSliderValue : value];
+    
     // Update the unit of measurement
-    [unitField setTitle:[self.buttons objectAtIndex:buttonIndex-1] forState:UIControlStateNormal];
+    NSString * uomAbbr = [dict valueForKey:@"abbr"];
+    [unitField setTitle:uomAbbr forState:UIControlStateNormal];
+}
+
+- (float) convertValue : (NSUInteger) convertToIndex
+{
+    // Get the units
+    NSArray      * units = [unitsToRange allKeys];
+    NSDictionary * dict  = [unitsToRange valueForKey:[units objectAtIndex:convertToIndex]];
+    
+    // Using the range of the previous units and the new units,
+    // Convert the current value to a new value
+    float maxConvertFrom = [slider maximumValue];
+    float valConvertFrom = [slider value];
+    
+    // Get the value to convert to
+    NSArray  * range   = [dict valueForKey:@"range"];
+    NSNumber * max     = [range objectAtIndex:1];
+    float maxConvertTo = [max floatValue];
+    
+    // New value
+    return valConvertFrom * maxConvertTo / maxConvertFrom;
 }
 
 // Save Action
 - (IBAction) save: (id) sender
 {
-    // Pass current value to the edited object
-    [self.editedObject setValue:self.textField.text forKey:self.editedFieldKey];
+    // Convert the value to the expected unit
+    float      value       = [self convertValue : 0];
+    NSString * stringValue = [NSString stringWithFormat:@"%1.3f", value];
     
+    // Pass current value to the edited object
+    [self.editedObject setValue:stringValue forKey:self.editedFieldKey];
+
     // Save
     RootViewController * controller = (RootViewController *) self.navigationController;
     [controller didFinishWithSave : YES];

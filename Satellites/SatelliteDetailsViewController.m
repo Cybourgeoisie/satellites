@@ -75,6 +75,26 @@
     }
 }
 
+- (NSDictionary *) createUnitsToRange : (float) min : (float) max : (NSString *) abbr
+{
+    // This is absolutely fucking ridiculous
+    NSDictionary * unitsToRange = [[NSDictionary alloc] initWithObjects:
+                                   [[NSArray alloc] initWithObjects: [[NSArray alloc] initWithObjects:
+                                                                      [[NSNumber alloc] initWithFloat:min],
+                                                                      [[NSNumber alloc] initWithFloat:max],
+                                                                      nil],
+                                    abbr,
+                                    nil]
+                                                                forKeys:[[NSArray alloc] initWithObjects:
+                                                                         @"range",
+                                                                         @"abbr",
+                                                                         nil]];
+    
+    
+    // Return the damn units to ranges
+    return unitsToRange;
+}
+
 // Handle Segues
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -90,49 +110,73 @@
         controller.editedObject = self.satellite;
         
         // Prepare the units of measurements
-        NSMutableArray * units;
+        NSMutableDictionary * unitsToRange = [[NSMutableDictionary alloc] init];
 
         // Given a particular section and row, allow certain editing to occur
         if (indexPath.section == SECTION_DETAILS && indexPath.row == ROW_NAME)
         {
             controller.editedFieldKey = @"name";
             controller.editedFieldName = NSLocalizedString(@"Name", @"Name");
+            
+            /*
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Enter a Name" message:nil delegate:self cancelButtonTitle:@"Hide" otherButtonTitles:nil];
+            alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+            [alert show];
+            */
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_MASS)
         {
             controller.editedFieldKey = @"mass";
             controller.editedFieldName = NSLocalizedString(@"Mass", @"Mass");
-            units = [[NSMutableArray alloc] initWithObjects:@"Kilograms", @"Earth Masses", @"Solar Masses", nil];
+            
+            // Set the units and range
+            [unitsToRange setValue:[self createUnitsToRange: 0.1f : 333000.0f : @"Earth Mass"] forKey:@"Earth Masses"];
+            [unitsToRange setValue:[self createUnitsToRange: 0.000003f : 1.0f : @"Solar Mass"] forKey:@"Solar Masses"];
+            
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_ECCENTRICITY)
         {
             controller.editedFieldKey = @"eccentricity";
             controller.editedFieldName = NSLocalizedString(@"Eccentricity", @"Eccentricity");
-            units = [[NSMutableArray alloc] initWithObjects:@"Degrees", @"Radians", nil];
+
+            // Set the units and range
+            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 1.0f : @"Unitless"] forKey:@"Unitless"];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_INCLINATION)
         {
             controller.editedFieldKey = @"inclination";
             controller.editedFieldName = NSLocalizedString(@"Inclination", @"Inclination");
-            units = [[NSMutableArray alloc] initWithObjects:@"Degrees", @"Radians", nil];
+
+            // Set the units and range
+            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 180.0f : @"Degrees"] forKey:@"Degrees"];
+            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 6.283f : @"Radians"] forKey:@"Radians"];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_ROTATION)
         {
             controller.editedFieldKey = @"rotation";
             controller.editedFieldName = NSLocalizedString(@"Rotation", @"Rotation");
-            units = [[NSMutableArray alloc] initWithObjects:@"Degrees / Second", @"Radians / Second", nil];
+
+            // Set the units and range
+            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 180.0f : @"Deg / Sec"] forKey:@"Degrees per Second"];
+            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 6.283f : @"Rad / Sec"] forKey:@"Radians per Second"];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_DISTANCE)
         {
             controller.editedFieldKey = @"semimajorAxis";
             controller.editedFieldName = NSLocalizedString(@"Distance", @"Distance");
-            units = [[NSMutableArray alloc] initWithObjects:@"Kilometers", @"Astronomical Units (AU)", nil];
+
+            // Set the units and range
+            //[unitsToRange setValue:[self createUnitsToRange: 0.1f : 333000.0f : @"Kilometers"] forKey:@"Kilometers"];
+            [unitsToRange setValue:[self createUnitsToRange: 0.1f : 100.0f : @"AU"] forKey:@"Astronomical Units (AU)"];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_AXIAL_TILT)
         {
             controller.editedFieldKey = @"axialTilt";
             controller.editedFieldName = NSLocalizedString(@"Axial Tilt", @"Axial Tilt");
-            units = [[NSMutableArray alloc] initWithObjects:@"Degrees", @"Radians", nil];
+
+            // Set the units and range
+            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 180.0f : @"Degrees"] forKey:@"Degrees"];
+            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 6.283f : @"Radians"] forKey:@"Radians"];
         }
         else
         {
@@ -142,7 +186,7 @@
         }
         
         // Set the unit of measurement options
-        [controller setButtons: units];
+        [controller setUnitsToRange: unitsToRange];
     }
     else if ([[segue identifier] isEqualToString:@"EditSelectedBody"])
     {

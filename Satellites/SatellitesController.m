@@ -46,7 +46,7 @@ static float dt = 1;
 - (void) setConfiguration
 {
     // Multipliers
-    scale = 1500;
+    scale = 1000;
 }
 
 - (void) initializeBodies
@@ -86,7 +86,7 @@ static float dt = 1;
         [star setInclination  : [starObject.inclination floatValue]];
         [star setAxialTilt    : [starObject.axialTilt floatValue]];
         [star setRotationSpeed : [starObject.rotation floatValue]];
-        [star setPosition:0.0 : [starObject.semimajorAxis floatValue] * scale : 0.0];
+        [star setPosition : 0.0 : [starObject.semimajorAxis floatValue] * scale : 0.0];
         [star setName : starObject.name];
         [star setTexture : ([starObject.texture length]) ? starObject.texture : @"Sun"];
         [star setMass : [starObject.mass floatValue]];
@@ -107,7 +107,7 @@ static float dt = 1;
         Satellite * star2 = [bodies objectAtIndex:1];
         
         // Set the second star at the opposite point
-        [star2 setPosition:0.0 : - star2.position.y : 0.0];
+        [star2 setPosition : 0.0 : - star2.position.y : 0.0];
         
         // Set the orbital bodies
         [star  setOrbitalBody : star2];

@@ -15,9 +15,12 @@
     NSManagedObject * editedObject;
     NSString        * editedFieldKey;
     NSString        * editedFieldName;
-    NSMutableArray  * buttons;
+    
+    // Internal stuff
+    NSMutableDictionary * unitsToRange;
     
     // UI Elements
+    IBOutlet UISlider    * slider;
     IBOutlet UITextField * textField;
     IBOutlet UIButton    * unitField;
     UIActionSheet * activityActionSheet;
@@ -27,9 +30,12 @@
 @property (nonatomic, strong) NSManagedObject * editedObject;
 @property (nonatomic, strong) NSString        * editedFieldKey;
 @property (nonatomic, strong) NSString        * editedFieldName;
-@property (nonatomic, strong) NSMutableArray  * buttons;
+
+// Internal stuff
+@property (nonatomic, strong) NSMutableDictionary * unitsToRange;
 
 // UI Elements
+@property (nonatomic) IBOutlet UISlider    * slider;
 @property (nonatomic) IBOutlet UITextField * textField;
 @property (nonatomic) IBOutlet UIButton    * unitField;
 @property (nonatomic) UIActionSheet * activityActionSheet;

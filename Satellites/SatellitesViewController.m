@@ -260,8 +260,8 @@
     }
     
     //light.enabled = GL_TRUE;
-    //light.spotCutoff = 180.0f;
-    //light.spotExponent = 45.0f;
+    light.spotCutoff = 180.0f;
+    light.spotExponent = 45.0f;
     light.ambientColor = GLKVector4Make(0.1f, 0.1f, 0.1f, 1.0f);
     light.diffuseColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
     //light.specularColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
@@ -296,8 +296,8 @@
         // If this body is a star, illuminate
         if ([body isStar])
         {
-            [self castLight : starCount : x : y : z];
-            [self disableLighting];
+            //[self castLight : starCount : x : y : z];
+            //[self disableLighting];
         }
         
         // If this body is a moon, increase the spacing
@@ -314,7 +314,7 @@
         // If we're done with the star, turn the light back on
         if ([body isStar])
         {
-            [self enableLighting];
+            //[self enableLighting];
             starCount++;
         }
     }
