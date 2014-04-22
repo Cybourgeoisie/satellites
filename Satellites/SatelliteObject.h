@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class SatelliteObject, System;
+@class SatelliteObject, SystemObject;
 
 @interface SatelliteObject : NSManagedObject
 
@@ -25,7 +25,7 @@
 @property (nonatomic, retain) NSNumber * size;
 @property (nonatomic, retain) NSString * texture;
 @property (nonatomic, retain) NSSet *relativeBody;
-@property (nonatomic, retain) System *system;
+@property (nonatomic, retain) SystemObject *system;
 @property (nonatomic, retain) SatelliteObject *orbitalBody;
 @end
 

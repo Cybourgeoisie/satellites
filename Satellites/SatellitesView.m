@@ -1,20 +1,19 @@
 //
-//  SatellitesViewController.m
+//  SatellitesView.m
 //  Satellites
 //
-//  Created by Richard Benjamin Heidorn on 4/14/13.
-//  Copyright (c) 2013 Richard B Heidorn. All rights reserved.
+//  Created by Richard Benjamin Heidorn on 4/20/14.
+//  Copyright (c) 2014 Richard B Heidorn. All rights reserved.
 //
 
-#import "SatellitesViewController.h"
+#import "SatellitesView.h"
 
-@implementation SatellitesViewController
+@implementation SatellitesView
 
 @synthesize baseEffect;
 @synthesize controller;
 @synthesize system;
 @synthesize satelliteModel;
-@synthesize satellite;
 @synthesize spheres;
 @synthesize bodies;
 @synthesize skybox;
@@ -30,18 +29,57 @@
     self = [super init];
     if (self)
     {
-        // Any Initializations
+        [self loadView];
     }
     
     return self;
 }
 
-- (void)viewDidLoad
+- (id) initWithFrame: (CGRect) screenRect
 {
-    [super viewDidLoad];
+    self = [super initWithFrame:screenRect];
+    if (self)
+    {
+        [self loadView];
+    }
     
+    return self;
+}
+
+- (id) initWithFrame: (CGRect) screenRect context: (EAGLContext *) context
+{
+    self = [super initWithFrame:screenRect context:context];
+    if (self)
+    {
+        [self loadView];
+    }
+    
+    return self;
+}
+
+- (void) initSystem
+{
+    // Check for a valid system
+    if (system != nil)
+    {
+        // Initialize the controller with the system at hand
+        controller = [[SatellitesController alloc] initWithSystemObject: system];
+    }
+    else
+    {
+        // Initialize the controller with default parameters
+        controller = [[SatellitesController alloc] init];
+    }
+    
+    // Get the bodies
+    bodies = controller.bodies;
+}
+
+// Not necessary?
+- (void) loadView
+{
     // Hide the toolbar
-    self.navigationController.toolbarHidden = true;
+    //self.navigationController.toolbarHidden = true;
     
     // Create the system
     [self initSystem];
@@ -73,42 +111,18 @@
     [self initSkybox];
 }
 
-- (void) initSystem
-{
-    // Check for a valid system
-    if (system != nil)
-    {
-        // Initialize the controller with the system at hand
-        controller = [[SatellitesController alloc] initWithSystemObject: system];
-    }
-    else if (satellite != nil)
-    {
-        controller = [[SatellitesController alloc] initWithSatelliteObject:satellite];
-    }
-    else
-    {
-        // Initialize the controller with default parameters
-        controller = [[SatellitesController alloc] init];
-    }
-    
-    // Get the bodies
-    bodies = controller.bodies;
-}
-
-
 // View context
 - (void) initViewContext
 {
     // Create the GLKView & ensure creation
-    GLKView *view = (GLKView *) self.view;
-    NSAssert([view isKindOfClass : [GLKView class]], @"View controller's view is not a GLKView");
+    NSAssert([self isKindOfClass : [GLKView class]], @"View controller's view is not a GLKView");
     
     // Set the drawable depth
-    view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
+    self.drawableDepthFormat = GLKViewDrawableDepthFormat16;
     
     // Create an OpenGL ES 2.0 context and provide it to the view, then set current
-    view.context = [[EAGLContext alloc] initWithAPI : kEAGLRenderingAPIOpenGLES2];
-    [EAGLContext setCurrentContext : view.context];
+    self.context = [[EAGLContext alloc] initWithAPI : kEAGLRenderingAPIOpenGLES2];
+    [EAGLContext setCurrentContext : self.context];
 }
 
 // Base Effect
@@ -119,7 +133,7 @@
     self.baseEffect.lightingType           = GLKLightingTypePerPixel;
     self.baseEffect.lightModelAmbientColor = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
     self.baseEffect.colorMaterialEnabled   = GL_TRUE;
-
+    
     self.baseEffect.texture2d0.envMode = GLKTextureEnvModeModulate;
     
     self.baseEffect.light0.enabled      = GL_TRUE;
@@ -133,14 +147,14 @@
 {
     // Pinch
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handleScale:)];
-    [self.view addGestureRecognizer : pinch];
+    [self addGestureRecognizer : pinch];
 }
 
 // Camera Properties
 - (void) initCamera
 {
     // Set initial point of view
-    self.eyePosition    = (system != nil) ? GLKVector3Make(0.0, 0.0, 100.0) : GLKVector3Make(100.0, 0.0, 0.0);
+    self.eyePosition    = GLKVector3Make(0.0, 0.0, 100.0);
     self.lookAtPosition = GLKVector3Make(0.0, 0.0, 0.0);
     
     // Set initial alteration to the pov
@@ -148,8 +162,8 @@
     self.targetLookAtPosition = GLKVector3Make(0.0, 0.0, 0.0);
     
     // Set the current matrix propertites
-    self.scale = (system != nil) ? 0.6 : 2.4;
-    self.rotation = GLKVector3Make(0.0, -900.0, 0.0);
+    self.scale = 0.6;
+    self.rotation = GLKVector3Make(0.0, 0.0, 0.0);
 }
 
 // Draw elements that belong in the scene
@@ -162,12 +176,12 @@
     {
         // Create the sphere
         SceneSatellite * sphere = [[SceneSatellite alloc]
-                                    initWithPosition : GLKVector3Make(0.0, 0.0, 0.0)
-                                    rotation : body.rotationSpeed
-                                    tilt     : body.axialTilt
-                                    radius   : body.size
-                                    color    : GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)
-                                    texture  : body.texture];
+                                   initWithPosition : GLKVector3Make(0.0, 0.0, 0.0)
+                                   rotation : body.rotationSpeed
+                                   tilt     : body.axialTilt
+                                   radius   : body.size
+                                   color    : GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)
+                                   texture  : body.texture];
         
         // Add to our collection
         [spheres addObject : sphere];
@@ -190,12 +204,12 @@
     NSError *error = nil;
     GLKTextureInfo *skyboxTextureInfo = [GLKTextureLoader cubeMapWithContentsOfFiles:paths options:nil error:&error];
     NSAssert(nil != skyboxTextureInfo, @"Invalid skyboxTextureInfo: %@", error);
-
+    
     // Create the skybox
     self.skybox = [[GLKSkyboxEffect alloc] init];
     self.skybox.textureCubeMap.name   = skyboxTextureInfo.name;
     self.skybox.textureCubeMap.target = skyboxTextureInfo.target;
-
+    
     // Size up the skybox
     GLfloat maxDimension = 3000.0f;
     self.skybox.xSize = maxDimension;
@@ -236,19 +250,16 @@
 {
     // Clear Frame Buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    
     // Calculate the aspect ratio for the scene and setup a perspective projection
     const GLfloat aspectRatio = (GLfloat) view.drawableWidth / (GLfloat) view.drawableHeight;
     self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 5000.0f * scale);
-
+    
     // Reposition all of the bodies to the scaled amount
     [self drawSatellites];
-
+    
     // Draw the skybox
     [self drawSkybox];
-
-    // Draw test path
-    //[self drawQuadBezier];
 }
 
 - (void) castLight : (GLint) lightNum : (GLfloat) x : (GLfloat) y : (GLfloat) z
@@ -266,8 +277,8 @@
     }
     
     //light.enabled = GL_TRUE;
-    light.spotCutoff = 180.0f;
-    light.spotExponent = 45.0f;
+    //light.spotCutoff = 180.0f;
+    //light.spotExponent = 45.0f;
     light.ambientColor = GLKVector4Make(0.1f, 0.1f, 0.1f, 1.0f);
     light.diffuseColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
     //light.specularColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
@@ -338,76 +349,6 @@
     self.baseEffect.light0.enabled = GL_TRUE;
 }
 
-- (void) drawQuadBezier
-{
-    GLKVector3 origin      = GLKVector3Make(0.0f, 0.0f, 0.0f);
-    GLKVector3 control     = GLKVector3Make(10.0f, 5.0f, 0.0f);
-    GLKVector3 destination = GLKVector3Make(20.0f, 10.0f, 0.0f);
-    
-    // Bezier quadratic code
-    GLfloat vertices[12];
-    GLfloat t = 0.0f;
-    for (int i = 0; i < 4; i++)
-    {
-        vertices[i] = pow(1 - t, 2) * origin.x + 2.0 * (1 - t) * t * control.x + t * t * destination.x;
-        vertices[i] = pow(1 - t, 2) * origin.y + 2.0 * (1 - t) * t * control.y + t * t * destination.y;
-        vertices[i] = pow(1 - t, 2) * origin.x + 2.0 * (1 - t) * t * control.x + t * t * destination.x;
-        t += 1.0f / 4.0f;
-    }
-    
-    GLfloat verts[] = {
-        0.0f, 0.0f, 0.0f,
-        0.0f, 50.0f, 0.0f,
-        30.0f, 30.0f, 50.0f,
-        -10.0f, 50.0f, 0.0f};
-    
-    [self draw3dVertices: vertices : sizeof(vertices)];
-    
-}
-
-- (void) draw3dVertices : (GLfloat *) verts : (size_t) sizeVerts
-{
-    // Turn off the lights
-    self.baseEffect.light0.enabled = GL_FALSE;
-    
-    // Plain ol' color
-    self.baseEffect.useConstantColor = GL_TRUE;
-    self.baseEffect.constantColor = GLKVector4Make(0.0f, 1.0f, 0.0f, 1.0f);
-    
-    // Prepare for drawing
-    [self.baseEffect prepareToDraw];
-   
-    // Create an handle for a buffer object array
-    // Have OpenGL generate a buffer name and store it in the buffer object array
-    // Bind the buffer object array to the GL_ARRAY_BUFFER target buffer
-    GLuint bufferObjectNameArray;
-    glGenBuffers(1, &bufferObjectNameArray);
-    glBindBuffer(GL_ARRAY_BUFFER, bufferObjectNameArray);
-    
-    // Send the line data over to the target buffer in GPU RAM
-    glBufferData(GL_ARRAY_BUFFER, sizeVerts, verts, GL_STATIC_DRAW);
-    
-    // Enable vertex data to be fed down the graphics pipeline to be drawn
-    // Specify how the GPU looks up the data
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glVertexAttribPointer(GLKVertexAttribPosition, // the currently bound buffer holds the data
-                          3,                       // number of coordinates per vertex
-                          GL_FLOAT,                // the data type of each component
-                          GL_FALSE,                // can the data be scaled
-                          3*sizeof(GLfloat),       // how many bytes per vertex (3 floats per vertex)
-                          NULL);                   // offset to the first coordinate, in this case 0
-    
-    // Set the line width
-    glLineWidth(2.0);
-    
-    // Render
-    glDrawArrays(GL_LINE_STRIP, 0, 4);
-    
-    // Clean up
-    glDisableVertexAttribArray(GLKVertexAttribPosition);
-    self.baseEffect.light0.enabled = GL_TRUE;
-}
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -422,8 +363,8 @@
 - (void) handleRotate: (NSSet *) touches withEvent: (UIEvent *) event
 {
     UITouch* t = [touches anyObject];
-    rotation.x += ([t locationInView:self.view].x - [t previousLocationInView:self.view].x);
-    rotation.y += ([t locationInView:self.view].y - [t previousLocationInView:self.view].y);
+    rotation.x += ([t locationInView:self].x - [t previousLocationInView:self].x);
+    rotation.y += ([t locationInView:self].y - [t previousLocationInView:self].y);
 }
 
 - (void) handleScale : (UIPinchGestureRecognizer*) sender
@@ -444,12 +385,11 @@
     }
 }
 
+// Not necessary?
 - (void)viewDidUnload
 {
-    [super viewDidUnload];
-    
     // Make the view's context current
-    GLKView *view = (GLKView *) self.view;
+    GLKView *view = (GLKView *) self;
     [EAGLContext setCurrentContext:view.context];
     
     // Delete buffers that aren't needed when view is unloaded
@@ -459,13 +399,8 @@
     self.skybox     = nil;
     
     // Stop using the context created in -viewDidLoad
-    ((GLKView *) self.view).context = nil;
+    ((GLKView *) self).context = nil;
     [EAGLContext setCurrentContext:nil];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 @end

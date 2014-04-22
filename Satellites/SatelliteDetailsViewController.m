@@ -109,6 +109,9 @@
         // Set the object
         controller.editedObject = self.satellite;
         
+        // Set the system
+        controller.system = self.satellite.system;
+        
         // Prepare the units of measurements
         NSMutableDictionary * unitsToRange = [[NSMutableDictionary alloc] init];
 

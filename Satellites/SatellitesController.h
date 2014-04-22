@@ -15,18 +15,21 @@
 
 @interface SatellitesController : NSObject
 {
-    SystemObject   * system;
-    Satellite      * barycenter;
-    NSMutableArray * bodies;
+    SystemObject    * system;
+    SatelliteObject * satellite;
+    Satellite       * barycenter;
+    NSMutableArray  * bodies;
     int              scale;
 }
 
-- (id) initWithSystemObject: (SystemObject *) systemObject;
+- (id) initWithSystemObject:    (SystemObject *)    systemObject;
+- (id) initWithSatelliteObject: (SatelliteObject *) satelliteObject;
 - (void) performCalculations;
 
-@property SystemObject   * system;
-@property Satellite      * barycenter;
-@property NSMutableArray * bodies;
+@property SystemObject    * system;
+@property SatelliteObject * satellite;
+@property Satellite       * barycenter;
+@property NSMutableArray  * bodies;
 @property int              scale;
 
 @end

@@ -18,6 +18,8 @@
 @synthesize textField;
 @synthesize unitField;
 @synthesize activityActionSheet;
+@synthesize satellitesViewController;
+@synthesize system;
 
 - (void)viewDidLoad
 {
@@ -26,7 +28,18 @@
     // Set the title to the user-visible name of the field.
     self.title = self.editedFieldName;
     
-    // Set the various options
+    CGRect screenRect;
+    screenRect.size.height = [UIScreen mainScreen].bounds.size.height - 130;
+    screenRect.origin.y    = 0;
+    screenRect.size.width  = [UIScreen mainScreen].bounds.size.width;
+    
+    satellitesViewController = [[SatellitesViewController alloc] init];
+    satellitesViewController.satellite = (SatelliteObject *) editedObject;
+    [satellitesViewController.view setFrame:screenRect];
+    [self.view addSubview:satellitesViewController.view];
+    [self addChildViewController:satellitesViewController];
+    //[self.view sendSubviewToBack:satellitesViewController.view];
+    [satellitesViewController didMoveToParentViewController:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated

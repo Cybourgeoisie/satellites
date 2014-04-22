@@ -1,9 +1,9 @@
 //
-//  SatellitesViewController.h
+//  SatellitesView.h
 //  Satellites
 //
-//  Created by Richard Benjamin Heidorn on 4/14/13.
-//  Copyright (c) 2013 Richard B Heidorn. All rights reserved.
+//  Created by Richard Benjamin Heidorn on 4/20/14.
+//  Copyright (c) 2014 Richard B Heidorn. All rights reserved.
 //
 
 #import <GLKit/GLKit.h>
@@ -14,12 +14,10 @@
 #import "SystemObject.h"
 #import "SatelliteObject.h"
 
-@interface SatellitesViewController : GLKViewController
+@interface SatellitesView : GLKView
 {
-    
     SatellitesController * controller;
     SystemObject         * system;
-    SatelliteObject      * satellite;
     NSMutableArray       * spheres;
     NSMutableArray       * bodies;
     GLKSkyboxEffect      * skybox;
@@ -28,7 +26,6 @@
 @property (strong, nonatomic) GLKBaseEffect *baseEffect;
 @property (strong, nonatomic) SatellitesController * controller;
 @property (strong, nonatomic) SystemObject         * system;
-@property (strong, nonatomic) SatelliteObject * satellite;
 @property (strong, nonatomic) SceneModel * satelliteModel;
 @property (strong, nonatomic) NSMutableArray * spheres;
 @property (strong, nonatomic) NSMutableArray * bodies;
@@ -43,5 +40,8 @@
 // C'mon, c'mon, c'mon, c'mon, now touch me babe
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+
+// Temporary? I'll see this comment in 2015.
+- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect;
 
 @end

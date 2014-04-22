@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GLKit/GLKit.h>
 #import "RootViewController.h"
+#import "SatellitesViewController.h"
 
 @interface EditingViewController : UIViewController
 {
@@ -24,6 +26,10 @@
     IBOutlet UITextField * textField;
     IBOutlet UIButton    * unitField;
     UIActionSheet * activityActionSheet;
+    
+    // GLKView
+    SatellitesViewController * satellitesViewController;
+    SystemObject * system;
 }
 
 // Data Management
@@ -39,5 +45,9 @@
 @property (nonatomic) IBOutlet UITextField * textField;
 @property (nonatomic) IBOutlet UIButton    * unitField;
 @property (nonatomic) UIActionSheet * activityActionSheet;
+
+// GLKView
+@property (nonatomic, strong) SatellitesViewController * satellitesViewController;
+@property (strong, nonatomic) SystemObject * system;
 
 @end
