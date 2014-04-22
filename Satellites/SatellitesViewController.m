@@ -24,6 +24,7 @@
 @synthesize targetLookAtPosition;
 @synthesize rotation;
 @synthesize scale;
+@synthesize bEditorView;
 
 - (id) init
 {
@@ -36,7 +37,12 @@
     return self;
 }
 
-- (void)viewDidLoad
+- (void) useEditorView: (BOOL) bUseView
+{
+    self.bEditorView = bUseView;
+}
+
+- (void) viewDidLoad
 {
     [super viewDidLoad];
     
@@ -81,9 +87,11 @@
         // Initialize the controller with the system at hand
         controller = [[SatellitesController alloc] initWithSystemObject: system];
     }
+    // Check for a valid satellite
     else if (satellite != nil)
     {
-        controller = [[SatellitesController alloc] initWithSatelliteObject:satellite];
+        NSMutableArray * satellites = [[NSMutableArray alloc] initWithObjects:satellite, nil];
+        controller = [[SatellitesController alloc] initWithSatelliteObjects:satellites];
     }
     else
     {
@@ -123,8 +131,8 @@
     self.baseEffect.texture2d0.envMode = GLKTextureEnvModeModulate;
     
     self.baseEffect.light0.enabled      = GL_TRUE;
-    self.baseEffect.light0.ambientColor = GLKVector4Make(0.5f, 0.2f, 0.2f, 1.0f);
-    self.baseEffect.light0.diffuseColor = GLKVector4Make(0.7f, 0.7f, 0.7f, 1.0f);
+    self.baseEffect.light0.ambientColor = GLKVector4Make(0.1f, 0.1f, 0.1f, 1.0f);
+    self.baseEffect.light0.diffuseColor = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
     self.baseEffect.light0.position     = GLKVector4Make(0.0f, 0.0f, 0.1f, 0.0f);
 }
 
@@ -139,8 +147,20 @@
 // Camera Properties
 - (void) initCamera
 {
+    if (bEditorView)
+    {
+        [self initCameraEditorView];
+    }
+    else
+    {
+        [self initCameraNormal];
+    }
+}
+
+- (void) initCameraNormal
+{
     // Set initial point of view
-    self.eyePosition    = (system != nil) ? GLKVector3Make(0.0, 0.0, 100.0) : GLKVector3Make(100.0, 0.0, 0.0);
+    self.eyePosition    = GLKVector3Make(0.0, 0.0, 100.0);
     self.lookAtPosition = GLKVector3Make(0.0, 0.0, 0.0);
     
     // Set initial alteration to the pov
@@ -148,7 +168,22 @@
     self.targetLookAtPosition = GLKVector3Make(0.0, 0.0, 0.0);
     
     // Set the current matrix propertites
-    self.scale = (system != nil) ? 0.6 : 2.4;
+    self.scale = 0.6;
+    self.rotation = GLKVector3Make(0.0, 0.0, 0.0);
+}
+
+- (void) initCameraEditorView
+{
+    // Set initial point of view
+    self.eyePosition    = GLKVector3Make(100.0, 0.0, 0.0);
+    self.lookAtPosition = GLKVector3Make(0.0, 0.0, 0.0);
+    
+    // Set initial alteration to the pov
+    self.targetEyePosition    = GLKVector3Make(0.0, 0.0, 0.0);
+    self.targetLookAtPosition = GLKVector3Make(0.0, 0.0, 0.0);
+    
+    // Set the current matrix propertites
+    self.scale = 2.4;
     self.rotation = GLKVector3Make(0.0, -900.0, 0.0);
 }
 
@@ -302,8 +337,11 @@
         // If this body is a star, illuminate
         if ([body isStar])
         {
-            //[self castLight : starCount : x : y : z];
-            //[self disableLighting];
+            if (!bEditorView)
+            {
+                [self castLight : starCount : x : y : z];
+                [self disableLighting];
+            }
         }
         
         // If this body is a moon, increase the spacing
@@ -320,7 +358,11 @@
         // If we're done with the star, turn the light back on
         if ([body isStar])
         {
-            //[self enableLighting];
+            if (!bEditorView)
+            {
+                [self enableLighting];
+            }
+            
             starCount++;
         }
     }

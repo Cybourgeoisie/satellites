@@ -16,13 +16,13 @@
 
 @interface SatellitesViewController : GLKViewController
 {
-    
     SatellitesController * controller;
     SystemObject         * system;
     SatelliteObject      * satellite;
     NSMutableArray       * spheres;
     NSMutableArray       * bodies;
     GLKSkyboxEffect      * skybox;
+    BOOL                   bEditorView;
 }
 
 @property (strong, nonatomic) GLKBaseEffect *baseEffect;
@@ -39,9 +39,12 @@
 @property (nonatomic, assign) GLKVector3 targetLookAtPosition;
 @property (nonatomic, assign) GLKVector3 rotation;
 @property (nonatomic, assign) GLfloat scale;
+@property (nonatomic, assign) BOOL bEditorView;
 
 // C'mon, c'mon, c'mon, c'mon, now touch me babe
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+
+- (void)useEditorView:(BOOL)bUseView;
 
 @end

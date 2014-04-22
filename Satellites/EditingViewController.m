@@ -32,9 +32,13 @@
     screenRect.size.height = [UIScreen mainScreen].bounds.size.height - 130;
     screenRect.origin.y    = 0;
     screenRect.size.width  = [UIScreen mainScreen].bounds.size.width;
-    
+
+    // Create and instantiate the satellite view controller
     satellitesViewController = [[SatellitesViewController alloc] init];
-    satellitesViewController.satellite = (SatelliteObject *) editedObject;
+    [satellitesViewController useEditorView: true];
+    [satellitesViewController setSatellite: (SatelliteObject *) editedObject];
+
+    // Set the satellites view controller in the view
     [satellitesViewController.view setFrame:screenRect];
     [self.view addSubview:satellitesViewController.view];
     [self addChildViewController:satellitesViewController];

@@ -13,7 +13,7 @@ static float dt = 1;
 
 @implementation SatellitesController
 @synthesize system;
-@synthesize satellite;
+@synthesize satellites;
 @synthesize bodies;
 @synthesize barycenter;
 @synthesize scale;
@@ -44,11 +44,11 @@ static float dt = 1;
     return [self init];
 }
 
-- (id) initWithSatelliteObject: (SatelliteObject *) satelliteObject
+- (id) initWithSatelliteObjects: (NSMutableArray *) satelliteObjects
 {
     // Set a custom system
-    [self setSatellite: satelliteObject];
-    
+    [self setSatellites: satelliteObjects];
+
     // Initialize
     return [self init];
 }
@@ -70,9 +70,9 @@ static float dt = 1;
     {
         [self customSystem];
     }
-    else if (satellite != nil)
+    else if (satellites != nil)
     {
-        [self customSatellite:satellite];
+        [self createSystem: satellites];
     }
     else
     {
@@ -84,6 +84,44 @@ static float dt = 1;
         
         // Binary Stars
         //[self binaryStars];
+    }
+}
+
+- (void) createSystem : (NSMutableArray *) satelliteObjects
+{
+    for (SatelliteObject * satelliteObject in satelliteObjects)
+    {
+        // Create stars first
+        if (!satelliteObject.bStar) { continue; }
+        
+        [self createSatellite: satelliteObject];
+    }
+
+    // If there is more than one star, set orbital bodies
+    if (bodies.count == 2)
+    {
+        // Get the stars
+        Satellite * star  = [bodies objectAtIndex:0];
+        Satellite * star2 = [bodies objectAtIndex:1];
+        
+        // Set the second star at the opposite point
+        [star2 setPosition : 0.0 : - star2.position.y : 0.0];
+        
+        // Set the orbital bodies
+        [star  setOrbitalBody : star2];
+        [star2 setOrbitalBody : star];
+    }
+    
+    // Calculate the barycenter of these stars and set the COM
+    [self translateToCenterOfMass];
+    
+    // For each satellite object, create a corresponding satellite
+    for (SatelliteObject * satelliteObject in satelliteObjects)
+    {
+        // Already created stars
+        if (satelliteObject.bStar) { continue; }
+        
+        [self createSatellite: satelliteObject];
     }
 }
 
@@ -134,74 +172,50 @@ static float dt = 1;
     // For each satellite object, create a corresponding satellite
     for (SatelliteObject * planetObject in system.getPlanets)
     {
-        // Planet
-        Satellite * planet = [[Satellite alloc] init];
-        [planet isStar : false];
-        [planet isMoon : false];
-        [planet setEccentricity : [planetObject.eccentricity floatValue]];
-        [planet setInclination  : [planetObject.inclination floatValue]];
-        [planet setAxialTilt    : [planetObject.axialTilt floatValue]];
-        [planet setRotationSpeed : [planetObject.rotation floatValue]];
-        [planet setDistance: [planetObject.semimajorAxis floatValue] * scale fromBody: barycenter];
-        [planet setName : planetObject.name];
-        [planet setTexture : ([planetObject.texture length]) ? planetObject.texture : @"Venus"];
-        [planet setMass : [planetObject.mass floatValue]];
-        
-        // Add the body
-        [bodies addObject: planet];
-        
-        // Add each moon
-        for (SatelliteObject * moonObject in planetObject.relativeBody)
-        {
-            // Moon
-            Satellite * moon = [[Satellite alloc] init];
-            [moon isStar : false];
-            [moon isMoon : true];
-            [moon setEccentricity : [moonObject.eccentricity floatValue]];
-            [moon setInclination  : [moonObject.inclination floatValue]];
-            [moon setAxialTilt    : [moonObject.axialTilt floatValue]];
-            [moon setRotationSpeed : [moonObject.rotation floatValue]];
-            [moon setDistance: [moonObject.semimajorAxis floatValue] * scale fromBody: planet];
-            [moon setName : moonObject.name];
-            [moon setTexture : ([moonObject.texture length]) ? moonObject.texture : @"Moon"];
-            [moon setMass : [moonObject.mass floatValue]];
-            
-            // Add the moons
-            [bodies addObject: moon];
-        }
+        [self createSatellite:planetObject];
     }
 }
 
-- (void) customSatellite: (SatelliteObject *) planetObject
+- (void) createSatellite: (SatelliteObject *) satelliteObject
 {
     // Planet
-    Satellite * planet = [[Satellite alloc] init];
-    [planet isStar : false];
-    [planet isMoon : false];
-    [planet setEccentricity : [planetObject.eccentricity floatValue]];
-    [planet setInclination  : [planetObject.inclination floatValue]];
-    [planet setAxialTilt    : [planetObject.axialTilt floatValue]];
-    [planet setRotationSpeed : [planetObject.rotation floatValue]];
-    [planet setDistance: [planetObject.semimajorAxis floatValue] * scale fromBody: barycenter];
-    [planet setName : planetObject.name];
-    [planet setTexture : ([planetObject.texture length]) ? planetObject.texture : @"Venus"];
-    [planet setMass : [planetObject.mass floatValue]];
+    Satellite * satellite = [[Satellite alloc] init];
+    [satellite isStar : satelliteObject.bStar];
+    [satellite isMoon : satelliteObject.bMoon];
+    [satellite setEccentricity : [satelliteObject.eccentricity floatValue]];
+    [satellite setInclination  : [satelliteObject.inclination floatValue]];
+    [satellite setAxialTilt    : [satelliteObject.axialTilt floatValue]];
+    [satellite setRotationSpeed : [satelliteObject.rotation floatValue]];
+    [satellite setName : satelliteObject.name];
+    [satellite setMass : [satelliteObject.mass floatValue]];
+    
+    // Star-specific settings
+    if (satelliteObject.bStar)
+    {
+        [satellite setPosition : 0.0 : [satelliteObject.semimajorAxis floatValue] * scale : 0.0];
+        [satellite setTexture : ([satelliteObject.texture length]) ? satelliteObject.texture : @"Sun"];
+    }
+    else
+    {
+        [satellite setDistance: [satelliteObject.semimajorAxis floatValue] * scale fromBody: barycenter];
+        [satellite setTexture : ([satelliteObject.texture length]) ? satelliteObject.texture : @"Venus"];
+    }
     
     // Add the body
-    [bodies addObject: planet];
+    [bodies addObject: satellite];
     
     // Add each moon
-    for (SatelliteObject * moonObject in planetObject.relativeBody)
+    for (SatelliteObject * moonObject in satelliteObject.relativeBody)
     {
         // Moon
         Satellite * moon = [[Satellite alloc] init];
-        [moon isStar : false];
-        [moon isMoon : true];
+        [moon isStar : moonObject.bStar];
+        [moon isMoon : moonObject.bMoon];
         [moon setEccentricity : [moonObject.eccentricity floatValue]];
         [moon setInclination  : [moonObject.inclination floatValue]];
         [moon setAxialTilt    : [moonObject.axialTilt floatValue]];
         [moon setRotationSpeed : [moonObject.rotation floatValue]];
-        [moon setDistance: [moonObject.semimajorAxis floatValue] * scale fromBody: planet];
+        [moon setDistance: [moonObject.semimajorAxis floatValue] * scale fromBody: satellite];
         [moon setName : moonObject.name];
         [moon setTexture : ([moonObject.texture length]) ? moonObject.texture : @"Moon"];
         [moon setMass : [moonObject.mass floatValue]];
@@ -226,6 +240,7 @@ static float dt = 1;
     }
     else
     {
+        SatelliteObject * satellite = [satellites lastObject];
         [self translateToBody : satellite.name];
     }
 }
