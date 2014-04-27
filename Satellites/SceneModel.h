@@ -26,11 +26,10 @@ SceneAxisAllignedBoundingBox;
 
 @interface SceneModel : NSObject
 
-@property (copy, nonatomic, readonly) NSString
-   *name;
-@property (assign, nonatomic, readonly) 
-   SceneAxisAllignedBoundingBox axisAlignedBoundingBox;
-
+@property (copy, nonatomic, readwrite) NSString *name;
+@property (assign, nonatomic, readwrite) SceneAxisAllignedBoundingBox axisAlignedBoundingBox;
+@property (strong, nonatomic, readwrite) SceneMesh *mesh;
+@property (nonatomic) GLsizei numberOfVertices;
 
 - (id)initWithName:(NSString *)aName
    mesh:(SceneMesh *)aMesh

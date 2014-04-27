@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DD00C9D617CA6C6100A6ADF3 /* TextureCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DD00C9D517CA6C6100A6ADF3 /* TextureCollectionViewLayout.m */; };
-		DD0553E7190426DC005CCED8 /* SatellitesView.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0553E6190426DC005CCED8 /* SatellitesView.m */; };
 		DD0788881736B1EC00CE27CF /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788871736B1EC00CE27CF /* Default-Landscape~ipad.png */; };
 		DD0788931736C3A000CE27CF /* SatellitesAppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788921736C3A000CE27CF /* SatellitesAppIcon.png */; };
 		DD0788951736C3A500CE27CF /* SatellitesAppIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788941736C3A500CE27CF /* SatellitesAppIcon@2x.png */; };
@@ -56,8 +55,6 @@
 /* Begin PBXFileReference section */
 		DD00C9D417CA6C6100A6ADF3 /* TextureCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCollectionViewLayout.h; sourceTree = "<group>"; };
 		DD00C9D517CA6C6100A6ADF3 /* TextureCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureCollectionViewLayout.m; sourceTree = "<group>"; };
-		DD0553E5190426DC005CCED8 /* SatellitesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SatellitesView.h; sourceTree = "<group>"; };
-		DD0553E6190426DC005CCED8 /* SatellitesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SatellitesView.m; sourceTree = "<group>"; };
 		DD0788871736B1EC00CE27CF /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		DD0788921736C3A000CE27CF /* SatellitesAppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SatellitesAppIcon.png; sourceTree = SOURCE_ROOT; };
 		DD0788941736C3A500CE27CF /* SatellitesAppIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SatellitesAppIcon@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -171,8 +168,6 @@
 			children = (
 				DDF131D8171B517C00C42923 /* SatellitesViewController.h */,
 				DDF131D9171B517C00C42923 /* SatellitesViewController.m */,
-				DD0553E5190426DC005CCED8 /* SatellitesView.h */,
-				DD0553E6190426DC005CCED8 /* SatellitesView.m */,
 			);
 			name = GLKit;
 			sourceTree = "<group>";
@@ -478,7 +473,6 @@
 				DDE2776F17CA7534003BAEC6 /* TextureCollectionViewCell.m in Sources */,
 				DDDBA4D418EB6C2C007446BA /* SceneMesh.m in Sources */,
 				DDDBA4D518EB6C2C007446BA /* SceneModel.m in Sources */,
-				DD0553E7190426DC005CCED8 /* SatellitesView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

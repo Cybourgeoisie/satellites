@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 #import "RootViewController.h"
+#import "Satellite.h"
 #import "SatellitesViewController.h"
 
 @interface EditingViewController : UIViewController
@@ -28,6 +29,7 @@
     UIActionSheet * activityActionSheet;
     
     // GLKView
+    Satellite * satellite;
     SatellitesViewController * satellitesViewController;
     SystemObject * system;
 }
@@ -47,6 +49,7 @@
 @property (nonatomic) UIActionSheet * activityActionSheet;
 
 // GLKView
+@property (nonatomic, strong) Satellite * satellite;
 @property (nonatomic, strong) SatellitesViewController * satellitesViewController;
 @property (strong, nonatomic) SystemObject * system;
 

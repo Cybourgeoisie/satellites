@@ -60,6 +60,14 @@
     return self;
 }
 
+- (void) updateField : (NSString *) fieldName withValue : (id) value
+{
+    if ([self respondsToSelector:NSSelectorFromString(fieldName)])
+    {
+        [self setValue: value forKey: fieldName];
+    }
+}
+
 /*
  Parameter: Semi-major axis
  Creates position based on random orientation
@@ -152,6 +160,11 @@
 - (void) setAxialTilt : (float) theta
 {
     self->axialTilt = [self convertToRadians: theta];
+}
+
+- (void) setRotationSpeed : (float) theta
+{
+    self->rotationSpeed = [self convertToRadians: theta] / 30; // Assuming 30 FPS
 }
 
 - (float) convertToRadians : (float) deg

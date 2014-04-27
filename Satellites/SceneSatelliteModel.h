@@ -12,6 +12,9 @@
 
 @interface SceneSatelliteModel : SceneModel
 
+@property (nonatomic) GLfloat * vertices;
+@property (nonatomic) GLfloat * normals;
+
 - (id) initWithRadius : (GLfloat) radius;
 
 @end

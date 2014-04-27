@@ -22,7 +22,7 @@
 @property (strong, nonatomic, readwrite) SceneModel * model;
 @property (assign, nonatomic, readwrite) GLKVector3   position;
 @property (assign, nonatomic, readwrite) GLfloat      tilt;
-@property (assign, nonatomic, readwrite) GLfloat      rotation;
+@property (assign, nonatomic, readwrite) GLfloat      rotationSpeed;
 @property (assign, nonatomic, readwrite) GLKVector4   color;
 @property (assign, nonatomic, readwrite) GLfloat      radius;
 @property (assign, nonatomic, readwrite) GLfloat      currentRotation;

@@ -18,6 +18,7 @@
 @synthesize textField;
 @synthesize unitField;
 @synthesize activityActionSheet;
+@synthesize satellite;
 @synthesize satellitesViewController;
 @synthesize system;
 
@@ -55,6 +56,10 @@
     [self prepareSlider];
     [self prepareUnitOfMeasurementActionSheet];
     
+    // Get this edited satellite
+    SatelliteObject * satelliteObject = (SatelliteObject *) editedObject;
+    satellite = [satellitesViewController getSatelliteByName: satelliteObject.name];
+    
     // Get the value
     id value = [self.editedObject valueForKey:self.editedFieldKey];
     [self updateSliderValue:[value floatValue]];
@@ -91,6 +96,7 @@
     [slider setMaximumValue:[max floatValue]];
 }
 
+// When the text value is changed, alter the slider value
 - (IBAction) textFieldValueChanged : (UITextField *) sender
 {
     // Float this shit
@@ -113,13 +119,34 @@
     
     // Update slider value
     [slider setValue:value];
+    
+    // Update satellite
+    
 }
 
+// When the slider value is changed, alter the text value
 - (IBAction) sliderValueChanged : (UISlider *) sender
 {
     // Update the text field
     NSString * value = [NSString stringWithFormat:@"%1.3f", sender.value];
     [textField setText : value];
+    
+    // Update satellite
+    NSNumber * numValue  = [[NSNumber alloc] initWithFloat:[self convertValue : 0]];
+    NSString * fieldName = [[NSString alloc] initWithString:editedFieldName];
+    
+    // Make sure we're using a valid field name
+    if ([fieldName isEqualToString:@"Axial Tilt"])
+    {
+        fieldName = @"axialTilt";
+    }
+    else if ([fieldName isEqualToString:@"Rotation"])
+    {
+        fieldName = @"rotationSpeed";
+    }
+    
+    // Set the new value
+    [satellite updateField:fieldName withValue:numValue];
 }
 
 - (void) updateSliderValue : (float) value
@@ -129,6 +156,9 @@
     // Update the text field
     NSString * textValue = [NSString stringWithFormat:@"%1.3f", value];
     [textField setText : textValue];
+    
+    // Update satellite
+    
 }
 
 - (void) prepareUnitOfMeasurementActionSheet

@@ -5,21 +5,6 @@
 
 #import "SceneModel.h"
 
-
-@interface SceneModel ()
-
-@property (strong, nonatomic, readwrite) SceneMesh
-   *mesh;
-@property (assign, nonatomic, readwrite) 
-   SceneAxisAllignedBoundingBox axisAlignedBoundingBox;
-@property (nonatomic) GLsizei 
-   numberOfVertices;
-@property (copy, nonatomic, readwrite) NSString
-   *name;
-
-@end
-
-
 @implementation SceneModel
 
 @synthesize mesh;

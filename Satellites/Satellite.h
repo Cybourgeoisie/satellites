@@ -72,4 +72,6 @@
 - (void) setVelocity      : (float) a : (float) b : (float) c;
 - (void) setAcceleration  : (float) a : (float) b : (float) c;
 
+- (void) updateField      : (NSString *) fieldName withValue : (id) value;
+
 @end

@@ -209,6 +209,19 @@
     }
 }
 
+- (Satellite *)getSatelliteByName:(NSString *)name
+{
+    for (Satellite * body in bodies)
+    {
+        if ([body.name isEqualToString:name])
+        {
+            return body;
+        }
+    }
+    
+    return nil;
+}
+
 - (void) initSkybox
 {
     // Get all six textures
@@ -352,7 +365,15 @@
             z += (body.position.z - body.orbitalBody.position.z);
         }
         
-        [spheres[i]   updateBody : x : y : z];
+        [spheres[i] updateBody : x : y : z];
+        
+        // Update any fields if in editor mode
+        if (bEditorView)
+        {
+            [spheres[i] setTilt:body.axialTilt];
+            [spheres[i] setRotationSpeed:body.rotationSpeed];
+        }
+        
         [spheres[i++] drawWithBaseEffect : self.baseEffect];
         
         // If we're done with the star, turn the light back on

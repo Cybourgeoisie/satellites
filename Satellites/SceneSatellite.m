@@ -12,7 +12,7 @@
 
 @synthesize model;
 @synthesize position;
-@synthesize rotation;
+@synthesize rotationSpeed;
 @synthesize color;
 @synthesize radius;
 @synthesize texture;
@@ -40,7 +40,7 @@
 
         // Set attributes
         self.position = aPosition;
-        self.rotation = aRotation;
+        self.rotationSpeed = aRotation;
         self.tilt     = aTilt;
         self.radius   = aRadius;
         self.color    = aColor;
@@ -95,7 +95,7 @@
     anEffect.transform.modelviewMatrix = GLKMatrix4Rotate(anEffect.transform.modelviewMatrix, self.tilt, 0.0, 1.0, 0.0);
     
     // Rotate about the x-z plane wrt time
-    self.currentRotation += self.rotation;
+    self.currentRotation += self.rotationSpeed;
     anEffect.transform.modelviewMatrix = GLKMatrix4Rotate(anEffect.transform.modelviewMatrix, self.currentRotation, 0.0, 0.0, 1.0);
     
     // Rotate to match model's yaw angle (rotation about Y)

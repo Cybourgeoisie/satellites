@@ -46,5 +46,6 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
 
 - (void)useEditorView:(BOOL)bUseView;
+- (Satellite *)getSatelliteByName:(NSString *)name;
 
 @end
