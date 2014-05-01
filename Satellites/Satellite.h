@@ -39,7 +39,7 @@
 @property Satellite * orbitalBody;
 
 // Extrinsic Properties
-@property float    size;
+@property GLfloat size;
 @property Vector * color;
 @property NSString * name;
 @property NSString * texture;

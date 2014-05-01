@@ -19,7 +19,7 @@
 
 @interface SceneSatellite : NSObject
 
-@property (strong, nonatomic, readwrite) SceneModel * model;
+@property (strong, nonatomic, readwrite) SceneSatelliteModel * model;
 @property (assign, nonatomic, readwrite) GLKVector3   position;
 @property (assign, nonatomic, readwrite) GLfloat      tilt;
 @property (assign, nonatomic, readwrite) GLfloat      rotationSpeed;
@@ -36,6 +36,7 @@
                 texture : (NSString *)  aTexture;
 
 - (void) updateBody : (GLfloat) x : (GLfloat) y : (GLfloat) z;
+- (void) updateSize : (GLfloat) size;
 
 - (void) drawWithBaseEffect:(GLKBaseEffect *)anEffect;
 

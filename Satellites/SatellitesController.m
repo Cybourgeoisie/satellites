@@ -543,9 +543,6 @@ static float dt = 1;
 
 - (void) translateToBody : (NSString *) name
 {
-    // Calculate the center of mass
-    [self translateToCenterOfMass];
-    
     // Find the body
     for (Satellite * center in bodies)
     {
@@ -607,6 +604,11 @@ static float dt = 1;
         barycenter.position.x += body.position.x * body.mass;
         barycenter.position.y += body.position.y * body.mass;
         barycenter.position.z += body.position.z * body.mass;
+    }
+    
+    if (barycenter.mass == 0)
+    {
+        return;
     }
     
     // Now divide by the total mass

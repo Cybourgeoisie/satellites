@@ -106,10 +106,8 @@
         // Prepare the Editing View Controller
         EditingViewController * controller = (EditingViewController *)[segue destinationViewController];
         
-        // Set the object
+        // Set the object and system
         controller.editedObject = self.satellite;
-        
-        // Set the system
         controller.system = self.satellite.system;
         
         // Prepare the units of measurements

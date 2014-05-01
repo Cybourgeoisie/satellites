@@ -52,7 +52,7 @@
     return self;
 }
 
-- (void) updateRadius : (GLfloat) radius
+- (id) updateRadius : (GLfloat) radius
 {
     // Get the sizes of the arrays
     int numVertices = sizeof sphereVerts / sizeof sphereVerts[0];
@@ -74,9 +74,12 @@
                                  numberOfIndices:0];
     
     // Update the mesh and bounding box
+    self.mesh = nil;
     self.mesh = satelliteMesh;
     [self updateAlignedBoundingBoxForVertices:sphereVerts
                                         count:sphereNumVerts];
+    
+    return self;
 }
 
 @end

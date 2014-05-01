@@ -17,6 +17,7 @@
 @synthesize radius;
 @synthesize texture;
 @synthesize currentRotation;
+@synthesize tilt;
 
 // Catch invalid initialization
 - (id)init
@@ -71,6 +72,17 @@
 - (void) updateBody : (GLfloat) x : (GLfloat) y : (GLfloat) z
 {
     self.position = GLKVector3Make(x, y, z);
+}
+
+- (void) updateSize : (GLfloat) size
+{
+    if (self.radius == size)
+    {
+        return;
+    }
+    
+    self.radius = size;
+    self.model  = [self.model updateRadius:size];
 }
 
 /////////////////////////////////////////////////////////////////

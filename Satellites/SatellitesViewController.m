@@ -12,9 +12,13 @@
 
 @synthesize baseEffect;
 @synthesize controller;
-@synthesize system;
 @synthesize satelliteModel;
+
+// These three need to be cleaned up
+@synthesize system;
 @synthesize satellite;
+@synthesize satellites;
+
 @synthesize spheres;
 @synthesize bodies;
 @synthesize skybox;
@@ -90,7 +94,11 @@
     // Check for a valid satellite
     else if (satellite != nil)
     {
-        NSMutableArray * satellites = [[NSMutableArray alloc] initWithObjects:satellite, nil];
+        satellites = [[NSMutableArray alloc] initWithObjects:satellite, nil];
+        controller = [[SatellitesController alloc] initWithSatelliteObjects:satellites];
+    }
+    else if (satellites != nil)
+    {
         controller = [[SatellitesController alloc] initWithSatelliteObjects:satellites];
     }
     else
@@ -209,7 +217,7 @@
     }
 }
 
-- (Satellite *)getSatelliteByName:(NSString *)name
+- (Satellite *) getSatelliteByName : (NSString *) name
 {
     for (Satellite * body in bodies)
     {
@@ -370,6 +378,7 @@
         // Update any fields if in editor mode
         if (bEditorView)
         {
+            [spheres[i] updateSize:body.size];
             [spheres[i] setTilt:body.axialTilt];
             [spheres[i] setRotationSpeed:body.rotationSpeed];
         }

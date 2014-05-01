@@ -37,7 +37,30 @@
     // Create and instantiate the satellite view controller
     satellitesViewController = [[SatellitesViewController alloc] init];
     [satellitesViewController useEditorView: true];
-    [satellitesViewController setSatellite: (SatelliteObject *) editedObject];
+    
+    if ([editedFieldName isEqualToString:@"Eccentricity"])
+    {
+        // Show this satellite and its primary orbital partner
+        NSMutableArray * satellites = [[NSMutableArray alloc] init];
+        SatelliteObject * sat_obj = (SatelliteObject *) editedObject;
+        
+        // If this is a moon, add its parent
+        if ([sat_obj bMoon])
+        {
+            [satellites addObject:[sat_obj orbitalBody]];
+        }
+        else
+        {
+            [satellites addObject:sat_obj];
+        }
+        
+        [satellitesViewController setSatellites: satellites];
+    }
+    else
+    {
+        // Otherwise, just show this satellite alone
+        [satellitesViewController setSatellite: (SatelliteObject *) editedObject];
+    }
 
     // Set the satellites view controller in the view
     [satellitesViewController.view setFrame:screenRect];
@@ -121,7 +144,7 @@
     [slider setValue:value];
     
     // Update satellite
-    
+    [self updateSatellite];
 }
 
 // When the slider value is changed, alter the text value
@@ -131,6 +154,24 @@
     NSString * value = [NSString stringWithFormat:@"%1.3f", sender.value];
     [textField setText : value];
     
+    // Update satellite
+    [self updateSatellite];
+}
+
+- (void) updateSliderValue : (float) value
+{
+    [slider setValue:value];
+    
+    // Update the text field
+    NSString * textValue = [NSString stringWithFormat:@"%1.3f", value];
+    [textField setText : textValue];
+    
+    // Update satellite
+    [self updateSatellite];
+}
+
+- (void) updateSatellite
+{
     // Update satellite
     NSNumber * numValue  = [[NSNumber alloc] initWithFloat:[self convertValue : 0]];
     NSString * fieldName = [[NSString alloc] initWithString:editedFieldName];
@@ -144,21 +185,13 @@
     {
         fieldName = @"rotationSpeed";
     }
+    else if ([fieldName isEqualToString:@"Mass"])
+    {
+        fieldName = @"mass";
+    }
     
     // Set the new value
     [satellite updateField:fieldName withValue:numValue];
-}
-
-- (void) updateSliderValue : (float) value
-{
-    [slider setValue:value];
-    
-    // Update the text field
-    NSString * textValue = [NSString stringWithFormat:@"%1.3f", value];
-    [textField setText : textValue];
-    
-    // Update satellite
-    
 }
 
 - (void) prepareUnitOfMeasurementActionSheet

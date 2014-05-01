@@ -16,5 +16,6 @@
 @property (nonatomic) GLfloat * normals;
 
 - (id) initWithRadius : (GLfloat) radius;
+- (id) updateRadius : (GLfloat) radius;
 
 @end

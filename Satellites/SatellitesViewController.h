@@ -17,8 +17,12 @@
 @interface SatellitesViewController : GLKViewController
 {
     SatellitesController * controller;
+
+    // Need to be cleaned up
     SystemObject         * system;
     SatelliteObject      * satellite;
+    NSMutableArray       * satellites;
+    
     NSMutableArray       * spheres;
     NSMutableArray       * bodies;
     GLKSkyboxEffect      * skybox;
@@ -27,9 +31,14 @@
 
 @property (strong, nonatomic) GLKBaseEffect *baseEffect;
 @property (strong, nonatomic) SatellitesController * controller;
-@property (strong, nonatomic) SystemObject         * system;
-@property (strong, nonatomic) SatelliteObject * satellite;
 @property (strong, nonatomic) SceneModel * satelliteModel;
+
+// Need to be cleaned up
+@property (strong, nonatomic) SystemObject * system;
+@property (strong, nonatomic) SatelliteObject * satellite;
+@property (strong, nonatomic) NSMutableArray * satellites;
+
+
 @property (strong, nonatomic) NSMutableArray * spheres;
 @property (strong, nonatomic) NSMutableArray * bodies;
 @property (strong, nonatomic) GLKSkyboxEffect * skybox;
