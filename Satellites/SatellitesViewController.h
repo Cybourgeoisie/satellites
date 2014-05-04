@@ -12,15 +12,12 @@
 #import "SceneSatelliteModel.h"
 #import "SceneSatellite.h"
 #import "SystemObject.h"
-#import "SatelliteObject.h"
 
 @interface SatellitesViewController : GLKViewController
 {
     SatellitesController * controller;
 
-    // Need to be cleaned up
     SystemObject         * system;
-    SatelliteObject      * satellite;
     NSMutableArray       * satellites;
     
     NSMutableArray       * spheres;
@@ -35,9 +32,7 @@
 
 // Need to be cleaned up
 @property (strong, nonatomic) SystemObject * system;
-@property (strong, nonatomic) SatelliteObject * satellite;
 @property (strong, nonatomic) NSMutableArray * satellites;
-
 
 @property (strong, nonatomic) NSMutableArray * spheres;
 @property (strong, nonatomic) NSMutableArray * bodies;

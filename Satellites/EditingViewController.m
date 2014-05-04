@@ -26,47 +26,58 @@
 {
     [super viewDidLoad];
     
+    // Control the text field
+    self.textField.delegate = self;
+    
     // Set the title to the user-visible name of the field.
     self.title = self.editedFieldName;
     
     CGRect screenRect;
-    screenRect.size.height = [UIScreen mainScreen].bounds.size.height - 130;
-    screenRect.origin.y    = 0;
-    screenRect.size.width  = [UIScreen mainScreen].bounds.size.width;
+    screenRect.size.height = [UIScreen mainScreen].bounds.size.height;
+    screenRect.size.width  = [UIScreen mainScreen].bounds.size.width + 20;
+    screenRect.origin.y    = 0; // 110
+    screenRect.origin.x    = -10;
+    
+    // Prepare to send satellites to view controller
+    NSMutableArray * satellites = [[NSMutableArray alloc] init];
+    
+    // Show this satellite and its primary orbital partner
+    SatelliteObject * satelliteObject = (SatelliteObject *) editedObject;
+    
+    // Show more than just this satellite if we need to
+    if ([editedFieldName isEqualToString:@"Eccentricity"])
+    {
+        if ([satelliteObject bMoon])
+        {
+            // If this is a moon, add its parent
+            [satellites addObject:[satelliteObject orbitalBody]];
+            [satellites addObject:satelliteObject];
+        }
+        else if ([satelliteObject bStar])
+        {
+            // Only show the stars
+            NSMutableArray * stars = [[[system getStars] allObjects] mutableCopy];
+            [satellites addObjectsFromArray:stars];
+        }
+        else
+        {
+            // Show the planet with the stars
+            NSMutableArray * stars = [[[system getStars] allObjects] mutableCopy];
+            [satellites addObjectsFromArray:stars];
+            [satellites addObject:satelliteObject];
+        }
+    }
 
     // Create and instantiate the satellite view controller
     satellitesViewController = [[SatellitesViewController alloc] init];
     [satellitesViewController useEditorView: true];
-    
-    if ([editedFieldName isEqualToString:@"Eccentricity"])
-    {
-        // Show this satellite and its primary orbital partner
-        NSMutableArray * satellites = [[NSMutableArray alloc] init];
-        SatelliteObject * sat_obj = (SatelliteObject *) editedObject;
-        
-        // If this is a moon, add its parent
-        if ([sat_obj bMoon])
-        {
-            [satellites addObject:[sat_obj orbitalBody]];
-        }
-        else
-        {
-            [satellites addObject:sat_obj];
-        }
-        
-        [satellitesViewController setSatellites: satellites];
-    }
-    else
-    {
-        // Otherwise, just show this satellite alone
-        [satellitesViewController setSatellite: (SatelliteObject *) editedObject];
-    }
+    [satellitesViewController setSatellites: satellites];
 
     // Set the satellites view controller in the view
     [satellitesViewController.view setFrame:screenRect];
     [self.view addSubview:satellitesViewController.view];
     [self addChildViewController:satellitesViewController];
-    //[self.view sendSubviewToBack:satellitesViewController.view];
+    [self.view sendSubviewToBack:satellitesViewController.view];
     [satellitesViewController didMoveToParentViewController:self];
 }
 
@@ -86,6 +97,13 @@
     // Get the value
     id value = [self.editedObject valueForKey:self.editedFieldKey];
     [self updateSliderValue:[value floatValue]];
+}
+
+// Drop the keyboard when the return button is pressed
+- (BOOL)textFieldShouldReturn:(UITextField *)uiTextField
+{
+    [uiTextField resignFirstResponder];
+    return YES;
 }
 
 - (void) prepareTextField

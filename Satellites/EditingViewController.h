@@ -12,7 +12,7 @@
 #import "Satellite.h"
 #import "SatellitesViewController.h"
 
-@interface EditingViewController : UIViewController
+@interface EditingViewController : UIViewController <UITextFieldDelegate>
 {
     // Data Management
     NSManagedObject * editedObject;

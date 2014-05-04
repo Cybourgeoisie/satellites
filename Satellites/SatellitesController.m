@@ -8,15 +8,15 @@
 
 #import "SatellitesController.h"
 
-static float G  = 100000; // 4 PI^2 * AU^3 / ( year ^2 * (solar system mass) )
-static float dt = 1;
+static float G     = 100000; // 4 PI^2 * AU^3 / ( year ^2 * (solar system mass) )
+static float dt    = 1;
+static float scale = 1000;
 
 @implementation SatellitesController
-@synthesize system;
 @synthesize satellites;
 @synthesize bodies;
 @synthesize barycenter;
-@synthesize scale;
+@synthesize bEditorView;
 
 - (id) init
 {
@@ -38,7 +38,7 @@ static float dt = 1;
 - (id) initWithSystemObject: (SystemObject *) systemObject
 {
     // Set a custom system
-    [self setSystem: systemObject];
+    [self setSatellites:[[systemObject.satellites allObjects] mutableCopy]];
     
     // Initialize
     return [self init];
@@ -56,7 +56,7 @@ static float dt = 1;
 - (void) setConfiguration
 {
     // Multipliers
-    scale = 1000;
+    //scale = 1000;
 }
 
 - (void) initializeBodies
@@ -64,26 +64,25 @@ static float dt = 1;
     // Instantiate
     barycenter = [[Satellite alloc] init];
     bodies     = [[NSMutableArray alloc] init];
-    
-    // If we have a system, create all bodies from it
-    if (system != nil)
-    {
-        [self customSystem];
-    }
-    else if (satellites != nil)
+
+    // Now create the system
+    if (satellites != nil)
     {
         [self createSystem: satellites];
     }
     else
     {
+        DefaultSatelliteSystems * defaults = [[DefaultSatelliteSystems alloc] init];
+        [defaults setScale:scale];
+
         // Random method of generating planets
-        //[self randomBodies];
+        //bodies = [defaults randomBodies];
         
         // Simple Solar System Model
-        [self solarSystem];
-        
+        bodies = [defaults solarSystem];
+
         // Binary Stars
-        //[self binaryStars];
+        //bodies = [defaults binaryStars];
     }
 }
 
@@ -97,7 +96,10 @@ static float dt = 1;
         [self createSatellite: satelliteObject];
     }
 
+    // PROBLEM: Multiple stars need to be able to revolve with each other.
+    // Temporary solution is to only allow single and double star systems.
     // If there is more than one star, set orbital bodies
+    // YEAH THIS IS A HACK, SO WHAT?
     if (bodies.count == 2)
     {
         // Get the stars
@@ -122,57 +124,6 @@ static float dt = 1;
         if (satelliteObject.bStar) { continue; }
         
         [self createSatellite: satelliteObject];
-    }
-}
-
-- (void) customSystem
-{
-    // For each sun, create a satellite
-    for (SatelliteObject * starObject in system.getStars)
-    {
-        // Star
-        Satellite * star = [[Satellite alloc] init];
-        [star isStar : true];
-        [star isMoon : false];
-        [star setEccentricity : [starObject.eccentricity floatValue]];
-        [star setInclination  : [starObject.inclination floatValue]];
-        [star setAxialTilt    : [starObject.axialTilt floatValue]];
-        [star setRotationSpeed : [starObject.rotation floatValue]];
-        [star setPosition : 0.0 : [starObject.semimajorAxis floatValue] * scale : 0.0];
-        [star setName : starObject.name];
-        [star setTexture : ([starObject.texture length]) ? starObject.texture : @"Sun"];
-        [star setMass : [starObject.mass floatValue]];
-        
-        // PROBLEM: Multiple stars need to be able to revolve with each other.
-        // Temporary solution is to only allow single and double star systems.
-        
-        // Add the body
-        [bodies addObject: star];
-    }
-    
-    // If there is more than one star, set orbital bodies
-    // YEAH THIS IS A HACK, SO WHAT?
-    if (bodies.count == 2)
-    {
-        // Get the stars
-        Satellite * star  = [bodies objectAtIndex:0];
-        Satellite * star2 = [bodies objectAtIndex:1];
-        
-        // Set the second star at the opposite point
-        [star2 setPosition : 0.0 : - star2.position.y : 0.0];
-        
-        // Set the orbital bodies
-        [star  setOrbitalBody : star2];
-        [star2 setOrbitalBody : star];
-    }
-    
-    // Calculate the barycenter of these stars and set the COM
-    [self translateToCenterOfMass];
-    
-    // For each satellite object, create a corresponding satellite
-    for (SatelliteObject * planetObject in system.getPlanets)
-    {
-        [self createSatellite:planetObject];
     }
 }
 
@@ -243,183 +194,6 @@ static float dt = 1;
         SatelliteObject * satellite = [satellites lastObject];
         [self translateToBody : satellite.name];
     }
-}
-
-/* * * * * * * * * *
- 
-  Planetary Systems
- 
- * * * * * * * * * */
-
-- (void) solarSystem
-{
-    // Sun
-    Satellite *sun = [[Satellite alloc] init];
-    [sun isStar : true];
-    [sun setRotationSpeed: 0.05];
-    [sun setMass : 330000];
-    [sun setTexture : @"Sun"];
-    [sun setName : @"Sun"];
-    
-    // Mercury
-    Satellite *mercury = [[Satellite alloc] init];
-    [mercury setEccentricity : 0.206];
-    [mercury setInclination  : 7.01];
-    [mercury setDistance: 0.4 * scale fromBody : sun];
-    [mercury setMass : 0.06];
-    [mercury setTexture : @"Mercury"];
-    [mercury setName : @"Mercury"];
-    
-    // Venus
-    Satellite *venus = [[Satellite alloc] init];
-    [venus setEccentricity : 0.007];
-    [venus setInclination  : 3.39];
-    [venus setDistance : 0.7 * scale fromBody : sun];
-    [venus setMass : 0.81];
-    [venus setTexture : @"Venus"];
-    [venus setName : @"Venus"];
-    
-    // Earth
-    Satellite *earth = [[Satellite alloc] init];
-    [earth setEccentricity : 0.017];
-    [earth setAxialTilt: 23.5];
-    [earth setRotationSpeed: 0.01];
-    [earth setDistance : 1.0 * scale fromBody : sun];
-    [earth setMass : 1];
-    [earth setTexture : @"Earth"];
-    [earth setName : @"Earth"];
-    
-    // Moon
-    Satellite *moon = [[Satellite alloc] init];
-    [moon isMoon : true];
-    [moon setDistance : 0.0025 * scale fromBody : earth];
-    [moon setMass : 0.0123];
-    [moon setTexture : @"Moon"];
-    [moon setName : @"Moon"];
-    
-    // Mars
-    Satellite *mars = [[Satellite alloc] init];
-    [mars setEccentricity : 0.093];
-    [mars setInclination  : 1.85];
-    [mars setDistance : 1.5 * scale fromBody : sun];
-    [mars setMass : 0.11];
-    [mars setTexture : @"Mars"];
-    [mars setName : @"Mars"];
-    
-    // Ceres
-    Satellite *ceres = [[Satellite alloc] init];
-    [ceres setEccentricity : 0.079];
-    [ceres setInclination  : 10.59];
-    [ceres setDistance : 2.8 * scale fromBody : sun];
-    [ceres setMass : 0.00015];
-    [ceres setTexture : @"Moon"];
-    [ceres setName : @"Ceres"];
-    
-    // Jupiter
-    Satellite *jupiter = [[Satellite alloc] init];
-    [jupiter setEccentricity : 0.004];
-    [jupiter setInclination  : 1.31];
-    [jupiter setDistance : 5.22 * scale fromBody : sun];
-    [jupiter setMass : 317.8];
-    [jupiter setTexture : @"Jupiter"];
-    [jupiter setName : @"Jupiter"];
-
-    // Saturn
-    Satellite *saturn = [[Satellite alloc] init];
-    [saturn setEccentricity : 0.056];
-    [saturn setInclination  : 2.49];
-    [saturn setDistance : 9.54 * scale fromBody : sun];
-    [saturn setMass : 95.2];
-    [saturn setTexture : @"Saturn"];
-    [saturn setName : @"Saturn"];
-
-    // Uranus
-    Satellite *uranus = [[Satellite alloc] init];
-    [uranus setEccentricity : 0.047];
-    [uranus setInclination  : 0.77];
-    [uranus setDistance : 19.2 * scale fromBody : sun];
-    [uranus setMass : 14.5];
-    [uranus setTexture : @"Uranus"];
-    [uranus setName : @"Uranus"];
-    
-    // Neptune
-    Satellite *neptune = [[Satellite alloc] init];
-    [neptune setEccentricity : 0.009];
-    [neptune setInclination  : 1.77];
-    [neptune setDistance : 30.05 * scale fromBody : sun];
-    [neptune setMass : 17.2];
-    [neptune setTexture : @"Neptune"];
-    [neptune setName : @"Neptune"];
-    
-    // Pluto -- Requires Charon for accuracy, which means another
-    // update to the orbital velocity to include centers of masses
-    // of multiple body systems. Could be helpful for binary stars.
-    Satellite *pluto = [[Satellite alloc] init];
-    [pluto setEccentricity : 0.248];
-    [pluto setInclination  : 17.14];
-    [pluto setDistance : 39.48 * scale fromBody : sun];
-    [pluto setMass : 0.002];
-    [pluto setTexture : @"Pluto"];
-    [pluto setName : @"Pluto"];
-    
-    // Add the bodies to the array
-    [bodies addObject:sun];
-    [bodies addObject:mercury];
-    [bodies addObject:venus];
-    [bodies addObject:earth];
-    [bodies addObject:moon];
-    [bodies addObject:mars];
-    [bodies addObject:ceres];
-    [bodies addObject:jupiter];
-    [bodies addObject:saturn];
-    [bodies addObject:uranus];
-    [bodies addObject:neptune];
-    [bodies addObject:pluto];
-}
-
-- (void) randomBodies
-{
-    // Create a massive star first
-    Satellite *star = [[Satellite alloc] init];
-    [star setMass : 5000 * scale];
-    [bodies addObject:star];
-    
-    // Create all of the bodies
-    for (int i = 0; i < 30; i++)
-    {
-        // Create the body
-        Satellite *body = [[Satellite alloc] init];
-        [body setEccentricity  : arc4random_uniform(50) / 100.0];
-        [body setInclination   : arc4random_uniform(30)];
-        [body setDistance : ((arc4random_uniform(200) / 100.0 * scale + scale / 10))];
-        [body setMass : arc4random_uniform(20000) / 100.0 + 1];
-        
-        // Add the body to the array
-        [bodies addObject:body];
-    }
-}
-
-- (void) binaryStars
-{
-    // Create a massive star first
-    Satellite *star = [[Satellite alloc] init];
-    [star isStar : true];
-    [star setPosition: 0.0 : 1.0 * scale : 0];
-    [star setTexture : @"Sun"];
-    [star setMass : 1000];
-    
-    // Another star
-    Satellite *star2 = [[Satellite alloc] init];
-    [star2 isStar : true];
-    [star2 setPosition: 0.0 : - 1.0 * scale : 0];
-    [star2 setTexture : @"Sun"];
-    [star2 setMass : 1000];
-    
-    // Set the relative bodies and add to the system
-    [star  setOrbitalBody : star2];
-    [star2 setOrbitalBody : star];
-    [bodies addObject:star];
-    [bodies addObject:star2];
 }
 
 /* * * * * * * * * *

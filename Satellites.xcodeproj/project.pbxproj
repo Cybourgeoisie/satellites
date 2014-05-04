@@ -24,6 +24,7 @@
 		DDC9FAF5175560A200968025 /* EditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC9FAF4175560A200968025 /* EditingViewController.m */; };
 		DDD35981176927110049A509 /* SatelliteDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDD35980176927110049A509 /* SatelliteDetailsViewController.m */; };
 		DDD35984176927350049A509 /* ManagedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDD35983176927350049A509 /* ManagedTableViewController.m */; };
+		DDD616351916D85200DB15EA /* DefaultSatelliteSystems.m in Sources */ = {isa = PBXBuildFile; fileRef = DDD616341916D85200DB15EA /* DefaultSatelliteSystems.m */; };
 		DDDBA4D418EB6C2C007446BA /* SceneMesh.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDBA4D118EB6C2C007446BA /* SceneMesh.m */; };
 		DDDBA4D518EB6C2C007446BA /* SceneModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDBA4D318EB6C2C007446BA /* SceneModel.m */; };
 		DDDBCC7A18EF91D00011D29D /* skybox in Resources */ = {isa = PBXBuildFile; fileRef = DDDBCC7918EF91D00011D29D /* skybox */; };
@@ -81,6 +82,8 @@
 		DDD35980176927110049A509 /* SatelliteDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SatelliteDetailsViewController.m; sourceTree = "<group>"; };
 		DDD35982176927350049A509 /* ManagedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedTableViewController.h; sourceTree = "<group>"; };
 		DDD35983176927350049A509 /* ManagedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedTableViewController.m; sourceTree = "<group>"; };
+		DDD616331916D85200DB15EA /* DefaultSatelliteSystems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultSatelliteSystems.h; sourceTree = "<group>"; };
+		DDD616341916D85200DB15EA /* DefaultSatelliteSystems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultSatelliteSystems.m; sourceTree = "<group>"; };
 		DDDBA4D018EB6C2C007446BA /* SceneMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneMesh.h; sourceTree = "<group>"; };
 		DDDBA4D118EB6C2C007446BA /* SceneMesh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneMesh.m; sourceTree = "<group>"; };
 		DDDBA4D218EB6C2C007446BA /* SceneModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneModel.h; sourceTree = "<group>"; };
@@ -365,6 +368,8 @@
 		DDF131F4171B7DA800C42923 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				DDD616331916D85200DB15EA /* DefaultSatelliteSystems.h */,
+				DDD616341916D85200DB15EA /* DefaultSatelliteSystems.m */,
 				DDF131F7171B7DBC00C42923 /* SatellitesController.h */,
 				DDF131F8171B7DBC00C42923 /* SatellitesController.m */,
 				DDF131F9171B7DBC00C42923 /* Vector.h */,
@@ -473,6 +478,7 @@
 				DDE2776F17CA7534003BAEC6 /* TextureCollectionViewCell.m in Sources */,
 				DDDBA4D418EB6C2C007446BA /* SceneMesh.m in Sources */,
 				DDDBA4D518EB6C2C007446BA /* SceneModel.m in Sources */,
+				DDD616351916D85200DB15EA /* DefaultSatelliteSystems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

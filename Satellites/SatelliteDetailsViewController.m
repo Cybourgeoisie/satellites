@@ -130,10 +130,22 @@
             controller.editedFieldKey = @"mass";
             controller.editedFieldName = NSLocalizedString(@"Mass", @"Mass");
             
-            // Set the units and range
-            [unitsToRange setValue:[self createUnitsToRange: 0.1f : 333000.0f : @"Earth Mass"] forKey:@"Earth Masses"];
-            [unitsToRange setValue:[self createUnitsToRange: 0.000003f : 1.0f : @"Solar Mass"] forKey:@"Solar Masses"];
-            
+            // If modifying a planetary body, smaller range - Jupiter is about 319 x Earth Mass
+            if ([self.satellite bStar])
+            {
+                [unitsToRange setValue:[self createUnitsToRange: 0.015f : 1.0f : @"Solar Mass"] forKey:@"Solar Masses"];
+                [unitsToRange setValue:[self createUnitsToRange: 5000.0f : 333000.0f : @"Earth Mass"] forKey:@"Earth Masses"];
+            }
+            else if ([self.satellite bMoon])
+            {
+                [unitsToRange setValue:[self createUnitsToRange: 0.010f : 243.9f : @"Lunar Mass"] forKey:@"Lunar Masses"];
+                [unitsToRange setValue:[self createUnitsToRange: 0.000123f : 3.0f : @"Earth Mass"] forKey:@"Earth Masses"];
+            }
+            else
+            {
+                [unitsToRange setValue:[self createUnitsToRange: 0.10f : 500.0f : @"Earth Mass"] forKey:@"Earth Masses"];
+                [unitsToRange setValue:[self createUnitsToRange: 8.13f : 40650.0f : @"Lunar Mass"] forKey:@"Lunar Masses"];
+            }
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_ECCENTRICITY)
         {
@@ -165,10 +177,19 @@
         {
             controller.editedFieldKey = @"semimajorAxis";
             controller.editedFieldName = NSLocalizedString(@"Distance", @"Distance");
+            
+            if ([self.satellite bMoon])
+            {
+                [unitsToRange setValue:[self createUnitsToRange: 0.001f : 0.1f : @"AU"] forKey:@"Astronomical Units (AU)"];
+                [unitsToRange setValue:[self createUnitsToRange: 0.389f : 38.9f : @"Lunar Distance"] forKey:@"Lunar Distance"];
+            }
+            else
+            {
+                [unitsToRange setValue:[self createUnitsToRange: 0.1f : 100.0f : @"AU"] forKey:@"Astronomical Units (AU)"];
+            }
 
             // Set the units and range
             //[unitsToRange setValue:[self createUnitsToRange: 0.1f : 333000.0f : @"Kilometers"] forKey:@"Kilometers"];
-            [unitsToRange setValue:[self createUnitsToRange: 0.1f : 100.0f : @"AU"] forKey:@"Astronomical Units (AU)"];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_AXIAL_TILT)
         {

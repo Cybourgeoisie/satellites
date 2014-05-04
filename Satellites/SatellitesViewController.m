@@ -14,9 +14,7 @@
 @synthesize controller;
 @synthesize satelliteModel;
 
-// These three need to be cleaned up
 @synthesize system;
-@synthesize satellite;
 @synthesize satellites;
 
 @synthesize spheres;
@@ -91,12 +89,7 @@
         // Initialize the controller with the system at hand
         controller = [[SatellitesController alloc] initWithSystemObject: system];
     }
-    // Check for a valid satellite
-    else if (satellite != nil)
-    {
-        satellites = [[NSMutableArray alloc] initWithObjects:satellite, nil];
-        controller = [[SatellitesController alloc] initWithSatelliteObjects:satellites];
-    }
+    // Check for valid satellites
     else if (satellites != nil)
     {
         controller = [[SatellitesController alloc] initWithSatelliteObjects:satellites];
@@ -366,7 +359,7 @@
         }
         
         // If this body is a moon, increase the spacing
-        if (body.isMoon)
+        if (body.isMoon && [bodies count] > 1)
         {
             x += (body.position.x - body.orbitalBody.position.x);
             y += (body.position.y - body.orbitalBody.position.y);
