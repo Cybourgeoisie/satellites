@@ -112,6 +112,8 @@
         
         // Prepare the units of measurements
         NSMutableDictionary * unitsToRange = [[NSMutableDictionary alloc] init];
+        NSMutableArray * units     = [[NSMutableArray alloc] init];
+        NSMutableArray * unitRange = [[NSMutableArray alloc] init];
 
         // Given a particular section and row, allow certain editing to occur
         if (indexPath.section == SECTION_DETAILS && indexPath.row == ROW_NAME)
@@ -161,8 +163,10 @@
             controller.editedFieldName = NSLocalizedString(@"Inclination", @"Inclination");
 
             // Set the units and range
-            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 180.0f : @"Degrees"] forKey:@"Degrees"];
-            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 6.283f : @"Radians"] forKey:@"Radians"];
+            [units addObject:@"Degrees"];
+            [units addObject:@"Radians"];
+            [unitRange addObject:[[NSNumber alloc] initWithFloat:0.0f]];
+            [unitRange addObject:[[NSNumber alloc] initWithFloat:180.0f]];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_ROTATION)
         {
@@ -178,7 +182,11 @@
             controller.editedFieldKey = @"semimajorAxis";
             controller.editedFieldName = NSLocalizedString(@"Distance", @"Distance");
             
-            if ([self.satellite bMoon])
+            if ([self.satellite bStar])
+            {
+                [unitsToRange setValue:[self createUnitsToRange: 0.1f : 5.0f : @"AU"] forKey:@"Astronomical Units (AU)"];
+            }
+            else if ([self.satellite bMoon])
             {
                 [unitsToRange setValue:[self createUnitsToRange: 0.001f : 0.1f : @"AU"] forKey:@"Astronomical Units (AU)"];
                 [unitsToRange setValue:[self createUnitsToRange: 0.389f : 38.9f : @"Lunar Distance"] forKey:@"Lunar Distance"];
@@ -208,7 +216,9 @@
         }
         
         // Set the unit of measurement options
-        [controller setUnitsToRange: unitsToRange];
+        [controller setUnits:units];
+        [controller setUnitRange:unitRange];
+        //[controller setUnitsToRange: unitsToRange];
     }
     else if ([[segue identifier] isEqualToString:@"EditSelectedBody"])
     {

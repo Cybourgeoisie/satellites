@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DD00C9D617CA6C6100A6ADF3 /* TextureCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DD00C9D517CA6C6100A6ADF3 /* TextureCollectionViewLayout.m */; };
+		DD0220E7191855AC008ABE69 /* Unit.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0220E6191855AC008ABE69 /* Unit.m */; };
 		DD0788881736B1EC00CE27CF /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788871736B1EC00CE27CF /* Default-Landscape~ipad.png */; };
 		DD0788931736C3A000CE27CF /* SatellitesAppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788921736C3A000CE27CF /* SatellitesAppIcon.png */; };
 		DD0788951736C3A500CE27CF /* SatellitesAppIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0788941736C3A500CE27CF /* SatellitesAppIcon@2x.png */; };
@@ -56,6 +57,8 @@
 /* Begin PBXFileReference section */
 		DD00C9D417CA6C6100A6ADF3 /* TextureCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCollectionViewLayout.h; sourceTree = "<group>"; };
 		DD00C9D517CA6C6100A6ADF3 /* TextureCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureCollectionViewLayout.m; sourceTree = "<group>"; };
+		DD0220E5191855AC008ABE69 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
+		DD0220E6191855AC008ABE69 /* Unit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Unit.m; sourceTree = "<group>"; };
 		DD0788871736B1EC00CE27CF /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		DD0788921736C3A000CE27CF /* SatellitesAppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SatellitesAppIcon.png; sourceTree = SOURCE_ROOT; };
 		DD0788941736C3A500CE27CF /* SatellitesAppIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SatellitesAppIcon@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -376,6 +379,8 @@
 				DDF131FA171B7DBC00C42923 /* Vector.m */,
 				DDDFD24F1744460D0063FEB1 /* Satellite.h */,
 				DDDFD2501744460D0063FEB1 /* Satellite.m */,
+				DD0220E5191855AC008ABE69 /* Unit.h */,
+				DD0220E6191855AC008ABE69 /* Unit.m */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 				DDDBA4D418EB6C2C007446BA /* SceneMesh.m in Sources */,
 				DDDBA4D518EB6C2C007446BA /* SceneModel.m in Sources */,
 				DDD616351916D85200DB15EA /* DefaultSatelliteSystems.m in Sources */,
+				DD0220E7191855AC008ABE69 /* Unit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

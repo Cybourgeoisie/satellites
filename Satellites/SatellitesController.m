@@ -187,12 +187,36 @@ static float scale = 1000;
         [self translateToCenterOfMass];
         
         // Translate to a particular body
-        [self translateToBody : @"Earth"];
+        //[self translateToBody : @"Earth"];
     }
     else
     {
         SatelliteObject * satellite = [satellites lastObject];
         [self translateToBody : satellite.name];
+    }
+}
+
+- (void) restartCalculations
+{
+    // Translate satellites to COM frame
+    [self translateToCenterOfMass];
+    
+    // Calculuate initial velocities
+    [self calculateInitialVelocities];
+}
+
+- (void) updateSatellite : (Satellite *) satellite
+{
+    // Find the body
+    for (Satellite * body in bodies)
+    {
+        // Find a matching name
+        if (body != satellite) { continue; }
+        
+        // Update the corresponding property
+        
+        
+        break;
     }
 }
 
@@ -236,10 +260,15 @@ static float scale = 1000;
     float theta    = atanf(relPosition.y / relPosition.x);
     
     // Bail if too close
-    if (a < 0.01) { return; }
+    if (a < 0.005)
+    {
+        NSLog(@"Semi-major Axis too short, did not calculate velocity");
+        return;
+    }
     
     // Get the coordinates of the velocity
     // Reverse the direction in quadrants where x is negative
+    // TODO: Calculate in 3D space
     float vx =   velocity * sinf(theta) * (relPosition.x < 0 ? -1 : 1);
     float vy = - velocity * cosf(theta) * (relPosition.x < 0 ? -1 : 1);
     float vz = 0;
@@ -304,7 +333,11 @@ static float scale = 1000;
             
             // Don't allow calculations close to the same point
             // Soon, don't allow calculations when bodies touch
-            if (abs(dr) < 1 / scale) { continue; }
+            if (abs(dr) < (1 / scale))
+            {
+                NSLog(@"Distance between satellite too short, did not calculate velocity");
+                continue;
+            }
             
             // Update accelerations
             float massRatio = actor.mass / barycenter.mass;

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ManagedTableViewController.h"
+#import "Unit.h"
 #import "SatelliteObject.h"
 #import "EditingViewController.h"
 #import "TextureViewController.h"

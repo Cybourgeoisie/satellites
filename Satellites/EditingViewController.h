@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 #import "RootViewController.h"
+#import "Unit.h"
 #import "Satellite.h"
 #import "SatellitesViewController.h"
 
@@ -21,7 +22,9 @@
     
     // Internal stuff
     NSMutableDictionary * unitsToRange;
-    
+    NSMutableArray * units;
+    NSMutableArray * unitRange;
+
     // UI Elements
     IBOutlet UISlider    * slider;
     IBOutlet UITextField * textField;
@@ -41,6 +44,8 @@
 
 // Internal stuff
 @property (nonatomic, strong) NSMutableDictionary * unitsToRange;
+@property (nonatomic, strong) NSMutableArray * units;
+@property (nonatomic, strong) NSMutableArray * unitRange;
 
 // UI Elements
 @property (nonatomic) IBOutlet UISlider    * slider;

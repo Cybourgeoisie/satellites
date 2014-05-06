@@ -25,6 +25,8 @@
 - (id) initWithSystemObject:     (SystemObject *)    systemObject;
 - (id) initWithSatelliteObjects: (NSMutableArray *) satelliteObjects;
 - (void) performCalculations;
+- (void) restartCalculations;
+- (void) updateSatellite : (Satellite *) satellite;
 
 @property NSMutableArray  * satellites;
 @property Satellite       * barycenter;

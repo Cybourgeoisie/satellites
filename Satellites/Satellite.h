@@ -64,6 +64,7 @@
 
 - (void) setDistance      : (float) a;
 - (void) setDistance      : (float) a fromBody : (Satellite *) body;
+- (void) updateDistance   : (float) a;
 
 - (void) setMass          : (float) m;
 - (void) setInclination   : (float) i;

@@ -101,6 +101,27 @@
     [self setPosition: x : y : z];
 }
 
+- (void) updateDistance : (float) a
+{
+    // Use this body's orbital body.. or none
+    Satellite * body = self.orbitalBody ?: [[Satellite alloc] init];
+
+    // Move the body closer or further.. somehow.
+    // Prepare the coordinates
+    float x = self.position.x, y = self.position.y, z = self.position.z;
+    float theta = atanf(y/x);
+    //theta *= (y >= 0) ? 1.0f : -1.0f;
+
+    // Coordinates
+    float periapsis = a * (1 - self.eccentricity);
+    x = body.position.x + periapsis * cosf(theta) * cosf(self.inclination);
+    y = body.position.y + periapsis * sinf(theta) * cosf(self.inclination);
+    z = body.position.z + periapsis * sinf(self.inclination);
+    
+    // Set the position
+    [self setPosition: x : y : z];
+}
+
 // Override to also set the size
 - (void) setMass : (float) m
 {

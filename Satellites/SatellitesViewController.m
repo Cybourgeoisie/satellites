@@ -26,7 +26,9 @@
 @synthesize targetLookAtPosition;
 @synthesize rotation;
 @synthesize scale;
+
 @synthesize bEditorView;
+@synthesize bUpdateSatellites;
 
 - (id) init
 {
@@ -290,6 +292,9 @@
     const GLfloat aspectRatio = (GLfloat) view.drawableWidth / (GLfloat) view.drawableHeight;
     self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 5000.0f * scale);
 
+    // Alter the calculations if necessary
+    [self updateSatellites];
+
     // Reposition all of the bodies to the scaled amount
     [self drawSatellites];
 
@@ -335,6 +340,37 @@
     [self.skybox prepareToDraw];
     [self.skybox draw];
     glBindVertexArrayOES(0);
+}
+
+- (void)propogateChanges:(Satellite *)satellite forProperty:(NSString *)property
+{
+    bUpdateSatellites = true;
+    
+    if (//[property isEqualToString:@"mass"]         ||
+        [property isEqualToString:@"inclination"]  ||
+        [property isEqualToString:@"eccentricity"] ||
+        [property isEqualToString:@"semimajorAxis"])
+    {
+        [controller restartCalculations];
+    }
+}
+
+- (void) updateSatellites
+{
+    // Only allow updating properties from editor mode
+    if (!bEditorView || !bUpdateSatellites) { return; }
+
+    int i = 0;
+    for (Satellite * body in bodies)
+    {
+        // Update whatever is necessary
+        [spheres[i] updateSize:body.size];
+        [spheres[i] setTilt:body.axialTilt];
+        [spheres[i] setRotationSpeed:body.rotationSpeed];
+        i++;
+    }
+    
+    bUpdateSatellites = false;
 }
 
 - (void) drawSatellites

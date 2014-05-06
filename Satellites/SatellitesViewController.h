@@ -23,7 +23,9 @@
     NSMutableArray       * spheres;
     NSMutableArray       * bodies;
     GLKSkyboxEffect      * skybox;
+    
     BOOL                   bEditorView;
+    BOOL                   bUpdateSatellites;
 }
 
 @property (strong, nonatomic) GLKBaseEffect *baseEffect;
@@ -44,6 +46,7 @@
 @property (nonatomic, assign) GLKVector3 rotation;
 @property (nonatomic, assign) GLfloat scale;
 @property (nonatomic, assign) BOOL bEditorView;
+@property (nonatomic, assign) BOOL bUpdateSatellites;
 
 // C'mon, c'mon, c'mon, c'mon, now touch me babe
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
@@ -51,5 +54,6 @@
 
 - (void)useEditorView:(BOOL)bUseView;
 - (Satellite *)getSatelliteByName:(NSString *)name;
+- (void)propogateChanges:(Satellite *)satellite forProperty:(NSString *)property;
 
 @end

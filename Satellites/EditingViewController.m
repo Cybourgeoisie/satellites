@@ -15,6 +15,8 @@
 @synthesize editedObject;
 @synthesize slider;
 @synthesize unitsToRange;
+@synthesize units;
+@synthesize unitRange;
 @synthesize textField;
 @synthesize unitField;
 @synthesize activityActionSheet;
@@ -45,7 +47,9 @@
     SatelliteObject * satelliteObject = (SatelliteObject *) editedObject;
     
     // Show more than just this satellite if we need to
-    if ([editedFieldName isEqualToString:@"Eccentricity"])
+    if ([editedFieldName isEqualToString:@"Distance"] ||
+        [editedFieldName isEqualToString:@"Eccentricity"] ||
+        [editedFieldName isEqualToString:@"Inclination"])
     {
         if ([satelliteObject bMoon])
         {
@@ -66,6 +70,11 @@
             [satellites addObjectsFromArray:stars];
             [satellites addObject:satelliteObject];
         }
+    }
+    else
+    {
+        // Just show this one satellite
+        [satellites addObject:satelliteObject];
     }
 
     // Create and instantiate the satellite view controller
@@ -124,15 +133,11 @@
 
 - (void) setRange : (NSUInteger) index
 {
-    // Get the keys
-    NSArray * units = [unitsToRange allKeys];
-    
-    // Set the initial minimum and maximum values for the default UOM
-    NSDictionary * dict  = [unitsToRange valueForKey:[units objectAtIndex:index]];
-    NSArray      * range = [dict valueForKey:@"range"];
-    NSNumber     * min   = [range objectAtIndex:0];
-    NSNumber     * max   = [range objectAtIndex:1];
-    
+    // Get the min and max
+    NSNumber * min = [unitRange objectAtIndex:0];
+    NSNumber * max = [unitRange objectAtIndex:1];
+
+    // Set the range
     [slider setMinimumValue:[min floatValue]];
     [slider setMaximumValue:[max floatValue]];
 }
@@ -207,9 +212,23 @@
     {
         fieldName = @"mass";
     }
+    else if ([fieldName isEqualToString:@"Eccentricity"])
+    {
+        fieldName = @"eccentricity";
+    }
+    else if ([fieldName isEqualToString:@"Inclination"])
+    {
+        fieldName = @"inclination";
+    }
+    else if ([fieldName isEqualToString:@"Distance"])
+    {
+        fieldName = @"semimajorAxis";
+        [satellite updateDistance:[numValue floatValue] * 1000];
+    }
     
     // Set the new value
     [satellite updateField:fieldName withValue:numValue];
+    [satellitesViewController propogateChanges:satellite forProperty:fieldName];
 }
 
 - (void) prepareUnitOfMeasurementActionSheet
@@ -253,6 +272,10 @@
     {
         return;
     }
+    
+    // Convert if necessary
+    //NSString * unitName = [units objectAtIndex:buttonIndex];
+    //Unit * unit = [[Unit alloc] initWithValue:[[NSNumber alloc] initWithFloat:[slider value]] forUnit:unitName];
     
     // Get the units
     NSArray      * units = [unitsToRange allKeys];
