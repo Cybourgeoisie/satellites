@@ -14,9 +14,9 @@
 @synthesize editedFieldName;
 @synthesize editedObject;
 @synthesize slider;
-@synthesize unitsToRange;
 @synthesize units;
 @synthesize unitRange;
+@synthesize currentUnit;
 @synthesize textField;
 @synthesize unitField;
 @synthesize activityActionSheet;
@@ -105,6 +105,7 @@
     
     // Get the value
     id value = [self.editedObject valueForKey:self.editedFieldKey];
+    currentUnit = [[Unit alloc] initWithValue:value forUnit:[units objectAtIndex:0]];
     [self updateSliderValue:[value floatValue]];
 }
 
@@ -128,10 +129,10 @@
     [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     
     // Set the min and max values for the slider
-    [self setRange:0];
+    [self setRange];
 }
 
-- (void) setRange : (NSUInteger) index
+- (void) setRange
 {
     // Get the min and max
     NSNumber * min = [unitRange objectAtIndex:0];
@@ -165,6 +166,7 @@
     
     // Update slider value
     [slider setValue:value];
+    [currentUnit setValue:[[NSNumber alloc] initWithFloat:value]];
     
     // Update satellite
     [self updateSatellite];
@@ -177,6 +179,9 @@
     NSString * value = [NSString stringWithFormat:@"%1.3f", sender.value];
     [textField setText : value];
     
+    // Update the unit
+    [currentUnit setValue:[[NSNumber alloc] initWithFloat:sender.value]];
+
     // Update satellite
     [self updateSatellite];
 }
@@ -188,6 +193,10 @@
     // Update the text field
     NSString * textValue = [NSString stringWithFormat:@"%1.3f", value];
     [textField setText : textValue];
+
+    // Update the unit
+    // Not actually needed in practice
+    //[currentUnit setValue:[[NSNumber alloc] initWithFloat:value]];
     
     // Update satellite
     [self updateSatellite];
@@ -196,7 +205,7 @@
 - (void) updateSatellite
 {
     // Update satellite
-    NSNumber * numValue  = [[NSNumber alloc] initWithFloat:[self convertValue : 0]];
+    NSNumber * numValue  = [currentUnit getBaseValue];
     NSString * fieldName = [[NSString alloc] initWithString:editedFieldName];
     
     // Make sure we're using a valid field name
@@ -240,7 +249,6 @@
                                              otherButtonTitles:nil];
 
     // Set the buttons
-    NSArray * units = [self.unitsToRange allKeys];
     for (NSString * buttonName in units)
     {
         [activityActionSheet addButtonWithTitle:buttonName];
@@ -249,8 +257,7 @@
     // Update the button name
     if ([units count] > 0)
     {
-        NSDictionary * dict  = [unitsToRange valueForKey:[units objectAtIndex:0]];
-        NSString * uomAbbr = [dict valueForKey:@"abbr"];
+        NSString * uomAbbr = [currentUnit getAbbr];
         [unitField setTitle:uomAbbr forState:UIControlStateNormal];
     }
     else
@@ -273,53 +280,34 @@
         return;
     }
     
-    // Convert if necessary
-    //NSString * unitName = [units objectAtIndex:buttonIndex];
-    //Unit * unit = [[Unit alloc] initWithValue:[[NSNumber alloc] initWithFloat:[slider value]] forUnit:unitName];
+    // Get the new unit name
+    NSString * unitName = [units objectAtIndex:buttonIndex - 1];
     
-    // Get the units
-    NSArray      * units = [unitsToRange allKeys];
-    NSDictionary * dict  = [unitsToRange valueForKey:[units objectAtIndex:buttonIndex-1]];
-
-    // Get the new value
-    float value = [self convertValue : buttonIndex - 1];
-
     // Update the range
-    [self setRange:buttonIndex - 1];
+    [unitRange setValue:[currentUnit convertValue:[unitRange objectAtIndex:0] toUnit:unitName]
+                 forKey:[[[NSNumber alloc] initWithInt:0] stringValue]];
+    [unitRange setValue:[currentUnit convertValue:[unitRange objectAtIndex:1] toUnit:unitName]
+                 forKey:[[[NSNumber alloc] initWithInt:1] stringValue]];
+
+    // Now convert this unit to the new one
+    currentUnit = [currentUnit convertTo:unitName];
+
+    // Set the new range
+    [self setRange];
     
     // New value
-    [self updateSliderValue : value];
+    [self updateSliderValue : [[currentUnit getValue] floatValue]];
     
     // Update the unit of measurement
-    NSString * uomAbbr = [dict valueForKey:@"abbr"];
-    [unitField setTitle:uomAbbr forState:UIControlStateNormal];
+    [unitField setTitle:[currentUnit getAbbr] forState:UIControlStateNormal];
 }
 
-- (float) convertValue : (NSUInteger) convertToIndex
-{
-    // Get the units
-    NSArray      * units = [unitsToRange allKeys];
-    NSDictionary * dict  = [unitsToRange valueForKey:[units objectAtIndex:convertToIndex]];
-    
-    // Using the range of the previous units and the new units,
-    // Convert the current value to a new value
-    float maxConvertFrom = [slider maximumValue];
-    float valConvertFrom = [slider value];
-    
-    // Get the value to convert to
-    NSArray  * range   = [dict valueForKey:@"range"];
-    NSNumber * max     = [range objectAtIndex:1];
-    float maxConvertTo = [max floatValue];
-    
-    // New value
-    return valConvertFrom * maxConvertTo / maxConvertFrom;
-}
 
 // Save Action
 - (IBAction) save: (id) sender
 {
     // Convert the value to the expected unit
-    float      value       = [self convertValue : 0];
+    float      value       = [[currentUnit getBaseValue] floatValue];
     NSString * stringValue = [NSString stringWithFormat:@"%1.3f", value];
     
     // Pass current value to the edited object

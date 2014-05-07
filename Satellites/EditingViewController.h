@@ -21,9 +21,9 @@
     NSString        * editedFieldName;
     
     // Internal stuff
-    NSMutableDictionary * unitsToRange;
     NSMutableArray * units;
     NSMutableArray * unitRange;
+    Unit * currentUnit;
 
     // UI Elements
     IBOutlet UISlider    * slider;
@@ -43,9 +43,9 @@
 @property (nonatomic, strong) NSString        * editedFieldName;
 
 // Internal stuff
-@property (nonatomic, strong) NSMutableDictionary * unitsToRange;
 @property (nonatomic, strong) NSMutableArray * units;
 @property (nonatomic, strong) NSMutableArray * unitRange;
+@property (nonatomic, strong) Unit * currentUnit;
 
 // UI Elements
 @property (nonatomic) IBOutlet UISlider    * slider;

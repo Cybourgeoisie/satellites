@@ -68,9 +68,10 @@
     
     self->name = unitName;
 
-    // Set the unit type
+    // Set the unit type and abbr
     NSUInteger index = [unitNames indexOfObject:unitName];
     [self setType:[unitTypes objectAtIndex:index]];
+    [self setAbbr:[unitAbbrs objectAtIndex:index]];
 }
 
 - (void) setType : (NSString *) unitType
@@ -101,15 +102,46 @@
     return value;
 }
 
+- (NSNumber *) convertValue : (NSNumber *) unitValue toUnit : (NSString *) unitName
+{
+    // Get the unit name index
+    NSUInteger fromIndex = [unitNames indexOfObject:name];
+    NSUInteger toIndex   = [unitNames indexOfObject:unitName];
+    
+    // Now divide this value by the conversion rate
+    NSNumber * convFrom = [unitValues objectAtIndex:fromIndex];
+    NSNumber * convTo   = [unitValues objectAtIndex:toIndex];
+    float convertedValue = ([unitValue floatValue] / [convFrom floatValue]) * [convTo floatValue];
+    
+    return [[NSNumber alloc] initWithFloat:convertedValue];
+}
+
+- (NSNumber *) convertValue : (NSNumber *) unitValue fromUnit : (NSString *) unitName
+{
+    // Get the unit name index
+    NSUInteger fromIndex = [unitNames indexOfObject:unitName];
+    NSUInteger toIndex   = [unitNames indexOfObject:name];
+    
+    // Now divide this value by the conversion rate
+    NSNumber * convFrom = [unitValues objectAtIndex:fromIndex];
+    NSNumber * convTo   = [unitValues objectAtIndex:toIndex];
+    float convertedValue = ([unitValue floatValue] / [convFrom floatValue]) * [convTo floatValue];
+    
+    return [[NSNumber alloc] initWithFloat:convertedValue];
+}
+
 // Incomplete
 - (Unit *) convertToBaseUnit
 {
     return self;
 }
 
-// Incomplete
 - (Unit *) convertTo: (NSString *) unitName
 {
+    // Set the value, name, type, abbr
+    value = [self convertValue:value toUnit:unitName];
+    [self setName:unitName];
+    
     return self;
 }
 

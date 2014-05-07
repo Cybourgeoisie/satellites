@@ -35,7 +35,10 @@
 - (id) initWithValue : (NSNumber *) unitValue forUnit : (NSString *) unitName;
 - (Unit *) convertToBaseUnit;
 - (Unit *) convertTo: (NSString *) unitName;
+- (NSNumber *) convertValue : (NSNumber *) unitValue toUnit   : (NSString *) unitName;
+- (NSNumber *) convertValue : (NSNumber *) unitValue fromUnit : (NSString *) unitName;
 - (NSNumber *) getBaseValue;
 - (NSNumber *) getValue;
+- (NSString *) getAbbr;
 
 @end
