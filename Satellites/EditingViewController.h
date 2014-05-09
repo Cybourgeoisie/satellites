@@ -22,7 +22,7 @@
     
     // Internal stuff
     NSMutableArray * units;
-    NSMutableArray * unitRange;
+    NSMutableDictionary * unitRange;
     Unit * currentUnit;
 
     // UI Elements
@@ -44,7 +44,7 @@
 
 // Internal stuff
 @property (nonatomic, strong) NSMutableArray * units;
-@property (nonatomic, strong) NSMutableArray * unitRange;
+@property (nonatomic, strong) NSMutableDictionary * unitRange;
 @property (nonatomic, strong) Unit * currentUnit;
 
 // UI Elements

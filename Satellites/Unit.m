@@ -25,24 +25,28 @@
                   @"mass", @"mass", @"mass",
                   @"angle", @"angle",
                   @"angle/time", @"angle/time",
+                  @"none",
                   nil];
     unitNames  = [[NSArray alloc] initWithObjects:
                   @"Astronomical Unit", @"Lunar Distance",
                   @"Earth Masses", @"Solar Masses", @"Lunar Masses",
                   @"Degrees", @"Radians",
                   @"Degrees per Second", @"Radians per Second",
+                  @"Unitless",
                   nil];
     unitAbbrs  = [[NSArray alloc] initWithObjects:
                   @"AU", @"Lunar Dist.",
                   @"Earth Mass", @"Solar Mass", @"Lunar Mass",
                   @"Deg", @"Rad",
                   @"Deg / Sec", @"Rad / Sec",
+                  @"Unitless",
                   nil];
     unitValues = [[NSArray alloc] initWithObjects:
                   [[NSNumber alloc] initWithFloat:1.0f], [[NSNumber alloc] initWithFloat:388.6f],
                   [[NSNumber alloc] initWithFloat:1.0f], [[NSNumber alloc] initWithFloat:0.00000300347f], [[NSNumber alloc] initWithFloat:81.3f],
-                  [[NSNumber alloc] initWithFloat:1.0f], [[NSNumber alloc] initWithFloat:0.0175f],
-                  [[NSNumber alloc] initWithFloat:1.0f], [[NSNumber alloc] initWithFloat:0.0175f],
+                  [[NSNumber alloc] initWithFloat:1.0f], [[NSNumber alloc] initWithFloat:0.017453293f],
+                  [[NSNumber alloc] initWithFloat:1.0f], [[NSNumber alloc] initWithFloat:0.017453293f],
+                  [[NSNumber alloc] initWithFloat:1.0f],
                   nil];
 }
 
@@ -57,6 +61,24 @@
     
     return self;
 }
+
+- (id) initWithBaseValue : (NSNumber *) unitValue forUnit : (NSString *) unitName
+{
+    // Set the default values
+    [self prepareUnits];
+    
+    // Get the converted value
+    NSUInteger toIndex   = [unitNames indexOfObject:unitName];
+    NSNumber * convTo    = [unitValues objectAtIndex:toIndex];
+    float convertedValue = [unitValue floatValue] * [convTo floatValue];
+    
+    // Set the value and name
+    [self setValue:[[NSNumber alloc] initWithFloat: convertedValue]];
+    [self setName:unitName];
+    
+    return self;
+}
+
 
 - (void) setName : (NSString *) unitName
 {
@@ -100,6 +122,11 @@
 - (NSNumber *) getValue
 {
     return value;
+}
+
+- (NSString *) getAbbr
+{
+    return abbr;
 }
 
 - (NSNumber *) convertValue : (NSNumber *) unitValue toUnit : (NSString *) unitName

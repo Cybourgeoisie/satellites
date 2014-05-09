@@ -113,7 +113,7 @@
         // Prepare the units of measurements
         NSMutableDictionary * unitsToRange = [[NSMutableDictionary alloc] init];
         NSMutableArray * units     = [[NSMutableArray alloc] init];
-        NSMutableArray * unitRange = [[NSMutableArray alloc] init];
+        NSMutableDictionary * unitRange = [[NSMutableDictionary alloc] init];
 
         // Given a particular section and row, allow certain editing to occur
         if (indexPath.section == SECTION_DETAILS && indexPath.row == ROW_NAME)
@@ -135,18 +135,24 @@
             // If modifying a planetary body, smaller range - Jupiter is about 319 x Earth Mass
             if ([self.satellite bStar])
             {
-                [unitsToRange setValue:[self createUnitsToRange: 0.015f : 1.0f : @"Solar Mass"] forKey:@"Solar Masses"];
-                [unitsToRange setValue:[self createUnitsToRange: 5000.0f : 333000.0f : @"Earth Mass"] forKey:@"Earth Masses"];
+                [units addObject:@"Solar Masses"];
+                [units addObject:@"Earth Masses"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:0.1f] forKey:@"min"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:100.0f] forKey:@"max"];
             }
             else if ([self.satellite bMoon])
             {
-                [unitsToRange setValue:[self createUnitsToRange: 0.010f : 243.9f : @"Lunar Mass"] forKey:@"Lunar Masses"];
-                [unitsToRange setValue:[self createUnitsToRange: 0.000123f : 3.0f : @"Earth Mass"] forKey:@"Earth Masses"];
+                [units addObject:@"Lunar Masses"];
+                [units addObject:@"Earth Masses"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:0.1f] forKey:@"min"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:100.0f] forKey:@"max"];
             }
             else
             {
-                [unitsToRange setValue:[self createUnitsToRange: 0.10f : 500.0f : @"Earth Mass"] forKey:@"Earth Masses"];
-                [unitsToRange setValue:[self createUnitsToRange: 8.13f : 40650.0f : @"Lunar Mass"] forKey:@"Lunar Masses"];
+                [units addObject:@"Earth Masses"];
+                [units addObject:@"Lunar Masses"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:0.1f] forKey:@"min"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:100.0f] forKey:@"max"];
             }
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_ECCENTRICITY)
@@ -156,6 +162,11 @@
 
             // Set the units and range
             [unitsToRange setValue:[self createUnitsToRange: 0.0f : 1.0f : @"Unitless"] forKey:@"Unitless"];
+            
+            // Set the units and range
+            [units addObject:@"Unitless"];
+            [unitRange setValue:[[NSNumber alloc] initWithFloat:0.0f] forKey:@"min"];
+            [unitRange setValue:[[NSNumber alloc] initWithFloat:1.0f] forKey:@"max"];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_INCLINATION)
         {
@@ -165,8 +176,8 @@
             // Set the units and range
             [units addObject:@"Degrees"];
             [units addObject:@"Radians"];
-            [unitRange addObject:[[NSNumber alloc] initWithFloat:0.0f]];
-            [unitRange addObject:[[NSNumber alloc] initWithFloat:180.0f]];
+            [unitRange setValue:[[NSNumber alloc] initWithFloat:0.0f] forKey:@"min"];
+            [unitRange setValue:[[NSNumber alloc] initWithFloat:180.0f] forKey:@"max"];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_ROTATION)
         {
@@ -174,8 +185,11 @@
             controller.editedFieldName = NSLocalizedString(@"Rotation", @"Rotation");
 
             // Set the units and range
-            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 180.0f : @"Deg / Sec"] forKey:@"Degrees per Second"];
-            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 6.283f : @"Rad / Sec"] forKey:@"Radians per Second"];
+            
+            [units addObject:@"Degrees per Second"];
+            [units addObject:@"Radians per Second"];
+            [unitRange setValue:[[NSNumber alloc] initWithFloat:0.0f] forKey:@"min"];
+            [unitRange setValue:[[NSNumber alloc] initWithFloat:180.0f] forKey:@"max"];
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_DISTANCE)
         {
@@ -184,16 +198,22 @@
             
             if ([self.satellite bStar])
             {
-                [unitsToRange setValue:[self createUnitsToRange: 0.1f : 5.0f : @"AU"] forKey:@"Astronomical Units (AU)"];
+                [units addObject:@"Astronomical Unit"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:0.1f] forKey:@"min"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:5.0f] forKey:@"max"];
             }
             else if ([self.satellite bMoon])
             {
-                [unitsToRange setValue:[self createUnitsToRange: 0.001f : 0.1f : @"AU"] forKey:@"Astronomical Units (AU)"];
-                [unitsToRange setValue:[self createUnitsToRange: 0.389f : 38.9f : @"Lunar Distance"] forKey:@"Lunar Distance"];
+                [units addObject:@"Lunar Distance"];
+                [units addObject:@"Astronomical Unit"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:0.5f] forKey:@"min"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:10.f] forKey:@"max"];
             }
             else
             {
-                [unitsToRange setValue:[self createUnitsToRange: 0.1f : 100.0f : @"AU"] forKey:@"Astronomical Units (AU)"];
+                [units addObject:@"Astronomical Unit"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:0.1f] forKey:@"min"];
+                [unitRange setValue:[[NSNumber alloc] initWithFloat:100.0f] forKey:@"max"];
             }
 
             // Set the units and range
@@ -205,8 +225,10 @@
             controller.editedFieldName = NSLocalizedString(@"Axial Tilt", @"Axial Tilt");
 
             // Set the units and range
-            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 180.0f : @"Degrees"] forKey:@"Degrees"];
-            [unitsToRange setValue:[self createUnitsToRange: 0.0f : 6.283f : @"Radians"] forKey:@"Radians"];
+            [units addObject:@"Degrees"];
+            [units addObject:@"Radians"];
+            [unitRange setValue:[[NSNumber alloc] initWithFloat:0.0f] forKey:@"min"];
+            [unitRange setValue:[[NSNumber alloc] initWithFloat:180.0f] forKey:@"max"];
         }
         else
         {
@@ -218,7 +240,6 @@
         // Set the unit of measurement options
         [controller setUnits:units];
         [controller setUnitRange:unitRange];
-        //[controller setUnitsToRange: unitsToRange];
     }
     else if ([[segue identifier] isEqualToString:@"EditSelectedBody"])
     {

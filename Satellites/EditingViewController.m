@@ -94,6 +94,11 @@
 {
     [super viewWillAppear:animated];
     
+    // Set the unit and value
+    id value = [self.editedObject valueForKey:self.editedFieldKey];
+    currentUnit = [[Unit alloc] initWithBaseValue:value forUnit:[units objectAtIndex:0]];
+    value = [currentUnit getValue];
+
     // Prepare UI elements
     [self prepareTextField];
     [self prepareSlider];
@@ -104,8 +109,6 @@
     satellite = [satellitesViewController getSatelliteByName: satelliteObject.name];
     
     // Get the value
-    id value = [self.editedObject valueForKey:self.editedFieldKey];
-    currentUnit = [[Unit alloc] initWithValue:value forUnit:[units objectAtIndex:0]];
     [self updateSliderValue:[value floatValue]];
 }
 
@@ -135,8 +138,8 @@
 - (void) setRange
 {
     // Get the min and max
-    NSNumber * min = [unitRange objectAtIndex:0];
-    NSNumber * max = [unitRange objectAtIndex:1];
+    NSNumber * min = [unitRange objectForKey:@"min"];
+    NSNumber * max = [unitRange objectForKey:@"max"];
 
     // Set the range
     [slider setMinimumValue:[min floatValue]];
@@ -284,10 +287,10 @@
     NSString * unitName = [units objectAtIndex:buttonIndex - 1];
     
     // Update the range
-    [unitRange setValue:[currentUnit convertValue:[unitRange objectAtIndex:0] toUnit:unitName]
-                 forKey:[[[NSNumber alloc] initWithInt:0] stringValue]];
-    [unitRange setValue:[currentUnit convertValue:[unitRange objectAtIndex:1] toUnit:unitName]
-                 forKey:[[[NSNumber alloc] initWithInt:1] stringValue]];
+    NSNumber * minValue = [currentUnit convertValue:[unitRange objectForKey:@"min"] toUnit:unitName];
+    NSNumber * maxValue = [currentUnit convertValue:[unitRange objectForKey:@"max"] toUnit:unitName];
+    [unitRange setValue:minValue forKey:@"min"];
+    [unitRange setValue:maxValue forKey:@"max"];
 
     // Now convert this unit to the new one
     currentUnit = [currentUnit convertTo:unitName];

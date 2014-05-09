@@ -33,6 +33,7 @@
 @property (nonatomic, readwrite) NSString * abbr;
 
 - (id) initWithValue : (NSNumber *) unitValue forUnit : (NSString *) unitName;
+- (id) initWithBaseValue : (NSNumber *) unitValue forUnit : (NSString *) unitName;
 - (Unit *) convertToBaseUnit;
 - (Unit *) convertTo: (NSString *) unitName;
 - (NSNumber *) convertValue : (NSNumber *) unitValue toUnit   : (NSString *) unitName;
