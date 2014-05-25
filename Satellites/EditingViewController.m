@@ -113,9 +113,35 @@
 }
 
 // Drop the keyboard when the return button is pressed
-- (BOOL)textFieldShouldReturn:(UITextField *)uiTextField
+- (BOOL)textFieldShouldReturn:(UITextField *)sender
 {
-    [uiTextField resignFirstResponder];
+    // Float this shit
+    NSString * textValue = sender.text;
+    float value = [textValue floatValue];
+    
+    // Validate that we are within range
+    float min = [slider minimumValue];
+    float max = [slider maximumValue];
+    if (min > value)
+    {
+        value = min;
+        [textField setText:[NSString stringWithFormat:@"%1.3f", value]];
+    }
+    else if (max < value)
+    {
+        value = max;
+        [textField setText:[NSString stringWithFormat:@"%1.3f", value]];
+    }
+    
+    // Update slider value
+    [slider setValue:value];
+    [currentUnit setValue:[[NSNumber alloc] initWithFloat:value]];
+    
+    // Update satellite
+    [self updateSatellite];
+
+    // Resign the text field
+    [sender resignFirstResponder];
     return YES;
 }
 
@@ -146,35 +172,6 @@
     [slider setMaximumValue:[max floatValue]];
 }
 
-// When the text value is changed, alter the slider value
-- (IBAction) textFieldValueChanged : (UITextField *) sender
-{
-    // Float this shit
-    NSString * textValue = sender.text;
-    float value = [textValue floatValue];
-    
-    // Validate that we are within range
-    float min = [slider minimumValue];
-    float max = [slider maximumValue];
-    if (min > value)
-    {
-        value = min;
-        [textField setText:[NSString stringWithFormat:@"%1.3f", value]];
-    }
-    else if (max < value)
-    {
-        value = max;
-        [textField setText:[NSString stringWithFormat:@"%1.3f", value]];
-    }
-    
-    // Update slider value
-    [slider setValue:value];
-    [currentUnit setValue:[[NSNumber alloc] initWithFloat:value]];
-    
-    // Update satellite
-    [self updateSatellite];
-}
-
 // When the slider value is changed, alter the text value
 - (IBAction) sliderValueChanged : (UISlider *) sender
 {
@@ -196,10 +193,6 @@
     // Update the text field
     NSString * textValue = [NSString stringWithFormat:@"%1.3f", value];
     [textField setText : textValue];
-
-    // Update the unit
-    // Not actually needed in practice
-    //[currentUnit setValue:[[NSNumber alloc] initWithFloat:value]];
     
     // Update satellite
     [self updateSatellite];

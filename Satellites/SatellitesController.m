@@ -127,6 +127,40 @@ static float scale = 1000;
     }
 }
 
+- (Satellite *) createStarCenter
+{
+    Satellite * starCenter = [[Satellite alloc] init];
+    starCenter.mass       = 0;
+    starCenter.position.x = 0;
+    starCenter.position.y = 0;
+    starCenter.position.z = 0;
+    
+    for (Satellite * body in bodies)
+    {
+        if (![body isStar]) { continue; }
+        
+        // Add to the sum of masses
+        starCenter.mass += body.mass;
+        
+        // Here, get the sum of masses and positions
+        starCenter.position.x += body.position.x * body.mass;
+        starCenter.position.y += body.position.y * body.mass;
+        starCenter.position.z += body.position.z * body.mass;
+    }
+    
+    if (starCenter.mass == 0)
+    {
+        return starCenter;
+    }
+    
+    // Now divide by the total mass
+    starCenter.position.x /= starCenter.mass;
+    starCenter.position.y /= starCenter.mass;
+    starCenter.position.z /= starCenter.mass;
+    
+    return starCenter;
+}
+
 - (void) createSatellite: (SatelliteObject *) satelliteObject
 {
     // Planet
@@ -148,7 +182,7 @@ static float scale = 1000;
     }
     else
     {
-        [satellite setDistance: [satelliteObject.semimajorAxis floatValue] * scale fromBody: barycenter];
+        [satellite setDistance: [satelliteObject.semimajorAxis floatValue] * scale fromBody: [self createStarCenter]];
         [satellite setTexture : ([satelliteObject.texture length]) ? satelliteObject.texture : @"Venus"];
     }
     
@@ -205,21 +239,6 @@ static float scale = 1000;
     [self calculateInitialVelocities];
 }
 
-- (void) updateSatellite : (Satellite *) satellite
-{
-    // Find the body
-    for (Satellite * body in bodies)
-    {
-        // Find a matching name
-        if (body != satellite) { continue; }
-        
-        // Update the corresponding property
-        
-        
-        break;
-    }
-}
-
 /* * * * * * * * * *
  
  Calculations ahoy
@@ -233,7 +252,7 @@ static float scale = 1000;
         // If the body orbits something else, calculate with respect to that body
         if (!body.orbitalBody)
         {
-            [body setOrbitalBody : barycenter];
+            [body setOrbitalBody : [self createStarCenter]];
         }
         
         // Determine the orbital velocity

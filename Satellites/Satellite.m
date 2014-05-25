@@ -110,7 +110,6 @@
     // Prepare the coordinates
     float x = self.position.x, y = self.position.y, z = self.position.z;
     float theta = atanf(y/x);
-    //theta *= (y >= 0) ? 1.0f : -1.0f;
 
     // Coordinates
     float periapsis = a * (1 - self.eccentricity);
@@ -131,7 +130,7 @@
     // Create the size
     // The radius of the body is proportional to mass ^ 1/3
     // The logarithm allows us to see everything on the screen
-    //self.size = log2f(pow(m * 1000, 1.0/3.0f));
+    //self.size = log2f(pow(m * 10000, 1.0/3.0f));
     
     self.size = log2f(pow(m * 1000, 1.0/2.0f));
 }
