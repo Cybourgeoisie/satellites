@@ -16,6 +16,7 @@ static float scale = 1000;
 @synthesize satellites;
 @synthesize bodies;
 @synthesize barycenter;
+@synthesize centralBody;
 @synthesize bEditorView;
 
 - (id) init
@@ -84,6 +85,9 @@ static float scale = 1000;
         // Binary Stars
         //bodies = [defaults binaryStars];
     }
+    
+    // Set the central body
+    centralBody = [bodies objectAtIndex:0];
 }
 
 - (void) createSystem : (NSMutableArray *) satelliteObjects
@@ -221,12 +225,15 @@ static float scale = 1000;
         [self translateToCenterOfMass];
         
         // Translate to a particular body
-        //[self translateToBody : @"Earth"];
+        if (centralBody != barycenter)
+        {
+            [self translateToBody : centralBody];
+        }
     }
     else
     {
         SatelliteObject * satellite = [satellites lastObject];
-        [self translateToBody : satellite.name];
+        [self translateToBodyByName : satellite.name];
     }
 }
 
@@ -367,7 +374,7 @@ static float scale = 1000;
     }
 }
 
-- (void) translateToBody : (NSString *) name
+- (void) translateToBodyByName : (NSString *) name
 {
     // Find the body
     for (Satellite * center in bodies)
@@ -390,6 +397,33 @@ static float scale = 1000;
         center.position.y = 0.0;
         center.position.z = 0.0;
 
+        break;
+    }
+}
+
+- (void) translateToBody : (Satellite *) body
+{
+    // Find the body
+    for (Satellite * center in bodies)
+    {
+        // Find a matching name
+        if (body != center) { continue; }
+
+        // Move everything wrt the body in question
+        for (Satellite * body in bodies)
+        {
+            if (body == center) { continue; }
+            
+            body.position.x -= center.position.x;
+            body.position.y -= center.position.y;
+            body.position.z -= center.position.z;
+        }
+        
+        // Lastly, move this body
+        center.position.x = 0.0;
+        center.position.y = 0.0;
+        center.position.z = 0.0;
+        
         break;
     }
 }

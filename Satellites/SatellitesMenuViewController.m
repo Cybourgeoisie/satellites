@@ -14,6 +14,10 @@
 @synthesize showTrails;
 @synthesize viewScale;
 
+@synthesize satellites;
+@synthesize followSatellite;
+@synthesize activityActionSheet;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -23,12 +27,35 @@
     return self;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [self setupSatelliteList];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     // Set the values for the menu items
     [self setupMenu];
+}
+
+- (void) setupSatelliteList
+{
+    // Set up the list of satellites
+    activityActionSheet = [[UIActionSheet alloc] initWithTitle:@"Follow Satellite"
+                                                      delegate:self
+                                             cancelButtonTitle:nil
+                                        destructiveButtonTitle:@"Cancel"
+                                             otherButtonTitles:nil];
+    
+    // Set the buttons
+    for (Satellite * satellite in satellites)
+    {
+        [activityActionSheet addButtonWithTitle:[satellite name]];
+    }
 }
 
 - (void) setupMenu
@@ -50,7 +77,23 @@
         {
             [viewScale setSelectedSegmentIndex:[[menuOptions valueForKey:@"viewScale"] intValue]];
         }
+        
+        if ([menuOptions objectForKey:@"followSatellite"])
+        {
+            Satellite * satellite = [menuOptions valueForKey:@"followSatellite"];
+            NSString * satelliteName = [satellite name];
+
+            // Set the title
+            [followSatellite setTitle:satelliteName forState:UIControlStateNormal];
+        }
     }
+}
+
+- (IBAction) setUserActivity: (id) sender
+{
+    activityActionSheet.tag = 1;
+    [activityActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    [activityActionSheet showInView:self.view];
 }
 
 - (void) willMoveToParentViewController : (UIViewController *) parent

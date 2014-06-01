@@ -56,10 +56,12 @@
     
     // Set the toolbar and menu stuff
     [self setToolbar];
-    [self buildMenuOptions];
     
     // Create the system
     [self initSystem];
+    
+    // CRASHES HERE. needs getter?
+    [self buildMenuOptions];
     
     // Perform the setup operations
     [self initViewContext];
@@ -121,6 +123,7 @@
         // Pass the selected book to the new view controller.
         SatellitesMenuViewController * menuViewController = (SatellitesMenuViewController *) [segue destinationViewController];
         [menuViewController setMenuOptions:menuOptions];
+        [menuViewController setSatellites:bodies];
     }
 }
 

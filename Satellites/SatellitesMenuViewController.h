@@ -15,12 +15,21 @@
     UISwitch * showLabels;
     UISwitch * showTrails;
     UISegmentedControl * viewScale;
+    
+    // Following a central satellite
+    NSMutableArray * satellites;
+    UIButton       * followSatellite;
+    UIActionSheet  * activityActionSheet;
 }
 
 @property NSMutableDictionary * menuOptions;
 @property (retain, nonatomic) IBOutlet UISwitch * showLabels;
 @property (retain, nonatomic) IBOutlet UISwitch * showTrails;
 @property (retain, nonatomic) IBOutlet UISegmentedControl * viewScale;
+
+@property NSMutableArray * satellites;
+@property (retain, nonatomic) IBOutlet UIButton * followSatellite;
+@property (nonatomic) UIActionSheet * activityActionSheet;
 
 - (void) setMenuOptions:(NSMutableDictionary *)menuOptions;
 

@@ -18,6 +18,7 @@
 {
     NSMutableArray  * satellites;
     Satellite       * barycenter;
+    Satellite       * centralBody;
     NSMutableArray  * bodies;
     BOOL              bEditorView;
 }
@@ -27,9 +28,13 @@
 - (void) performCalculations;
 - (void) restartCalculations;
 - (void) updateSatellite : (Satellite *) satellite;
+- (Satellite *) getCentralBody;
+- (void) setCentralBody : (Satellite *) body;
+- (void) translateToBody : (Satellite *) body;
 
 @property NSMutableArray  * satellites;
 @property Satellite       * barycenter;
+@property Satellite       * centralBody;
 @property NSMutableArray  * bodies;
 @property BOOL              bEditorView;
 
