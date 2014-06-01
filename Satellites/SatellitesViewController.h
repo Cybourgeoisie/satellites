@@ -12,10 +12,15 @@
 #import "SceneSatelliteModel.h"
 #import "SceneSatellite.h"
 #import "SystemObject.h"
+#import "SatellitesMenuViewController.h"
 
 @interface SatellitesViewController : GLKViewController
 {
     SatellitesController * controller;
+    
+    // Menu
+    UIBarButtonItem      * menuButton;
+    NSMutableDictionary  * menuOptions;
 
     SystemObject         * system;
     NSMutableArray       * satellites;
@@ -31,6 +36,10 @@
 @property (strong, nonatomic) GLKBaseEffect *baseEffect;
 @property (strong, nonatomic) SatellitesController * controller;
 @property (strong, nonatomic) SceneModel * satelliteModel;
+
+// UI View Elements
+@property (strong, nonatomic) UIBarButtonItem * menuButton;
+@property (strong, nonatomic) NSMutableDictionary * menuOptions;
 
 // Need to be cleaned up
 @property (strong, nonatomic) SystemObject * system;

@@ -52,6 +52,7 @@
 		DDF131FC171B7DBC00C42923 /* SatellitesController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDF131F8171B7DBC00C42923 /* SatellitesController.m */; };
 		DDF131FD171B7DBC00C42923 /* Vector.m in Sources */ = {isa = PBXBuildFile; fileRef = DDF131FA171B7DBC00C42923 /* Vector.m */; };
 		DDF131FF171B80DF00C42923 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF131FE171B80DF00C42923 /* QuartzCore.framework */; };
+		DDFA6F2819324866005A4168 /* SatellitesMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDFA6F2719324866005A4168 /* SatellitesMenuViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -127,6 +128,8 @@
 		DDF131F9171B7DBC00C42923 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		DDF131FA171B7DBC00C42923 /* Vector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector.m; sourceTree = "<group>"; };
 		DDF131FE171B80DF00C42923 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		DDFA6F2619324866005A4168 /* SatellitesMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SatellitesMenuViewController.h; sourceTree = "<group>"; };
+		DDFA6F2719324866005A4168 /* SatellitesMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SatellitesMenuViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				DD13468617692A0600D63FF5 /* GLKit */,
+				DDFA6F2519324830005A4168 /* Menu */,
 				DD13468717692A1A00D63FF5 /* Navigation */,
 				DD13468817692A3000D63FF5 /* Tables */,
 				DDC9FAF3175560A200968025 /* EditingViewController.h */,
@@ -385,6 +389,15 @@
 			name = Engine;
 			sourceTree = "<group>";
 		};
+		DDFA6F2519324830005A4168 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				DDFA6F2619324866005A4168 /* SatellitesMenuViewController.h */,
+				DDFA6F2719324866005A4168 /* SatellitesMenuViewController.m */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -485,6 +498,7 @@
 				DDDBA4D518EB6C2C007446BA /* SceneModel.m in Sources */,
 				DDD616351916D85200DB15EA /* DefaultSatelliteSystems.m in Sources */,
 				DD0220E7191855AC008ABE69 /* Unit.m in Sources */,
+				DDFA6F2819324866005A4168 /* SatellitesMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

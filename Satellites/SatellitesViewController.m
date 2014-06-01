@@ -12,6 +12,7 @@
 
 @synthesize baseEffect;
 @synthesize controller;
+@synthesize menuButton;
 @synthesize satelliteModel;
 
 @synthesize system;
@@ -53,6 +54,10 @@
     // Hide the toolbar
     self.navigationController.toolbarHidden = true;
     
+    // Set the toolbar and menu stuff
+    [self setToolbar];
+    [self buildMenuOptions];
+    
     // Create the system
     [self initSystem];
     
@@ -81,6 +86,42 @@
     
     // Lastly, provide the skybox
     [self initSkybox];
+}
+
+- (void) setToolbar
+{
+    menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
+                                                  style:UIBarButtonSystemItemAction
+                                                 target:self
+                                                 action:@selector(openMenu)];
+    self.navigationItem.rightBarButtonItem = menuButton;
+}
+
+- (void) openMenu
+{
+    // Go to the menu page
+    [self performSegueWithIdentifier: @"OpenMenu" sender: self];
+}
+
+- (void) buildMenuOptions
+{
+    // Default options
+    menuOptions = [[NSMutableDictionary alloc] init];
+    [menuOptions setValue:NO forKey:@"showLabels"];
+    [menuOptions setValue:NO forKey:@"showTrails"];
+    [menuOptions setValue:[NSNumber numberWithInt:1] forKey:@"viewScale"];
+}
+
+#pragma mark - Segue management
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"OpenMenu"])
+    {
+        // Pass the selected book to the new view controller.
+        SatellitesMenuViewController * menuViewController = (SatellitesMenuViewController *) [segue destinationViewController];
+        [menuViewController setMenuOptions:menuOptions];
+    }
 }
 
 - (void) initSystem
