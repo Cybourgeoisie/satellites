@@ -28,6 +28,7 @@
     // UI Elements
     IBOutlet UISlider    * slider;
     IBOutlet UITextField * textField;
+    IBOutlet UITextField * nameTextField;
     IBOutlet UIButton    * unitField;
     UIActionSheet * activityActionSheet;
     
@@ -50,6 +51,7 @@
 // UI Elements
 @property (nonatomic) IBOutlet UISlider    * slider;
 @property (nonatomic) IBOutlet UITextField * textField;
+@property (nonatomic) IBOutlet UITextField * nameTextField;
 @property (nonatomic) IBOutlet UIButton    * unitField;
 @property (nonatomic) UIActionSheet * activityActionSheet;
 

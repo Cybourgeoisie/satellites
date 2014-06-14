@@ -18,6 +18,7 @@
 @synthesize unitRange;
 @synthesize currentUnit;
 @synthesize textField;
+@synthesize nameTextField;
 @synthesize unitField;
 @synthesize activityActionSheet;
 @synthesize satellite;
@@ -93,7 +94,28 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
+    // Get this edited satellite
+    SatelliteObject * satelliteObject = (SatelliteObject *) editedObject;
+    satellite = [satellitesViewController getSatelliteByName: satelliteObject.name];
+
+    // If we're altering the name, only show the name field
+    if ([editedFieldName isEqualToString:@"name"])
+    {
+        [nameTextField setHidden:NO];
+        [slider setHidden:YES];
+        [textField setHidden:YES];
+        [unitField setHidden:YES];
+        return;
+    }
+    else
+    {
+        [nameTextField setHidden:YES];
+        [slider setHidden:NO];
+        [textField setHidden:NO];
+        [unitField setHidden:NO];
+    }
+
     // Set the unit and value
     id value = [self.editedObject valueForKey:self.editedFieldKey];
     currentUnit = [[Unit alloc] initWithBaseValue:value forUnit:[units objectAtIndex:0]];
@@ -104,10 +126,6 @@
     [self prepareSlider];
     [self prepareUnitOfMeasurementActionSheet];
     
-    // Get this edited satellite
-    SatelliteObject * satelliteObject = (SatelliteObject *) editedObject;
-    satellite = [satellitesViewController getSatelliteByName: satelliteObject.name];
-    
     // Get the value
     [self updateSliderValue:[value floatValue]];
 }
@@ -115,6 +133,12 @@
 // Drop the keyboard when the return button is pressed
 - (BOOL)textFieldShouldReturn:(UITextField *)sender
 {
+    // Only if the text field is available
+    if ([textField isHidden])
+    {
+        return YES;
+    }
+    
     // Float this shit
     NSString * textValue = sender.text;
     float value = [textValue floatValue];
@@ -147,7 +171,6 @@
 
 - (void) prepareTextField
 {
-    self.textField.hidden = NO;
     self.textField.placeholder = self.title;
     [textField addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
 }
@@ -163,6 +186,12 @@
 
 - (void) setRange
 {
+    // Only if the slider is available
+    if ([slider isHidden])
+    {
+        return;
+    }
+    
     // Get the min and max
     NSNumber * min = [unitRange objectForKey:@"min"];
     NSNumber * max = [unitRange objectForKey:@"max"];
@@ -201,8 +230,14 @@
 - (void) updateSatellite
 {
     // Update satellite
-    NSNumber * numValue  = [currentUnit getBaseValue];
     NSString * fieldName = [[NSString alloc] initWithString:editedFieldName];
+    NSNumber * numValue;
+    
+    // Name field does not have a unit
+    if ([nameTextField isHidden])
+    {
+        numValue = [currentUnit getBaseValue];
+    }
     
     // Make sure we're using a valid field name
     if ([fieldName isEqualToString:@"Axial Tilt"])
@@ -303,8 +338,16 @@
 - (IBAction) save: (id) sender
 {
     // Convert the value to the expected unit
-    float      value       = [[currentUnit getBaseValue] floatValue];
-    NSString * stringValue = [NSString stringWithFormat:@"%1.3f", value];
+    NSString * stringValue;
+    if ([nameTextField isHidden])
+    {
+        float value = [[currentUnit getBaseValue] floatValue];
+        stringValue = [NSString stringWithFormat:@"%1.3f", value];
+    }
+    else
+    {
+        stringValue = [nameTextField text];
+    }
     
     // Pass current value to the edited object
     [self.editedObject setValue:stringValue forKey:self.editedFieldKey];
