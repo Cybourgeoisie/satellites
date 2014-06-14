@@ -112,7 +112,7 @@
         
         // Prepare the units of measurements
         NSMutableDictionary * unitsToRange = [[NSMutableDictionary alloc] init];
-        NSMutableArray * units     = [[NSMutableArray alloc] init];
+        NSMutableArray * units = [[NSMutableArray alloc] init];
         NSMutableDictionary * unitRange = [[NSMutableDictionary alloc] init];
 
         // Given a particular section and row, allow certain editing to occur
@@ -120,12 +120,6 @@
         {
             controller.editedFieldKey = @"name";
             controller.editedFieldName = NSLocalizedString(@"Name", @"Name");
-            
-            /*
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Enter a Name" message:nil delegate:self cancelButtonTitle:@"Hide" otherButtonTitles:nil];
-            alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-            [alert show];
-            */
         }
         else if (indexPath.section == SECTION_PROPERTIES && indexPath.row == ROW_MASS)
         {

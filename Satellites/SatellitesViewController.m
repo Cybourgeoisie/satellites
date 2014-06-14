@@ -90,8 +90,10 @@
     [self initSkybox];
 }
 
-- (void) viewDidAppear:(BOOL)animated
+- (void) viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+
     // Set the central body
     if ([controller centralBody] != [menuOptions objectForKey:@"followSatellite"])
     {

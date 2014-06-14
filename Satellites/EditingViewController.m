@@ -31,6 +31,7 @@
     
     // Control the text field
     self.textField.delegate = self;
+    self.nameTextField.delegate = self;
     
     // Set the title to the user-visible name of the field.
     self.title = self.editedFieldName;
@@ -98,11 +99,17 @@
     // Get this edited satellite
     SatelliteObject * satelliteObject = (SatelliteObject *) editedObject;
     satellite = [satellitesViewController getSatelliteByName: satelliteObject.name];
+    
+    // Get the value
+    id value = [self.editedObject valueForKey:self.editedFieldKey];
 
     // If we're altering the name, only show the name field
-    if ([editedFieldName isEqualToString:@"name"])
+    if ([editedFieldKey isEqualToString:@"name"])
     {
+        // Set the name field
         [nameTextField setHidden:NO];
+        [nameTextField setText:value];
+
         [slider setHidden:YES];
         [textField setHidden:YES];
         [unitField setHidden:YES];
@@ -117,7 +124,6 @@
     }
 
     // Set the unit and value
-    id value = [self.editedObject valueForKey:self.editedFieldKey];
     currentUnit = [[Unit alloc] initWithBaseValue:value forUnit:[units objectAtIndex:0]];
     value = [currentUnit getValue];
 
