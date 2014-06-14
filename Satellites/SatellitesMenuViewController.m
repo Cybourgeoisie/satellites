@@ -109,12 +109,28 @@
     }
 }
 
+- (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        return;
+    }
+    
+    // Set the satellite in the menu options
+    Satellite * satellite = [satellites objectAtIndex:buttonIndex - 1];
+    [menuOptions setValue:satellite forKey:@"followSatellite"];
+
+    // Update the selected name
+    [followSatellite setTitle:[satellite name] forState:UIControlStateNormal];
+}
+
 - (void) updateMenuOptions
 {
     // Go through the UI, set the current values
     [menuOptions setValue:[NSNumber numberWithBool:[showLabels isOn]] forKey:@"showLabels"];
     [menuOptions setValue:[NSNumber numberWithBool:[showTrails isOn]] forKey:@"showTrails"];
     [menuOptions setValue:[NSNumber numberWithInt:[viewScale selectedSegmentIndex]] forKey:@"viewScale"];
+    //[menuOptions setValue: forKey:@"followSatellite"];
 }
 
 - (void)didReceiveMemoryWarning

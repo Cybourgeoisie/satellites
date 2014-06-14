@@ -60,7 +60,7 @@
     // Create the system
     [self initSystem];
     
-    // CRASHES HERE. needs getter?
+    // Build the menu options
     [self buildMenuOptions];
     
     // Perform the setup operations
@@ -90,6 +90,15 @@
     [self initSkybox];
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    // Set the central body
+    if ([controller centralBody] != [menuOptions objectForKey:@"followSatellite"])
+    {
+        [controller setCentralBody:[menuOptions objectForKey:@"followSatellite"]];
+    }
+}
+
 - (void) setToolbar
 {
     menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
@@ -112,6 +121,7 @@
     [menuOptions setValue:NO forKey:@"showLabels"];
     [menuOptions setValue:NO forKey:@"showTrails"];
     [menuOptions setValue:[NSNumber numberWithInt:1] forKey:@"viewScale"];
+    [menuOptions setValue:controller.centralBody forKey:@"followSatellite"];
 }
 
 #pragma mark - Segue management
@@ -120,6 +130,9 @@
 {
     if ([[segue identifier] isEqualToString:@"OpenMenu"])
     {
+        // Update the menu options to include the selected satellite
+        [menuOptions setValue:controller.centralBody forKey:@"followSatellite"];
+
         // Pass the selected book to the new view controller.
         SatellitesMenuViewController * menuViewController = (SatellitesMenuViewController *) [segue destinationViewController];
         [menuViewController setMenuOptions:menuOptions];
