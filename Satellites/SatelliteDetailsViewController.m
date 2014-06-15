@@ -269,7 +269,9 @@
         [moon setName : @"Untitled Moon"];
         [moon setBMoon: [NSNumber numberWithBool:true]];
         [moon setOrbitalBody: satellite];
-        
+        [moon setMass: [NSNumber numberWithFloat:0.006]];
+        [moon setSemimajorAxis: [NSNumber numberWithFloat:0.003]];
+
         // Save the default information
         NSError *error = nil;
         if (![managedObjectContext save : &error])

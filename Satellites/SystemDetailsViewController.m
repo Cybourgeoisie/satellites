@@ -20,6 +20,7 @@
 @implementation SystemDetailsViewController
 
 @synthesize system;
+@synthesize bDeleteStarRow;
 
 - (void) setConfig
 {
@@ -56,8 +57,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    
+
+    // Default flags
+    self.bDeleteStarRow = NO;
 }
 
 // Selecting a row
@@ -101,6 +103,7 @@
         
         // Set the object
         controller.editedObject = self.system;
+        controller.system = self.system;
         
         // Given a particular row, allow certain editing to occur
         switch (indexPath.row)
@@ -150,12 +153,16 @@
         if (indexPath.section == SECTION_STARS)
         {
             [satellite setName : @"New Star"];
-            [satellite setBStar:[NSNumber numberWithBool:true]];
+            [satellite setBStar: [NSNumber numberWithBool:true]];
+            [satellite setMass : [NSNumber numberWithInt:333000]];
+            [satellite setSemimajorAxis: [NSNumber numberWithFloat:0.5]];
         }
         // Planet
         else
         {
             [satellite setName : @"New Planet"];
+            [satellite setMass : [NSNumber numberWithInt:1]];
+            [satellite setSemimajorAxis: [NSNumber numberWithFloat:0.1]];
         }
         
         // Save the default information
@@ -199,6 +206,11 @@
     // Dynamic: Stars, Planets
     
     // If we don't have stars, then don't show the last section (planets)
+    if (self.bDeleteStarRow)
+    {
+        return NUM_SECTIONS;
+    }
+    
     return NUM_SECTIONS - ![system numStars];
 }
 
@@ -230,7 +242,13 @@
     // Stars
     else if (section == SECTION_STARS)
     {
-        return [system numStars] < 2 ? [system numStars] + 1 : 2; // Num Stars + Add New Star
+        // If we're deleting a row, perform some acrobatics
+        if (self.bDeleteStarRow)
+        {
+            return 1;
+        }
+        
+        return [system numStars] ? 2 : 1; // Num Stars + Add New Star, or Add New Star
     }
 
     // Planets
@@ -320,8 +338,8 @@
 // Override to support editing the table view.
 - (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Only allow deletion for certain sections
-    if (//(indexPath.section == SECTION_STARS && indexPath.row != [system numStars]) || // TODO: Enable for stars
+    // Only allow deletion for certain sections - Don't allow deleting Add New Star
+    if ((indexPath.section == SECTION_STARS && !([system numStars] == 1 && indexPath.row == 1)) ||
         (indexPath.section == SECTION_PLANETS && indexPath.row != [system numPlanets]))
     {
         return UITableViewCellEditingStyleDelete;
@@ -341,11 +359,8 @@
         // Determine if we're removing a star or a planet
         if (indexPath.section == SECTION_STARS)
         {
-            //objects = [[system getStars] allObjects];
-            return; // TODO -- we run into UI errors while deleting stars,
-            // due to the variable numbers of sections or rows depending
-            // on the stars... So we need to refactor this a bit, or handle
-            // it as a special case..
+            objects = [[system getStars] allObjects];
+            self.bDeleteStarRow = YES;
         }
         else if (indexPath.section == SECTION_PLANETS)
         {
@@ -366,6 +381,8 @@
         
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        self.bDeleteStarRow = NO;
+        [tableView reloadData];
     }
 }
 

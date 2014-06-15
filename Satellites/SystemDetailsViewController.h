@@ -19,6 +19,9 @@
     // Number of Rows
     int numStars;
     int numPlanets;
+    
+    // Flags
+    BOOL bDeleteStarRow;
 }
 
 // System
@@ -27,5 +30,8 @@
 // Keep track of the number of rows
 @property int numStars;
 @property int numPlanets;
+
+// Flags
+@property BOOL bDeleteStarRow;
 
 @end

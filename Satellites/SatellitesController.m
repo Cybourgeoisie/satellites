@@ -87,7 +87,10 @@ static float scale = 1000;
     }
     
     // Set the central body
-    centralBody = [bodies objectAtIndex:0];
+    if ([bodies count] > 0)
+    {
+        centralBody = [bodies objectAtIndex:0];
+    }
 }
 
 - (void) createSystem : (NSMutableArray *) satelliteObjects

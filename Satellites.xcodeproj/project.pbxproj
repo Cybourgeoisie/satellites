@@ -78,10 +78,6 @@
 		DDB9574617494497005B8E07 /* SatelliteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SatelliteObject.m; sourceTree = "<group>"; };
 		DDB9574B174944D0005B8E07 /* SystemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemObject.h; sourceTree = "<group>"; };
 		DDB9574C174944D0005B8E07 /* SystemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemObject.m; sourceTree = "<group>"; };
-		DDBA704E193BB64500413A8D /* font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = font.h; sourceTree = "<group>"; };
-		DDBA704F193BB64500413A8D /* font.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = font.mm; sourceTree = "<group>"; };
-		DDBA7050193BB64500413A8D /* texture2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture2d.h; sourceTree = "<group>"; };
-		DDBA7051193BB64500413A8D /* texture2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = texture2d.m; sourceTree = "<group>"; };
 		DDC21243175E96C500E2D42C /* SystemDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemDetailsViewController.h; sourceTree = "<group>"; };
 		DDC21244175E96C500E2D42C /* SystemDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemDetailsViewController.m; sourceTree = "<group>"; };
 		DDC9FAF3175560A200968025 /* EditingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditingViewController.h; sourceTree = "<group>"; };
@@ -259,17 +255,6 @@
 			name = iPad;
 			sourceTree = "<group>";
 		};
-		DDBA704D193BB62D00413A8D /* Texts */ = {
-			isa = PBXGroup;
-			children = (
-				DDBA704E193BB64500413A8D /* font.h */,
-				DDBA704F193BB64500413A8D /* font.mm */,
-				DDBA7050193BB64500413A8D /* texture2d.h */,
-				DDBA7051193BB64500413A8D /* texture2d.m */,
-			);
-			name = Texts;
-			sourceTree = "<group>";
-		};
 		DDF131AE171B517B00C42923 = {
 			isa = PBXGroup;
 			children = (
@@ -352,7 +337,6 @@
 				DDF131EA171B68FC00C42923 /* Buffer */,
 				DDF131E8171B679B00C42923 /* Objects */,
 				DDB2FD68172C60E8000C59D2 /* Scene */,
-				DDBA704D193BB62D00413A8D /* Texts */,
 				DDDFD24717443FB20063FEB1 /* SatelliteModel.xcdatamodeld */,
 				DDB9574517494497005B8E07 /* SatelliteObject.h */,
 				DDB9574617494497005B8E07 /* SatelliteObject.m */,
