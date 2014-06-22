@@ -95,9 +95,9 @@
 {
     [super viewWillAppear:animated];
     
-    // Set the viewing scale
-    bLogMode = !![menuOptions objectForKey:@"viewScale"];
-    
+    // Set the viewing scale - log is 1, linear is 0
+    bLogMode = !![[menuOptions valueForKey:@"viewScale"] intValue];
+
     // Set the central body
     centralBody = (Satellite *)[menuOptions objectForKey:@"followSatellite"];
 }
@@ -162,9 +162,9 @@
     // Get the bodies
     bodies = controller.bodies;
     
-    // Set the central body
+    // Set the central body to the first body
     if (!centralBody)
-        centralBody = controller.barycenter;
+        centralBody = (Satellite *)[controller.bodies objectAtIndex:0];
 }
 
 
