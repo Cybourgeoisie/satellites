@@ -28,6 +28,7 @@
 @synthesize rotation;
 @synthesize scale;
 
+@synthesize bLogMode;
 @synthesize bEditorView;
 @synthesize bUpdateSatellites;
 
@@ -93,12 +94,12 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
+    // Set the viewing scale
+    bLogMode = !![menuOptions objectForKey:@"viewScale"];
+    
     // Set the central body
-    if ([controller centralBody] != [menuOptions objectForKey:@"followSatellite"])
-    {
-        [controller setCentralBody:[menuOptions objectForKey:@"followSatellite"]];
-    }
+    centralBody = (Satellite *)[menuOptions objectForKey:@"followSatellite"];
 }
 
 - (void) setToolbar
@@ -122,8 +123,8 @@
     menuOptions = [[NSMutableDictionary alloc] init];
     [menuOptions setValue:NO forKey:@"showLabels"];
     [menuOptions setValue:NO forKey:@"showTrails"];
-    [menuOptions setValue:[NSNumber numberWithInt:1] forKey:@"viewScale"];
-    [menuOptions setValue:controller.centralBody forKey:@"followSatellite"];
+    [menuOptions setValue:[NSNumber numberWithBool:bLogMode] forKey:@"viewScale"];
+    [menuOptions setValue:centralBody forKey:@"followSatellite"];
 }
 
 #pragma mark - Segue management
@@ -132,9 +133,6 @@
 {
     if ([[segue identifier] isEqualToString:@"OpenMenu"])
     {
-        // Update the menu options to include the selected satellite
-        [menuOptions setValue:controller.centralBody forKey:@"followSatellite"];
-
         // Pass the selected book to the new view controller.
         SatellitesMenuViewController * menuViewController = (SatellitesMenuViewController *) [segue destinationViewController];
         [menuViewController setMenuOptions:menuOptions];
@@ -163,6 +161,10 @@
     
     // Get the bodies
     bodies = controller.bodies;
+    
+    // Set the central body
+    if (!centralBody)
+        centralBody = controller.barycenter;
 }
 
 
@@ -271,11 +273,15 @@
     }
 }
 
-- (Satellite *) getSatelliteByName : (NSString *) name
+- (Satellite *) getSatelliteByManagedObject : (SatelliteObject *)satelliteObject
 {
+    // Store the managed object ID
+    NSManagedObjectID * MOID = [satelliteObject objectID];
+    NSString * MOIDString = [[MOID URIRepresentation] absoluteString];
+    
     for (Satellite * body in bodies)
     {
-        if ([body.name isEqualToString:name])
+        if ([body.managedObjectId isEqualToString:MOIDString])
         {
             return body;
         }
@@ -349,7 +355,7 @@
 
     // Calculate the aspect ratio for the scene and setup a perspective projection
     const GLfloat aspectRatio = (GLfloat) view.drawableWidth / (GLfloat) view.drawableHeight;
-    self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 5000.0f * scale);
+    self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 20000.0f * scale);
 
     // Alter the calculations if necessary
     [self updateSatellites];
@@ -434,14 +440,28 @@
 
 - (void) drawSatellites
 {
+    // Get the central body, and convert to log if needed
+    Vector * center = (bLogMode) ? [[centralBody.position copy] getLogPosition] : [centralBody.position copy];
+
     int i = 0;
     GLint starCount = 0;
     for (Satellite * body in bodies)
     {
         // Redraw each body
-        float x = body.position.x / 40;
-        float y = body.position.y / 40;
-        float z = body.position.z / 40;
+        float x, y, z;
+        if (bLogMode && [body.position getMagnitude] > 0.01)
+        {
+            Vector * log = [body.position getLogPosition];
+            x = ([log x] - [center x]) * 2;
+            y = ([log y] - [center y]) * 2;
+            z = ([log z] - [center z]) * 2;
+        }
+        else
+        {
+            x = (body.position.x - [center x]) / 30;
+            y = (body.position.y - [center y]) / 30;
+            z = (body.position.z - [center z]) / 30;
+        }
         
         // If this body is a star, illuminate
         if ([body isStar])

@@ -20,7 +20,9 @@
 @property float y;
 @property float z;
 
+- (Vector *) copy;
 - (void)  set : (float) a : (float) b : (float) c;
 - (float) getMagnitude;
+- (Vector *) getLogPosition;
 
 @end

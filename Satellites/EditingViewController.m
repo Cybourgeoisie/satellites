@@ -106,11 +106,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.navigationController setToolbarHidden:YES];
 
     // Get this edited satellite
     SatelliteObject * satelliteObject = (SatelliteObject *) editedObject;
-    satellite = [satellitesViewController getSatelliteByName: satelliteObject.name];
-    
+    satellite = [satellitesViewController getSatelliteByManagedObject: satelliteObject];
+
     // Get the value
     id value = [self.editedObject valueForKey:self.editedFieldKey];
 

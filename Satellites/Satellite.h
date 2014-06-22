@@ -17,6 +17,7 @@
     Vector   * color;
     NSString * name;
     NSString * texture;
+    NSString * managedObjectId;
     
     // Properties
 @public
@@ -43,6 +44,7 @@
 @property Vector * color;
 @property NSString * name;
 @property NSString * texture;
+@property NSString * managedObjectId;
 
 // Intrinsic properties
 @property (nonatomic) float mass;

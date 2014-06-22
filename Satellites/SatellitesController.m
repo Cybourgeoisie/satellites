@@ -16,14 +16,10 @@ static float scale = 1000;
 @synthesize satellites;
 @synthesize bodies;
 @synthesize barycenter;
-@synthesize centralBody;
 @synthesize bEditorView;
 
 - (id) init
 {
-    // Configuration
-    [self setConfiguration];
-    
     // Create the bodies
     [self initializeBodies];
     
@@ -54,12 +50,6 @@ static float scale = 1000;
     return [self init];
 }
 
-- (void) setConfiguration
-{
-    // Multipliers
-    //scale = 1000;
-}
-
 - (void) initializeBodies
 {
     // Instantiate
@@ -76,20 +66,8 @@ static float scale = 1000;
         DefaultSatelliteSystems * defaults = [[DefaultSatelliteSystems alloc] init];
         [defaults setScale:scale];
 
-        // Random method of generating planets
-        //bodies = [defaults randomBodies];
-        
         // Simple Solar System Model
         bodies = [defaults solarSystem];
-
-        // Binary Stars
-        //bodies = [defaults binaryStars];
-    }
-    
-    // Set the central body
-    if ([bodies count] > 0)
-    {
-        centralBody = [bodies objectAtIndex:0];
     }
 }
 
@@ -99,7 +77,7 @@ static float scale = 1000;
     {
         // Create stars first
         if (!satelliteObject.bStar) { continue; }
-        
+
         [self createSatellite: satelliteObject];
     }
 
@@ -193,6 +171,10 @@ static float scale = 1000;
         [satellite setTexture : ([satelliteObject.texture length]) ? satelliteObject.texture : @"Venus"];
     }
     
+    // Store the managed object ID
+    NSManagedObjectID * MOID = [satelliteObject objectID];
+    [satellite setManagedObjectId:[[MOID URIRepresentation] absoluteString]];
+
     // Add the body
     [bodies addObject: satellite];
     
@@ -211,7 +193,11 @@ static float scale = 1000;
         [moon setName : moonObject.name];
         [moon setTexture : ([moonObject.texture length]) ? moonObject.texture : @"Moon"];
         [moon setMass : [moonObject.mass floatValue]];
-        
+
+        // Store the managed object ID
+        MOID = [moonObject objectID];
+        [moon setManagedObjectId:[[MOID URIRepresentation] absoluteString]];
+
         // Add the moons
         [bodies addObject: moon];
     }
@@ -226,17 +212,6 @@ static float scale = 1000;
         
         // Translate satellites to COM frame
         [self translateToCenterOfMass];
-        
-        // Translate to a particular body
-        if (centralBody != barycenter)
-        {
-            [self translateToBody : centralBody];
-        }
-    }
-    else
-    {
-        SatelliteObject * satellite = [satellites lastObject];
-        [self translateToBodyByName : satellite.name];
     }
 }
 
@@ -374,60 +349,6 @@ static float scale = 1000;
             body.acceleration.y += (G * difference.y * massRatio) / pow(dr, 3);
             body.acceleration.z += (G * difference.z * massRatio) / pow(dr, 3);
         }
-    }
-}
-
-- (void) translateToBodyByName : (NSString *) name
-{
-    // Find the body
-    for (Satellite * center in bodies)
-    {
-        // Find a matching name
-        if (![name isEqualToString : center->name]) { continue; }
-        
-        // Move everything wrt the body in question
-        for (Satellite * body in bodies)
-        {
-            if (body == center) { continue; }
-            
-            body.position.x -= center.position.x;
-            body.position.y -= center.position.y;
-            body.position.z -= center.position.z;
-        }
-        
-        // Lastly, move this body
-        center.position.x = 0.0;
-        center.position.y = 0.0;
-        center.position.z = 0.0;
-
-        break;
-    }
-}
-
-- (void) translateToBody : (Satellite *) body
-{
-    // Find the body
-    for (Satellite * center in bodies)
-    {
-        // Find a matching name
-        if (body != center) { continue; }
-
-        // Move everything wrt the body in question
-        for (Satellite * body in bodies)
-        {
-            if (body == center) { continue; }
-            
-            body.position.x -= center.position.x;
-            body.position.y -= center.position.y;
-            body.position.z -= center.position.z;
-        }
-        
-        // Lastly, move this body
-        center.position.x = 0.0;
-        center.position.y = 0.0;
-        center.position.z = 0.0;
-        
-        break;
     }
 }
 

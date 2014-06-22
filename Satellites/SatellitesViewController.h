@@ -25,10 +25,13 @@
     SystemObject         * system;
     NSMutableArray       * satellites;
     
+    Satellite            * centralBody;
+    
     NSMutableArray       * spheres;
     NSMutableArray       * bodies;
     GLKSkyboxEffect      * skybox;
-    
+
+    BOOL                   bLogMode;
     BOOL                   bEditorView;
     BOOL                   bUpdateSatellites;
 }
@@ -44,6 +47,7 @@
 // Need to be cleaned up
 @property (strong, nonatomic) SystemObject * system;
 @property (strong, nonatomic) NSMutableArray * satellites;
+@property (strong, nonatomic) Satellite * centralBody;
 
 @property (strong, nonatomic) NSMutableArray * spheres;
 @property (strong, nonatomic) NSMutableArray * bodies;
@@ -54,6 +58,7 @@
 @property (nonatomic, assign) GLKVector3 targetLookAtPosition;
 @property (nonatomic, assign) GLKVector3 rotation;
 @property (nonatomic, assign) GLfloat scale;
+@property (nonatomic, assign) BOOL bLogMode;
 @property (nonatomic, assign) BOOL bEditorView;
 @property (nonatomic, assign) BOOL bUpdateSatellites;
 
@@ -62,7 +67,7 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
 
 - (void)useEditorView:(BOOL)bUseView;
-- (Satellite *)getSatelliteByName:(NSString *)name;
+- (Satellite *)getSatelliteByManagedObject:(SatelliteObject *)satelliteObject;
 - (void)propogateChanges:(Satellite *)satellite forProperty:(NSString *)property;
 
 @end

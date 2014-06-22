@@ -20,6 +20,7 @@
 @synthesize name;
 @synthesize color;
 @synthesize texture;
+@synthesize managedObjectId;
 
 // Intrinsic Properties
 @synthesize mass;
