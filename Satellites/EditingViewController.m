@@ -112,7 +112,7 @@
     // Get this edited satellite
     SatelliteObject * satelliteObject = (SatelliteObject *) editedObject;
     satellite = [satellitesViewController getSatelliteByManagedObject: satelliteObject];
-
+    
     // Get the value
     id value = [self.editedObject valueForKey:self.editedFieldKey];
 
@@ -147,6 +147,17 @@
     
     // Get the value
     [self updateSliderValue:[value floatValue]];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    // Set the edited satellite as the central body
+    //[satellitesViewController setCentralBody:satellite];
+
+    // Use log mode
+    [satellitesViewController setBLogMode:YES];
 }
 
 // Drop the keyboard when the return button is pressed

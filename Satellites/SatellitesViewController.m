@@ -216,7 +216,8 @@
 {
     if (bEditorView)
     {
-        [self initCameraEditorView];
+        //[self initCameraEditorView];
+        [self initCameraNormal];
     }
     else
     {
@@ -447,7 +448,7 @@
     for (Satellite * body in bodies)
     {
         float size;
-        if (bLogMode)
+        if (true) // bLogMode
         {
             size = log2f(pow(body.mass * 1000, 1.0/2.0f));
         }
@@ -463,7 +464,9 @@
 - (void) drawSatellites
 {
     // Get the central body, and convert to log if needed
-    Vector * center = (bLogMode) ? [[centralBody.position copy] getLogPosition] : [centralBody.position copy];
+    Vector * center = [centralBody.position copy];
+    if (bLogMode)
+        center = [center getLogPosition];
 
     int i = 0;
     GLint starCount = 0;

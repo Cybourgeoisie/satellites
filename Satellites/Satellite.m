@@ -93,7 +93,8 @@
     float theta = (arc4random_uniform(360)) * 3.141592 / 180;
     
     // Coordinates
-    float periapsis = a * (1 - self.eccentricity);
+    float e = (self.eccentricity == 1.0f) ? 0.9999 : self.eccentricity;
+    float periapsis = a * (1 - e);
     x = body.position.x + periapsis * cosf(theta) * cosf(self.inclination);
     y = body.position.y + periapsis * sinf(theta) * cosf(self.inclination);
     z = body.position.z + periapsis * sinf(self.inclination);
@@ -110,13 +111,21 @@
     // Move the body closer or further.. somehow.
     // Prepare the coordinates
     float x = self.position.x, y = self.position.y, z = self.position.z;
-    float theta = atanf(y/x);
+    float theta = atan2f(y, x);
+    if (theta < 0)
+        theta = 2 * M_PI + theta;
+
+    // Get the current angle from the x-y plane to the z-axis
+    float omega = asinf(z / [self.position getMagnitude]);
+    if (omega < 0)
+        omega = 2 * M_PI + omega;
 
     // Coordinates
-    float periapsis = a * (1 - self.eccentricity);
-    x = body.position.x + periapsis * cosf(theta) * cosf(self.inclination);
-    y = body.position.y + periapsis * sinf(theta) * cosf(self.inclination);
-    z = body.position.z + periapsis * sinf(self.inclination);
+    float e = (self.eccentricity == 1.0f) ? 0.9999 : self.eccentricity;
+    float periapsis = a * (1 - e);
+    x = body.position.x + periapsis * cosf(theta) * cosf(omega);
+    y = body.position.y + periapsis * sinf(theta) * cosf(omega);
+    z = body.position.z + periapsis * sinf(omega);
     
     // Set the position
     [self setPosition: x : y : z];

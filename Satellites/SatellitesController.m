@@ -9,7 +9,7 @@
 #import "SatellitesController.h"
 
 static float G     = 100000; // 4 PI^2 * AU^3 / ( year ^2 * (solar system mass) )
-static float dt    = 1;
+static float dt    = 1.0;
 static float scale = 1000;
 
 @implementation SatellitesController
@@ -235,7 +235,7 @@ static float scale = 1000;
     for (Satellite *body in bodies)
     {
         // If the body orbits something else, calculate with respect to that body
-        if (!body.orbitalBody)
+        if (!body.orbitalBody && ![body isStar])
         {
             [body setOrbitalBody : [self createStarCenter]];
         }
@@ -249,6 +249,11 @@ static float scale = 1000;
 {
     // Get the body orbited
     Satellite * actor = body.orbitalBody;
+    if (!body.orbitalBody)
+    {
+        [body setVelocity: 0.0f : 0.0f : 0.0f];
+        return;
+    }
     
     // Get the relative position
     Vector * relPosition = [[Vector alloc] init];
@@ -261,7 +266,9 @@ static float scale = 1000;
     float m = (body.mass + actor.mass) / barycenter.mass;
     float e = body.eccentricity;
     float velocity = sqrtf(G * m * (1 + e) / (a));
-    float theta    = atanf(relPosition.y / relPosition.x);
+    float theta    = atan2f(relPosition.y, relPosition.x);
+    if (theta < 0)
+        theta = 2 * M_PI + theta;
     
     // Bail if too close
     if (a < 0.005)
@@ -273,8 +280,8 @@ static float scale = 1000;
     // Get the coordinates of the velocity
     // Reverse the direction in quadrants where x is negative
     // TODO: Calculate in 3D space
-    float vx =   velocity * sinf(theta) * (relPosition.x < 0 ? -1 : 1);
-    float vy = - velocity * cosf(theta) * (relPosition.x < 0 ? -1 : 1);
+    float vx =   velocity * sinf(theta);
+    float vy = - velocity * cosf(theta);
     float vz = 0;
     
     // Velocity
