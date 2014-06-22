@@ -100,6 +100,9 @@
 
     // Set the central body
     centralBody = (Satellite *)[menuOptions objectForKey:@"followSatellite"];
+    
+    // Update the satellite sizes if needed
+    [self setSatelliteSizes];
 }
 
 - (void) setToolbar
@@ -355,7 +358,7 @@
 
     // Calculate the aspect ratio for the scene and setup a perspective projection
     const GLfloat aspectRatio = (GLfloat) view.drawableWidth / (GLfloat) view.drawableHeight;
-    self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 20000.0f * scale);
+    self.baseEffect.transform.projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(35.0f), aspectRatio, 0.01f, 100000000.0f * scale);
 
     // Alter the calculations if necessary
     [self updateSatellites];
@@ -438,6 +441,25 @@
     bUpdateSatellites = false;
 }
 
+- (void) setSatelliteSizes
+{
+    int i = 0;
+    for (Satellite * body in bodies)
+    {
+        float size;
+        if (bLogMode)
+        {
+            size = log2f(pow(body.mass * 1000, 1.0/2.0f));
+        }
+        else
+        {
+            size = pow(body.mass, 1.0/3.0f) * 10;
+        }
+        
+        [spheres[i++] updateSize:size];
+    }
+}
+
 - (void) drawSatellites
 {
     // Get the central body, and convert to log if needed
@@ -458,9 +480,9 @@
         }
         else
         {
-            x = (body.position.x - [center x]) / 30;
-            y = (body.position.y - [center y]) / 30;
-            z = (body.position.z - [center z]) / 30;
+            x = (body.position.x - [center x]) * 1.5;
+            y = (body.position.y - [center y]) * 1.5;
+            z = (body.position.z - [center z]) * 1.5;
         }
         
         // If this body is a star, illuminate
@@ -482,15 +504,6 @@
         }
         
         [spheres[i] updateBody : x : y : z];
-        
-        // Update any fields if in editor mode
-        if (bEditorView)
-        {
-            [spheres[i] updateSize:body.size];
-            [spheres[i] setTilt:body.axialTilt];
-            [spheres[i] setRotationSpeed:body.rotationSpeed];
-        }
-        
         [spheres[i++] drawWithBaseEffect : self.baseEffect];
         
         // If we're done with the star, turn the light back on
