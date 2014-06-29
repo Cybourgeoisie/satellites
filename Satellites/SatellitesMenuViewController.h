@@ -19,7 +19,9 @@
     // Following a central satellite
     NSMutableArray * satellites;
     UIButton       * followSatellite;
-    UIActionSheet  * activityActionSheet;
+    UIButton       * focusSatellite;
+    UIActionSheet  * followActivityActionSheet;
+    UIActionSheet  * focusActivityActionSheet;
 }
 
 @property NSMutableDictionary * menuOptions;
@@ -29,7 +31,9 @@
 
 @property NSMutableArray * satellites;
 @property (retain, nonatomic) IBOutlet UIButton * followSatellite;
-@property (nonatomic) UIActionSheet * activityActionSheet;
+@property (retain, nonatomic) IBOutlet UIButton * focusSatellite;
+@property (nonatomic) UIActionSheet * followActivityActionSheet;
+@property (nonatomic) UIActionSheet * focusActivityActionSheet;
 
 - (void) setMenuOptions:(NSMutableDictionary *)menuOptions;
 

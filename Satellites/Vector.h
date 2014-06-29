@@ -20,9 +20,17 @@
 @property float y;
 @property float z;
 
+- (Vector *) initWithCoordinates : (float) a : (float) b : (float) c;
+- (void)     set : (float) a : (float) b : (float) c;
 - (Vector *) copy;
-- (void)  set : (float) a : (float) b : (float) c;
+
 - (float) getMagnitude;
+- (void)  setMagnitude : (float) r;
+
+- (float) getAngleOnXYPlane;
+- (float) getAngleToZCoordinate;
+
+- (Vector *) getNegativeVector;
 - (Vector *) getLogPosition;
 
 @end

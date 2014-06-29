@@ -16,7 +16,9 @@
 
 @synthesize satellites;
 @synthesize followSatellite;
-@synthesize activityActionSheet;
+@synthesize focusSatellite;
+@synthesize followActivityActionSheet;
+@synthesize focusActivityActionSheet;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,16 +47,27 @@
 - (void) setupSatelliteList
 {
     // Set up the list of satellites
-    activityActionSheet = [[UIActionSheet alloc] initWithTitle:@"Follow Satellite"
+    followActivityActionSheet = [[UIActionSheet alloc] initWithTitle:@"Follow Satellite"
                                                       delegate:self
                                              cancelButtonTitle:nil
                                         destructiveButtonTitle:@"Cancel"
                                              otherButtonTitles:nil];
     
+    // Set up the list of satellites
+    focusActivityActionSheet = [[UIActionSheet alloc] initWithTitle:@"Focus Satellite"
+                                                            delegate:self
+                                                   cancelButtonTitle:nil
+                                              destructiveButtonTitle:@"Cancel"
+                                                   otherButtonTitles:nil];
+    
+    // Add a "Don't Follow" button for focus
+    [focusActivityActionSheet addButtonWithTitle:@"No Focus"];
+
     // Set the buttons
     for (Satellite * satellite in satellites)
     {
-        [activityActionSheet addButtonWithTitle:[satellite name]];
+        [followActivityActionSheet addButtonWithTitle:[satellite name]];
+        [focusActivityActionSheet  addButtonWithTitle:[satellite name]];
     }
 }
 
@@ -86,14 +99,30 @@
             // Set the title
             [followSatellite setTitle:satelliteName forState:UIControlStateNormal];
         }
+        
+        if ([menuOptions objectForKey:@"focusSatellite"])
+        {
+            Satellite * satellite = [menuOptions valueForKey:@"focusSatellite"];
+            NSString * satelliteName = [satellite name];
+            
+            // Set the title
+            [focusSatellite setTitle:satelliteName forState:UIControlStateNormal];
+        }
     }
 }
 
-- (IBAction) setUserActivity: (id) sender
+- (IBAction) setUserFollowActivity: (id) sender
 {
-    activityActionSheet.tag = 1;
-    [activityActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-    [activityActionSheet showInView:self.view];
+    followActivityActionSheet.tag = 1;
+    [followActivityActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    [followActivityActionSheet showInView:self.view];
+}
+
+- (IBAction) setUserFocusActivity: (id) sender
+{
+    focusActivityActionSheet.tag = 1;
+    [focusActivityActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    [focusActivityActionSheet showInView:self.view];
 }
 
 - (void) willMoveToParentViewController : (UIViewController *) parent
@@ -115,13 +144,38 @@
     {
         return;
     }
-    
-    // Set the satellite in the menu options
-    Satellite * satellite = [satellites objectAtIndex:buttonIndex - 1];
-    [menuOptions setValue:satellite forKey:@"followSatellite"];
 
-    // Update the selected name
-    [followSatellite setTitle:[satellite name] forState:UIControlStateNormal];
+    NSString * title = [popup title];
+    if ([title isEqualToString:@"Follow Satellite"])
+    {
+        // Set the satellite in the menu options
+        Satellite * satellite = [satellites objectAtIndex:buttonIndex - 1];
+        [menuOptions setValue:satellite forKey:@"followSatellite"];
+
+        // Update the selected name
+        [followSatellite setTitle:[satellite name] forState:UIControlStateNormal];
+    }
+    else if ([title isEqualToString:@"Focus Satellite"])
+    {
+        // If we're using the "Don't Focus" option, reckless abandon
+        if (buttonIndex < 2)
+        {
+            // Set the satellite in the menu options
+            [menuOptions setValue:nil forKey:@"focusSatellite"];
+            
+            // Update the selected name
+            [focusSatellite setTitle:@"No Focus" forState:UIControlStateNormal];
+
+            return;
+        }
+
+        // Set the satellite in the menu options
+        Satellite * satellite = [satellites objectAtIndex:buttonIndex - 2];
+        [menuOptions setValue:satellite forKey:@"focusSatellite"];
+        
+        // Update the selected name
+        [focusSatellite setTitle:[satellite name] forState:UIControlStateNormal];
+    }
 }
 
 - (void) updateMenuOptions

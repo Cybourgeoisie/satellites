@@ -26,7 +26,8 @@
     NSMutableArray       * satellites;
     
     Satellite            * centralBody;
-    
+    Satellite            * focusBody;
+
     NSMutableArray       * spheres;
     NSMutableArray       * bodies;
     GLKSkyboxEffect      * skybox;
@@ -48,14 +49,13 @@
 @property (strong, nonatomic) SystemObject * system;
 @property (strong, nonatomic) NSMutableArray * satellites;
 @property (strong, nonatomic) Satellite * centralBody;
+@property (strong, nonatomic) Satellite * focusBody;
 
 @property (strong, nonatomic) NSMutableArray * spheres;
 @property (strong, nonatomic) NSMutableArray * bodies;
 @property (strong, nonatomic) GLKSkyboxEffect * skybox;
 @property (nonatomic, assign) GLKVector3 eyePosition;
 @property (nonatomic, assign) GLKVector3 lookAtPosition;
-@property (nonatomic, assign) GLKVector3 targetEyePosition;
-@property (nonatomic, assign) GLKVector3 targetLookAtPosition;
 @property (nonatomic, assign) GLKVector3 rotation;
 @property (nonatomic, assign) GLfloat scale;
 @property (nonatomic, assign) BOOL bLogMode;

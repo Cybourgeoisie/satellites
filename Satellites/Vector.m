@@ -22,6 +22,13 @@
     return self;
 }
 
+- (Vector *) initWithCoordinates : (float) a : (float) b : (float) c
+{
+    // Set to the default values
+    [self set: a : b : c];
+    return self;
+}
+
 - (Vector *) copy
 {
     // Return a copy of these values
@@ -44,6 +51,49 @@
     return sqrt(pow(self.x, 2) + pow(self.y, 2) + pow(self.z, 2));
 }
 
+- (float) getAngleOnXYPlane
+{
+    // Get the angle between the x & y coordinates
+    float theta = atan2f(y, x);
+    if (theta < 0)
+        theta = 2 * M_PI + theta;
+
+    return theta;
+}
+
+- (float) getAngleToZCoordinate
+{
+    // Get the angle between the x-y plane & z coordinate
+    // Simplified math from equation to calculate angle between line and plane
+    float omega = asinf(z/[self getMagnitude]);
+
+    if (omega < 0)
+        omega = 2 * M_PI + omega;
+
+    return omega;
+}
+
+- (Vector *) getNegativeVector
+{
+    Vector * vec = [[Vector alloc] copy];
+    [vec setMagnitude:[vec getMagnitude] * -1.0f];
+    return vec;
+}
+
+- (void) setMagnitude : (float) r
+{
+    // Get the angle between the x & y coordinates
+    float theta = [self getAngleOnXYPlane];
+    
+    // Get the angle between the x-y plane & z coordinate
+    float omega = [self getAngleToZCoordinate];
+    
+    // Get the logarithmic values for x, y & z
+    [self setX: r * cosf(theta)];
+    [self setY: r * sinf(theta)];
+    [self setZ: r * sinf(omega)];
+}
+
 - (Vector *) getLogPosition
 {
     Vector * log = [[Vector alloc] init];
@@ -53,15 +103,10 @@
     float a_log = log2f(a);
     
     // Get the angle between the x & y coordinates
-    float theta = atan2f(y, x);
-    if (theta < 0)
-        theta = 2 * M_PI + theta;
+    float theta = [self getAngleOnXYPlane];
 
     // Get the angle between the x-y plane & z coordinate
-    // Simplified math from equation to calculate angle between line and plane
-    float omega = asinf(z/a);
-    if (omega < 0)
-        omega = 2 * M_PI + omega;
+    float omega = [self getAngleToZCoordinate];
     
     // Get the logarithmic values for x, y & z
     [log setX: a_log * cosf(theta)];

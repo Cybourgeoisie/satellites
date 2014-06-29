@@ -23,8 +23,6 @@
 @synthesize skybox;
 @synthesize eyePosition;
 @synthesize lookAtPosition;
-@synthesize targetEyePosition;
-@synthesize targetLookAtPosition;
 @synthesize rotation;
 @synthesize scale;
 
@@ -94,12 +92,22 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     // Set the viewing scale - log is 1, linear is 0
     bLogMode = !![[menuOptions valueForKey:@"viewScale"] intValue];
 
     // Set the central body
     centralBody = (Satellite *)[menuOptions objectForKey:@"followSatellite"];
+    
+    // Handle the focused body
+    Satellite * newFocusBody = (Satellite *)[menuOptions objectForKey:@"focusSatellite"];
+    
+    // Reset the rotation, if focus satellite is new
+    if (focusBody != newFocusBody)
+        self.rotation = GLKVector3Make(0.0, 0.0, 0.0);
+
+    // Set the look-at (focused) body
+    focusBody = newFocusBody;
     
     // Update the satellite sizes if needed
     [self setSatelliteSizes];
@@ -128,6 +136,7 @@
     [menuOptions setValue:NO forKey:@"showTrails"];
     [menuOptions setValue:[NSNumber numberWithBool:bLogMode] forKey:@"viewScale"];
     [menuOptions setValue:centralBody forKey:@"followSatellite"];
+    [menuOptions setValue:focusBody   forKey:@"focusSatellite"];
 }
 
 #pragma mark - Segue management
@@ -168,6 +177,10 @@
     // Set the central body to the first body
     if (!centralBody)
         centralBody = (Satellite *)[controller.bodies objectAtIndex:0];
+
+    // Set the focus body to nothing at all
+    if (!focusBody)
+        focusBody = nil;
 }
 
 
@@ -230,11 +243,7 @@
     // Set initial point of view
     self.eyePosition    = GLKVector3Make(0.0, 0.0, 100.0);
     self.lookAtPosition = GLKVector3Make(0.0, 0.0, 0.0);
-    
-    // Set initial alteration to the pov
-    self.targetEyePosition    = GLKVector3Make(0.0, 0.0, 0.0);
-    self.targetLookAtPosition = GLKVector3Make(0.0, 0.0, 0.0);
-    
+
     // Set the current matrix propertites
     self.scale = 0.6;
     self.rotation = GLKVector3Make(0.0, 0.0, 0.0);
@@ -245,14 +254,10 @@
     // Set initial point of view
     self.eyePosition    = GLKVector3Make(100.0, 0.0, 0.0);
     self.lookAtPosition = GLKVector3Make(0.0, 0.0, 0.0);
-    
-    // Set initial alteration to the pov
-    self.targetEyePosition    = GLKVector3Make(0.0, 0.0, 0.0);
-    self.targetLookAtPosition = GLKVector3Make(0.0, 0.0, 0.0);
-    
+
     // Set the current matrix propertites
     self.scale = 2.4;
-    self.rotation = GLKVector3Make(0.0, -900.0, 0.0);
+    self.rotation = GLKVector3Make(0.0, -90.0, 0.0);
 }
 
 // Draw elements that belong in the scene
@@ -344,8 +349,8 @@
                                                       0, 1, 0);
     
     // Alter the view matrix
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(rotation.y / 10.0), 1.0, 0.0, 0.0);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(rotation.x / 10.0), 0.0, 1.0, 0.0);
+    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(self.rotation.y), 1.0, 0.0, 0.0);
+    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(self.rotation.x), 0.0, 1.0, 0.0);
     modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, scale, scale, scale);
     
     // Set the model view matrix
@@ -477,15 +482,15 @@
         if (bLogMode && [body.position getMagnitude] > 0.01)
         {
             Vector * log = [body.position getLogPosition];
-            x = ([log x] - [center x]) * 2;
-            y = ([log y] - [center y]) * 2;
-            z = ([log z] - [center z]) * 2;
+            x = ([log x] - [center x]) * 2.5;
+            y = ([log y] - [center y]) * 2.5;
+            z = ([log z] - [center z]) * 2.5;
         }
         else
         {
-            x = (body.position.x - [center x]) * 1.5;
-            y = (body.position.y - [center y]) * 1.5;
-            z = (body.position.z - [center z]) * 1.5;
+            x = (body.position.x - [center x]) / 40;
+            y = (body.position.y - [center y]) / 40;
+            z = (body.position.z - [center z]) / 40;
         }
         
         // If this body is a star, illuminate
@@ -505,10 +510,23 @@
             y += (body.position.y - body.orbitalBody.position.y);
             z += (body.position.z - body.orbitalBody.position.z);
         }
-        
+
+        // Render the body
         [spheres[i] updateBody : x : y : z];
-        [spheres[i++] drawWithBaseEffect : self.baseEffect];
+        [spheres[i] drawWithBaseEffect : self.baseEffect];
         
+        // Determine if we're looking at this satellite currently
+        if (focusBody != nil && body == focusBody)
+        {
+            // Get the current angle from the x-y plane to the z-axis
+            Vector * vec = [[Vector alloc] initWithCoordinates:x :y :z];
+            [vec setMagnitude: -10];
+
+            // Set the eye position and look at position
+            self.eyePosition    = GLKVector3Make(vec.x, vec.y, vec.z);
+            self.lookAtPosition = GLKVector3Make(x, y, z);
+        }
+
         // If we're done with the star, turn the light back on
         if ([body isStar])
         {
@@ -519,6 +537,9 @@
             
             starCount++;
         }
+        
+        // Keep count of the current satellite
+        i++;
     }
 }
 
@@ -618,8 +639,8 @@
 - (void) handleRotate: (NSSet *) touches withEvent: (UIEvent *) event
 {
     UITouch* t = [touches anyObject];
-    rotation.x += ([t locationInView:self.view].x - [t previousLocationInView:self.view].x);
-    rotation.y += ([t locationInView:self.view].y - [t previousLocationInView:self.view].y);
+    rotation.x += ([t locationInView:self.view].x - [t previousLocationInView:self.view].x) / 10.0f;
+    rotation.y += ([t locationInView:self.view].y - [t previousLocationInView:self.view].y) / 10.0f;
 }
 
 - (void) handleScale : (UIPinchGestureRecognizer*) sender

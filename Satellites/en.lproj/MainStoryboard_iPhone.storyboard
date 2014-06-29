@@ -263,38 +263,67 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="setUserActivity:" destination="d3u-D5-IDp" eventType="touchDown" id="iRu-Sw-gEm"/>
+                                    <action selector="setUserFollowActivity:" destination="d3u-D5-IDp" eventType="touchDown" id="iLy-NJ-BKl"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Focus Satellite" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POq-Mx-pBA">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGo-GL-9Su">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="76C-9C-IFI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                <state key="normal" title="No Focus">
+                                    <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setUserFocusActivity:" destination="d3u-D5-IDp" eventType="touchDown" id="WRg-Oe-0Gq"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="nuR-M9-OiP" firstAttribute="baseline" secondItem="U5X-qh-11b" secondAttribute="baseline" type="default" id="1Q5-Cf-C0k"/>
-                            <constraint firstItem="nuR-M9-OiP" firstAttribute="trailing" secondItem="5bH-nc-Gsl" secondAttribute="trailing" type="default" id="9AA-sZ-mVt"/>
-                            <constraint firstItem="U5X-qh-11b" firstAttribute="trailing" secondItem="CjN-X3-UNI" secondAttribute="trailing" type="default" id="9cy-hA-eJ4"/>
                             <constraint firstItem="5bH-nc-Gsl" firstAttribute="leading" secondItem="5EL-5w-jvZ" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="BGY-6e-TaD"/>
                             <constraint firstItem="W4m-5d-me9" firstAttribute="centerY" secondItem="ok3-na-9h2" secondAttribute="centerY" type="default" id="DJb-hu-K2E"/>
+                            <constraint firstItem="POq-Mx-pBA" firstAttribute="trailing" secondItem="dDK-o8-rvA" secondAttribute="trailing" type="default" id="DvT-Ev-cSE"/>
                             <constraint firstItem="W4m-5d-me9" firstAttribute="leading" secondItem="5EL-5w-jvZ" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="ES8-Qc-5tb"/>
+                            <constraint firstItem="DGg-44-FIA" firstAttribute="trailing" secondItem="U5X-qh-11b" secondAttribute="trailing" type="default" id="EW4-JC-huY"/>
+                            <constraint firstItem="DGg-44-FIA" firstAttribute="top" secondItem="U5X-qh-11b" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="EhU-r4-LPo"/>
                             <constraint firstItem="5bH-nc-Gsl" firstAttribute="centerY" secondItem="DGg-44-FIA" secondAttribute="centerY" type="default" id="F90-RS-d3P"/>
-                            <constraint firstItem="ok3-na-9h2" firstAttribute="top" secondItem="DGg-44-FIA" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="KzH-kp-38a"/>
+                            <constraint firstItem="U5X-qh-11b" firstAttribute="trailing" secondItem="HGo-GL-9Su" secondAttribute="trailing" type="default" id="FC5-wE-QmV"/>
                             <constraint firstItem="dDK-o8-rvA" firstAttribute="baseline" secondItem="CjN-X3-UNI" secondAttribute="baseline" type="default" id="OGU-pv-ed1"/>
+                            <constraint firstItem="POq-Mx-pBA" firstAttribute="baseline" secondItem="HGo-GL-9Su" secondAttribute="baseline" type="default" id="Oav-t6-ffm"/>
+                            <constraint firstItem="POq-Mx-pBA" firstAttribute="leading" secondItem="5EL-5w-jvZ" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="RgS-AZ-Ev7"/>
                             <constraint firstItem="U5X-qh-11b" firstAttribute="centerY" secondItem="nuR-M9-OiP" secondAttribute="centerY" type="default" id="TJo-rR-UeZ"/>
-                            <constraint firstItem="U5X-qh-11b" firstAttribute="trailing" secondItem="DGg-44-FIA" secondAttribute="trailing" type="default" id="W21-Gy-70o"/>
+                            <constraint firstItem="HGo-GL-9Su" firstAttribute="leading" secondItem="U5X-qh-11b" secondAttribute="leading" type="default" id="UMq-sP-8eg"/>
+                            <constraint firstItem="U5X-qh-11b" firstAttribute="top" secondItem="5EL-5w-jvZ" secondAttribute="top" constant="92" id="d0g-a1-LU3"/>
+                            <constraint firstItem="POq-Mx-pBA" firstAttribute="centerY" secondItem="HGo-GL-9Su" secondAttribute="centerY" type="default" id="dSD-zf-Ozc"/>
                             <constraint firstItem="dDK-o8-rvA" firstAttribute="leading" secondItem="5EL-5w-jvZ" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="dxv-Af-XKA"/>
                             <constraint firstItem="DGg-44-FIA" firstAttribute="leading" secondItem="ok3-na-9h2" secondAttribute="leading" type="default" id="eYw-EF-bYe"/>
+                            <constraint firstItem="HGo-GL-9Su" firstAttribute="trailing" secondItem="CjN-X3-UNI" secondAttribute="trailing" type="default" id="gKi-N1-SkV"/>
                             <constraint firstItem="nuR-M9-OiP" firstAttribute="leading" secondItem="5EL-5w-jvZ" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="h81-0Q-CGb"/>
-                            <constraint firstItem="DGg-44-FIA" firstAttribute="top" secondItem="U5X-qh-11b" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="iwE-2l-ecA"/>
                             <constraint firstItem="DGg-44-FIA" firstAttribute="leading" secondItem="5bH-nc-Gsl" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="koY-XS-KKg"/>
-                            <constraint firstItem="CjN-X3-UNI" firstAttribute="leading" secondItem="U5X-qh-11b" secondAttribute="leading" type="default" id="lT4-kz-Wxb"/>
-                            <constraint firstItem="U5X-qh-11b" firstAttribute="top" secondItem="CjN-X3-UNI" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="pbw-c0-AYr"/>
+                            <constraint firstItem="nuR-M9-OiP" firstAttribute="trailing" secondItem="POq-Mx-pBA" secondAttribute="trailing" type="default" id="uO0-jh-Ow8"/>
+                            <constraint firstItem="nuR-M9-OiP" firstAttribute="trailing" secondItem="5bH-nc-Gsl" secondAttribute="trailing" type="default" id="vwp-l9-InX"/>
                             <constraint firstItem="ok3-na-9h2" firstAttribute="leading" secondItem="W4m-5d-me9" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="w3h-9E-B7F"/>
-                            <constraint firstItem="nuR-M9-OiP" firstAttribute="trailing" secondItem="dDK-o8-rvA" secondAttribute="trailing" type="default" id="wRx-WF-xZd"/>
-                            <constraint firstItem="dDK-o8-rvA" firstAttribute="top" secondItem="5EL-5w-jvZ" secondAttribute="top" constant="22" id="xKs-cQ-FCL"/>
+                            <constraint firstItem="U5X-qh-11b" firstAttribute="top" secondItem="HGo-GL-9Su" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="wZj-ws-N0R"/>
                             <constraint firstItem="dDK-o8-rvA" firstAttribute="centerY" secondItem="CjN-X3-UNI" secondAttribute="centerY" type="default" id="xdH-Of-wer"/>
+                            <constraint firstItem="ok3-na-9h2" firstAttribute="top" secondItem="5EL-5w-jvZ" secondAttribute="top" constant="234" id="yPB-CX-yW7"/>
+                            <constraint firstItem="HGo-GL-9Su" firstAttribute="leading" secondItem="CjN-X3-UNI" secondAttribute="leading" type="default" id="ylY-8j-yp3"/>
+                            <constraint firstItem="HGo-GL-9Su" firstAttribute="top" secondItem="CjN-X3-UNI" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="zq2-fQ-DeG"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Zuq-5L-St2"/>
                     <connections>
+                        <outlet property="focusSatellite" destination="HGo-GL-9Su" id="8Xq-Oz-CuC"/>
                         <outlet property="followSatellite" destination="CjN-X3-UNI" id="0uh-hR-FL5"/>
                         <outlet property="showLabels" destination="ok3-na-9h2" id="Ibb-cv-YG2"/>
                         <outlet property="showTrails" destination="DGg-44-FIA" id="fA0-5D-twh"/>
@@ -462,7 +491,6 @@
         <class className="EditingViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EditingViewController.h"/>
             <relationships>
-                <relationship kind="action" name="setUserActivity:"/>
                 <relationship kind="outlet" name="nameTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="slider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="textField" candidateClass="UITextField"/>
@@ -484,6 +512,7 @@
         <class className="SatellitesMenuViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SatellitesMenuViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="focusSatellite" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="followSatellite" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="showLabels" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="showTrails" candidateClass="UISwitch"/>
