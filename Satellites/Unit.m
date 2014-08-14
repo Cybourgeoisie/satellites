@@ -64,18 +64,22 @@
 
 - (id) initWithBaseValue : (NSNumber *) unitValue forUnit : (NSString *) unitName
 {
-    // Set the default values
-    [self prepareUnits];
-    
-    // Get the converted value
-    NSUInteger toIndex   = [unitNames indexOfObject:unitName];
-    NSNumber * convTo    = [unitValues objectAtIndex:toIndex];
-    float convertedValue = [unitValue floatValue] * [convTo floatValue];
-    
-    // Set the value and name
-    [self setValue:[[NSNumber alloc] initWithFloat: convertedValue]];
-    [self setName:unitName];
-    
+    self = [super init];
+    if (self)
+    {
+        // Set the default values
+        [self prepareUnits];
+        
+        // Get the converted value
+        NSUInteger toIndex   = [unitNames indexOfObject:unitName];
+        NSNumber * convTo    = [unitValues objectAtIndex:toIndex];
+        float convertedValue = [unitValue floatValue] * [convTo floatValue];
+        
+        // Set the value and name
+        [self setValue:[[NSNumber alloc] initWithFloat: convertedValue]];
+        [self setName:unitName];
+    }
+
     return self;
 }
 

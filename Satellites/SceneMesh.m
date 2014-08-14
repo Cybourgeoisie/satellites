@@ -140,7 +140,7 @@
             sizeof(SceneMeshVertex) 
          bytes:[self.vertexData bytes]
          usage:GL_STATIC_DRAW];
-      
+
       // No longer need local data storage
       self.vertexData = nil;
    }

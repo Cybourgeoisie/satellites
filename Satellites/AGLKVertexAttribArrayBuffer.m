@@ -60,7 +60,7 @@
    NSAssert(0 != name, @"Invalid name");
 
    self.stride = aStride;
-   self.bufferSizeBytes = aStride * count;
+    self.bufferSizeBytes = aStride * count;
    
    glBindBuffer(GL_ARRAY_BUFFER,  // STEP 2
       self.name); 
@@ -133,10 +133,10 @@
    startVertexIndex:(GLint)first
    numberOfVertices:(GLsizei)count
 {
-   NSAssert(self.bufferSizeBytes >= 
+   NSAssert(self.bufferSizeBytes >=
       ((first + count) * self.stride),
       @"Attempt to draw more vertex data than available.");
-      
+
    glDrawArrays(mode, first, count); // Step 6
 }
 

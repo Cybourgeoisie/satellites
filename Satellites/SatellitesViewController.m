@@ -208,7 +208,8 @@
     self.baseEffect.lightModelAmbientColor = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
     self.baseEffect.colorMaterialEnabled   = GL_TRUE;
 
-    self.baseEffect.texture2d0.envMode = GLKTextureEnvModeModulate;
+    // This little fucker caused me hours of grief over a malloc bug.
+    //self.baseEffect.texture2d0.envMode = GLKTextureEnvModeModulate;
     
     self.baseEffect.light0.enabled      = GL_TRUE;
     self.baseEffect.light0.ambientColor = GLKVector4Make(0.1f, 0.1f, 0.1f, 1.0f);
@@ -514,7 +515,7 @@
         // Render the body
         [spheres[i] updateBody : x : y : z];
         [spheres[i] drawWithBaseEffect : self.baseEffect];
-        
+
         // Determine if we're looking at this satellite currently
         if (focusBody != nil && body == focusBody)
         {
@@ -572,11 +573,11 @@
         t += 1.0f / 4.0f;
     }
     
-    GLfloat verts[] = {
+    /*GLfloat verts[] = {
         0.0f, 0.0f, 0.0f,
         0.0f, 50.0f, 0.0f,
         30.0f, 30.0f, 50.0f,
-        -10.0f, 50.0f, 0.0f};
+        -10.0f, 50.0f, 0.0f};*/
     
     [self draw3dVertices: vertices : sizeof(vertices)];
     
