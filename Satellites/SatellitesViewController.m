@@ -52,6 +52,7 @@
     
     // Hide the toolbar
     self.navigationController.toolbarHidden = true;
+    self.navigationController.navigationBar.translucent = NO;
     
     // Set the toolbar and menu stuff
     [self setToolbar];
@@ -175,7 +176,7 @@
     bodies = controller.bodies;
     
     // Set the central body to the first body
-    if (!centralBody)
+    if (!centralBody && [controller.bodies count] > 0)
         centralBody = (Satellite *)[controller.bodies objectAtIndex:0];
 
     // Set the focus body to nothing at all

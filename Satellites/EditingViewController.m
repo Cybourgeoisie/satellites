@@ -107,6 +107,7 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setToolbarHidden:YES];
+    self.navigationController.navigationBar.translucent = NO;
 
     // Get this edited satellite
     SatelliteObject * satelliteObject = (SatelliteObject *) editedObject;
