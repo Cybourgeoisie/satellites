@@ -47,11 +47,6 @@
     
     // Prepare the satellite object if we're editing a satellite
     SatelliteObject * satelliteObject;
-    if (self.editedObject != self.system)
-    {
-        // Show this satellite and its primary orbital partner
-        satelliteObject = (SatelliteObject *) editedObject;
-    }
     
     // If we're editing the system, load all of the satellites
     if (self.editedObject == self.system)
@@ -64,6 +59,9 @@
         [editedFieldName isEqualToString:@"Eccentricity"] ||
         [editedFieldName isEqualToString:@"Inclination"])
     {
+        // Show this satellite and its primary orbital partner
+        satelliteObject = (SatelliteObject *) editedObject;
+        
         if ([satelliteObject bMoon])
         {
             // If this is a moon, add its parent
@@ -87,6 +85,7 @@
     else
     {
         // Just show this one satellite
+        satelliteObject = (SatelliteObject *) editedObject;
         [satellites addObject:satelliteObject];
     }
 
@@ -108,6 +107,7 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setToolbarHidden:YES];
+    self.navigationController.navigationBar.translucent = NO;
 
     // Get this edited satellite
     SatelliteObject * satelliteObject = (SatelliteObject *) editedObject;

@@ -75,7 +75,7 @@
     NSString * imageUrl = self.albums[indexPath.section][indexPath.row];
 
     // Parse the image URL for the only necessary information
-    NSArray * urlComponents = [[NSArray alloc] init];
+    NSArray * urlComponents;
     urlComponents = [imageUrl componentsSeparatedByString:@"/"];
     imageUrl      = [urlComponents lastObject];
     urlComponents = [imageUrl componentsSeparatedByString:@"."];

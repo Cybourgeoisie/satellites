@@ -120,8 +120,9 @@
     // Set the texture if one exists
     if (self.texture != nil)
     {
-        anEffect.texture2d0.name   = self.texture.name;
-        anEffect.texture2d0.target = self.texture.target;
+        anEffect.texture2d0.name    = self.texture.name;
+        anEffect.texture2d0.envMode = GLKTextureEnvModeModulate;
+        anEffect.texture2d0.target  = self.texture.target;
     }
 
     // Prepare

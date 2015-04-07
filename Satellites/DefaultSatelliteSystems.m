@@ -21,7 +21,12 @@
 
 - (id)init
 {
-    bodies = [[NSMutableArray alloc] init];
+    self = [super init];
+    if (self)
+    {
+        bodies = [[NSMutableArray alloc] init];
+    }
+
     return self;
 }
 

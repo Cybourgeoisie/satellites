@@ -7,7 +7,6 @@
 //
 
 #import "SceneSatelliteModel.h"
-#import "AGLKVertexAttribArrayBuffer.h"
 #import "sphere.h"
 
 @implementation SceneSatelliteModel
@@ -25,7 +24,7 @@
     // Create our vertices arrays
     vertices = (GLfloat *) malloc(sizeof sphereVerts);
     normals  = (GLfloat *) malloc(sizeof sphereNormals);
-    
+
     // Change the sphere vertices to resize the body
     for (int i = 0; i < numVertices; i++)
     {

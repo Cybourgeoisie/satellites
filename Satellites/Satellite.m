@@ -36,27 +36,31 @@
 
 - (Satellite *) init
 {
-    // Initialize the necessary variables
-    self.position     = [[Vector alloc] init];
-    self.velocity     = [[Vector alloc] init];
-    self.acceleration = [[Vector alloc] init];
-    
-    // Set the remainder to 0
-    self.size = 0;
-    self.mass = 0;
-    self.eccentricity = 0;
-    self.inclination  = 0;
-    
-    // Set the properties to empty strings
-    self.name    = @"";
-    self.texture = @"";
-    
-    // Create random colors
-    self.color   = [[Vector alloc] init];
-    self.color.x = arc4random_uniform(80) / 100.0;
-    self.color.y = arc4random_uniform(80) / 100.0;
-    self.color.z = arc4random_uniform(80) / 100.0;
-    
+    self = [super init];
+    if (self)
+    {
+        // Initialize the necessary variables
+        self.position     = [[Vector alloc] init];
+        self.velocity     = [[Vector alloc] init];
+        self.acceleration = [[Vector alloc] init];
+        
+        // Set the remainder to 0
+        self.size = 0;
+        self.mass = 0;
+        self.eccentricity = 0;
+        self.inclination  = 0;
+        
+        // Set the properties to empty strings
+        self.name    = @"";
+        self.texture = @"";
+        
+        // Create random colors
+        self.color   = [[Vector alloc] init];
+        self.color.x = arc4random_uniform(80) / 100.0;
+        self.color.y = arc4random_uniform(80) / 100.0;
+        self.color.z = arc4random_uniform(80) / 100.0;
+    }
+
     // Pass back
     return self;
 }
