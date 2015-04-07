@@ -351,6 +351,7 @@
     // Alter the view matrix
     modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(self.rotation.y), 1.0, 0.0, 0.0);
     modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(self.rotation.x), 0.0, 1.0, 0.0);
+    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(self.rotation.z), 0.0, 0.0, 1.0);
     modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, scale, scale, scale);
     
     // Set the model view matrix
@@ -374,6 +375,10 @@
 
     // Draw the skybox
     [self drawSkybox];
+    
+    // Print some debug info
+    //NSLog(@"x = %f y = %f z = %f", self.rotation.x, self.rotation.y, self.rotation.z);
+    //NSLog(@"x = %f y = %f z = %f", self.lookAtPosition.x, self.lookAtPosition.y, self.lookAtPosition.z);
 
     // Draw test path
     //[self drawQuadBezier];
@@ -639,8 +644,38 @@
 - (void) handleRotate: (NSSet *) touches withEvent: (UIEvent *) event
 {
     UITouch* t = [touches anyObject];
-    rotation.x += ([t locationInView:self.view].x - [t previousLocationInView:self.view].x) / 10.0f;
-    rotation.y += ([t locationInView:self.view].y - [t previousLocationInView:self.view].y) / 10.0f;
+    
+    // Determine the change in x and y coordinates on the 2D screen
+    float delta_x = ([t locationInView:self.view].x - [t previousLocationInView:self.view].x) / 10.0f;
+    float delta_y = ([t locationInView:self.view].y - [t previousLocationInView:self.view].y) / 10.0f;
+
+    // Determine the rotation matrix values to see which axes we should rotate along
+    // There may be a utility function for this, and we may just need to provide the angle
+    GLfloat theta = GLKMathDegreesToRadians(self.rotation.x);
+    GLfloat phi   = GLKMathDegreesToRadians(self.rotation.y);
+    GLfloat psi   = GLKMathDegreesToRadians(self.rotation.z);
+
+    // 3D Rotation Matrix Transformation
+    // Partial source: http://zone.ni.com/reference/en-XX/help/371361H-01/gmath/3d_cartesian_coordinate_rotation_euler/
+    float delta_x_prime = delta_x
+        + delta_x * cos(phi) 
+        + delta_x * cos(psi) + delta_y * sin(psi);
+    
+    float delta_y_prime = delta_y * cos(theta)
+        + delta_y
+        - delta_x * sin(psi) + delta_y * cos(psi);
+
+    float delta_z_prime = - delta_y * sin(theta)
+        + delta_x * sin(phi);
+
+    rotation.x += delta_x_prime;
+    rotation.y += delta_y_prime;
+    rotation.z += delta_z_prime;
+    
+    /*
+    rotation.x += delta_x;
+    rotation.y += delta_y;
+    */
 }
 
 - (void) handleScale : (UIPinchGestureRecognizer*) sender
